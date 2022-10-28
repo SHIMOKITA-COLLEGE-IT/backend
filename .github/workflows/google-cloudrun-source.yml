@@ -89,6 +89,7 @@ jobs:
           region: ${{ env.REGION }}
           # NOTE: If required, update to the appropriate source folder
           source: ./
+          env_vars: 'DATABASE_URL=${{ secrets.DATABASE_URL }}'
 
       # If required, use the Cloud Run url output in later steps
       - name: Show Output
