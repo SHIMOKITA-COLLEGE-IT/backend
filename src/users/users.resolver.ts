@@ -37,15 +37,15 @@ export class UsersResolver {
     return this.usersService.validateUsername(username);
   }
 
-  @Mutation(() => Profile)
-  registerProfile(
-    @CurrentUser() user: JwtPayload,
-    @Args('data') data: ProfileCreateWithoutUserInput,
-  ) {
-    return this.prismaService.profile.create({
-      data: { ...data, user: { connect: { id: user.id } } },
-    });
-  }
+  // @Mutation(() => Profile)
+  // registerProfile(
+  //   @CurrentUser() user: JwtPayload,
+  //   @Args('data') data: ProfileCreateWithoutUserInput,
+  // ) {
+  //   return this.prismaService.profile.create({
+  //     data: { ...data, user: { connect: { id: user.id } } },
+  //   });
+  // }
 
   @Query(() => [User], { name: 'users' })
   findAll(@Args('where') where: UserWhereInput) {
