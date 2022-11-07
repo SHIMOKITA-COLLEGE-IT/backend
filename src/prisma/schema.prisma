@@ -6,6 +6,18 @@ generator client {
   previewFeatures = ["referentialIntegrity"]
 }
 
+generator nestgraphql {
+  provider               = "prisma-nestjs-graphql"
+  output                 = "graphql"
+  fields_Validator_from  = "class-validator"
+  fields_Validator_input = true
+  reExport               = Directories
+}
+
+generator dbml {
+  provider = "prisma-dbml-generator"
+}
+
 datasource db {
   provider             = "mysql"
   url                  = env("DATABASE_URL")
@@ -13,12 +25,212 @@ datasource db {
 }
 
 model User {
-  id        Int      @id @default(autoincrement())
-  username  String   @unique
-  firstName String
-  lastName  String
-  position  String
-  bio       String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id              String   @id @default(uuid())
+  firebaseAuthUid String   @unique
+  email           String?  @unique
+  imageUrl        String?
+  disabled        Boolean  @default(false)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  profile         Profile?
+}
+
+model Profile {
+  id                      Int                      @id @default(autoincrement())
+  user                    User                     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId                  String                   @unique
+  /// @Validator.IsAlphanumeric()
+  /// @Validator.Length(4, 12)
+  username                String                   @unique
+  firstName               String
+  lastName                String
+  nickName                String?
+  showOnlyNickname        Boolean                  @default(false)
+  birthday                DateTime
+  hideAge                 Boolean                  @default(false)
+  position                String
+  socialLinks             SocialLink[]
+  shimokitaCollegeProfile ShimokitaCollegeProfile?
+  myRoots                 MyRoots[]
+  mySkills                MySkills[]
+  bio                     String
+  tags                    Tag[]
+  photos                  Photo[]
+  createdAt               DateTime                 @default(now())
+  updatedAt               DateTime                 @updatedAt
+}
+
+model ShimokitaCollegeProfile {
+  id         Int         @id @default(autoincrement())
+  profile    Profile     @relation(fields: [profileId], references: [id], onDelete: Cascade)
+  profileId  Int         @unique
+  isAlumni   Boolean     @default(false)
+  /// @Validator.IsEmail()
+  slackEmail String      @unique
+  roomNumber Int
+  postNumber Int
+  programs   Program[]
+  houses     House[]
+  homes      Home[]
+  committee  Committee[]
+  clubs      Club[]
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @updatedAt
+}
+
+model Program {
+  id                       Int                       @id @default(autoincrement())
+  name                     String                    @unique
+  from                     DateTime?
+  to                       DateTime?
+  shimokitaCollegeProfiles ShimokitaCollegeProfile[]
+  createdAt                DateTime                  @default(now())
+  updatedAt                DateTime                  @updatedAt
+}
+
+model House {
+  id                       Int                       @id @default(autoincrement())
+  name                     String                    @unique
+  from                     DateTime?
+  to                       DateTime?
+  photos                   Photo[]
+  shimokitaCollegeProfiles ShimokitaCollegeProfile[]
+  createdAt                DateTime                  @default(now())
+  updatedAt                DateTime                  @updatedAt
+}
+
+model Home {
+  id                       Int                       @id @default(autoincrement())
+  name                     String                    @unique
+  from                     DateTime?
+  to                       DateTime?
+  photos                   Photo[]
+  shimokitaCollegeProfiles ShimokitaCollegeProfile[]
+  createdAt                DateTime                  @default(now())
+  updatedAt                DateTime                  @updatedAt
+}
+
+model Committee {
+  id                       Int                       @id @default(autoincrement())
+  name                     String                    @unique
+  imageUrl                 String?
+  slackChannel             String?
+  description              String?
+  photos                   Photo[]
+  shimokitaCollegeProfiles ShimokitaCollegeProfile[]
+  createdAt                DateTime                  @default(now())
+  updatedAt                DateTime                  @updatedAt
+}
+
+model Club {
+  id                       Int                       @id @default(autoincrement())
+  name                     String                    @unique
+  imageUrl                 String?
+  slackChannel             String?
+  description              String?
+  photos                   Photo[]
+  shimokitaCollegeProfiles ShimokitaCollegeProfile[]
+  createdAt                DateTime                  @default(now())
+  updatedAt                DateTime                  @updatedAt
+}
+
+model Photo {
+  id        Int         @id @default(autoincrement())
+  imageUrl  String
+  alt       String
+  profiles  Profile[]
+  houses    House[]
+  homes     Home[]
+  committee Committee[]
+  clubs     Club[]
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+}
+
+model SocialLink {
+  id             Int            @id @default(autoincrement())
+  profile        Profile        @relation(fields: [profileId], references: [id], onDelete: Cascade)
+  profileId      Int
+  name           String
+  // For Icon
+  socialLinkType SocialLinkType
+  url            String
+}
+
+enum SocialLinkType {
+  WEBSITE
+  INSTAGRAM
+  TWITTER
+  FACEBOOK
+  LINE
+  SNAPCHAT
+  TIKTOK
+  YOUTUBE
+  GITHUB
+  BEREAL
+  LINKTREE
+  OTHER
+}
+
+// seed ShimokitaCollege
+model MyRoots {
+  id               Int        @id @default(autoincrement())
+  profile          Profile    @relation(fields: [profileId], references: [id])
+  profileId        Int
+  roots            Roots      @relation(fields: [rootsId], references: [id])
+  rootsId          Int
+  from             DateTime?
+  to               DateTime?
+  profilesOnSkills MySkills[]
+}
+
+model Roots {
+  id              Int       @id @default(autoincrement())
+  name            String    @unique
+  // For Icon
+  rootsType       RootsType
+  googleMapUrl    String?
+  introductionUrl String?
+  myRoots         MyRoots[]
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+}
+
+enum RootsType {
+  COUNTRY
+  HOMETOWN
+  EDUCATION
+  WORK
+  GROUP
+}
+
+model MySkills {
+  profile   Profile  @relation(fields: [profileId], references: [id])
+  profileId Int
+  skill     Skill    @relation(fields: [skillId], references: [id])
+  skillId   Int
+  myRoots   MyRoots? @relation(fields: [myRootsId], references: [id])
+  myRootsId Int?
+
+  @@id([profileId, skillId])
+}
+
+model Skill {
+  id        Int        @id @default(autoincrement())
+  name      String     @unique
+  parentId  Int?
+  parent    Skill?     @relation("SkillTree", fields: [parentId], references: [id], onDelete: Restrict, onUpdate: Restrict)
+  children  Skill[]    @relation("SkillTree")
+  profiles  MySkills[]
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+}
+
+model Tag {
+  id        Int       @id @default(autoincrement())
+  name      String
+  iconUrl   String?
+  profiles  Profile[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
 }
