@@ -38,7 +38,5 @@ lerna-debug.log*
 
 # Ignore generated credentials from google-github-actions/auth
 gha-creds-*.json
-src/prisma/graphql
-src/prisma/dbml
 
 serviceAccountKey.json

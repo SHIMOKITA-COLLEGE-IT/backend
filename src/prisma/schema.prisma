@@ -8,7 +8,7 @@ generator client {
 
 generator nestgraphql {
   provider               = "prisma-nestjs-graphql"
-  output                 = "graphql"
+  output                 = "./graphql"
   fields_Validator_from  = "class-validator"
   fields_Validator_input = true
   reExport               = Directories
