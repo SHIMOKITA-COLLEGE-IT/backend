@@ -49,11 +49,11 @@ export class UsersResolver {
 
   @Query(() => [User], { name: 'users' })
   findAll(@Args('where') where: UserWhereInput) {
-    return this.usersService.findMany({ where });
+    return this.usersService.findMany({ where, include: { profile: true } });
   }
 
   @Query(() => User, { name: 'user' })
   findOne(@Args('where') where: UserWhereUniqueInput) {
-    return this.usersService.findUnique({ where });
+    return this.usersService.findUnique({ where, include: { profile: true } });
   }
 }
