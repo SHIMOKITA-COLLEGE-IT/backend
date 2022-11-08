@@ -36,4 +36,5 @@ jobs:
       # only run this command with the `--background` flag if you have the Apollo Studio GitHub integration enabled on your repository
       - name: Run check against prod
         run: |
+          ls
           rover graph check college-app-supergraph@main --schema ./src/schema.graphql --background
