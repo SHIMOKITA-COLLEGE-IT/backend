@@ -37,4 +37,4 @@ jobs:
       - name: Run check against prod
         run: |
           ls
-          rover graph check college-app-supergraph@main --schema ./src/schema.graphql --background
+          rover graph check college-app-supergraph@main --schema ./src/schema.gql --background
