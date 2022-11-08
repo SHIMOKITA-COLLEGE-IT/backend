@@ -54,7 +54,6 @@ env:
   PROJECT_ID: college-app-366823
   SERVICE: backend
   REGION: asia-northeast1
-  APOLLO_VCS_COMMIT: ${{ github.event.pull_request.head.sha }}
 
 jobs:
   deploy:
