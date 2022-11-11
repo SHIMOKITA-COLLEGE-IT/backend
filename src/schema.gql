@@ -63,12 +63,12 @@ type Home {
   _count: HomeCount!
 }
 
-type CoCoCount {
+type CommitteeCount {
   photos: Int!
   shimokitaCollegeProfiles: Int!
 }
 
-type CoCo {
+type Committee {
   id: ID!
   name: String!
   imageUrl: String
@@ -78,7 +78,7 @@ type CoCo {
   shimokitaCollegeProfiles: [ShimokitaCollegeProfile!]
   createdAt: DateTime!
   updatedAt: DateTime!
-  _count: CoCoCount!
+  _count: CommitteeCount!
 }
 
 type ClubCount {
@@ -103,7 +103,7 @@ type PhotoCount {
   profiles: Int!
   houses: Int!
   homes: Int!
-  coCos: Int!
+  committee: Int!
   clubs: Int!
 }
 
@@ -114,7 +114,7 @@ type Photo {
   profiles: [Profile!]
   houses: [House!]
   homes: [Home!]
-  coCos: [CoCo!]
+  committee: [Committee!]
   clubs: [Club!]
   createdAt: DateTime!
   updatedAt: DateTime!
@@ -142,7 +142,7 @@ type ShimokitaCollegeProfileCount {
   programs: Int!
   houses: Int!
   homes: Int!
-  coCos: Int!
+  committee: Int!
   clubs: Int!
 }
 
@@ -150,13 +150,14 @@ type ShimokitaCollegeProfile {
   id: ID!
   profile: Profile!
   profileId: Int!
+  isAlumni: Boolean!
   slackEmail: String!
   roomNumber: Int!
   postNumber: Int!
   programs: [Program!]
   houses: [House!]
   homes: [Home!]
-  coCos: [CoCo!]
+  committee: [Committee!]
   clubs: [Club!]
   createdAt: DateTime!
   updatedAt: DateTime!
@@ -170,7 +171,7 @@ type RootsCount {
 type Roots {
   id: ID!
   name: String!
-  RootsType: RootsType!
+  rootsType: RootsType!
   googleMapUrl: String
   introductionUrl: String
   myRoots: [MyRoots!]
@@ -261,7 +262,7 @@ type Profile {
   nickName: String
   showOnlyNickname: Boolean!
   birthday: DateTime!
-  showAge: Boolean!
+  hideAge: Boolean!
   position: String!
   socialLinks: [SocialLink!]
   shimokitaCollegeProfile: ShimokitaCollegeProfile
@@ -319,63 +320,6 @@ type UserMaxAggregate {
 
 type IsValid {
   isValid: Boolean!
-}
-
-type ProfileCountAggregate {
-  id: Int!
-  userId: Int!
-  username: Int!
-  firstName: Int!
-  lastName: Int!
-  nickName: Int!
-  showOnlyNickname: Int!
-  birthday: Int!
-  showAge: Int!
-  position: Int!
-  bio: Int!
-  createdAt: Int!
-  updatedAt: Int!
-  _all: Int!
-}
-
-type ProfileAvgAggregate {
-  id: Float
-}
-
-type ProfileSumAggregate {
-  id: Int
-}
-
-type ProfileMinAggregate {
-  id: Int
-  userId: String
-  username: String
-  firstName: String
-  lastName: String
-  nickName: String
-  showOnlyNickname: Boolean
-  birthday: DateTime
-  showAge: Boolean
-  position: String
-  bio: String
-  createdAt: DateTime
-  updatedAt: DateTime
-}
-
-type ProfileMaxAggregate {
-  id: Int
-  userId: String
-  username: String
-  firstName: String
-  lastName: String
-  nickName: String
-  showOnlyNickname: Boolean
-  birthday: DateTime
-  showAge: Boolean
-  position: String
-  bio: String
-  createdAt: DateTime
-  updatedAt: DateTime
 }
 
 type Auth {
@@ -509,7 +453,7 @@ input ProfileWhereInput {
   nickName: StringNullableFilter
   showOnlyNickname: BoolFilter
   birthday: DateTimeFilter
-  showAge: BoolFilter
+  hideAge: BoolFilter
   position: StringFilter
   socialLinks: SocialLinkListRelationFilter
   shimokitaCollegeProfile: ShimokitaCollegeProfileRelationFilter
@@ -593,13 +537,14 @@ input ShimokitaCollegeProfileWhereInput {
   id: IntFilter
   profile: ProfileRelationFilter
   profileId: IntFilter
+  isAlumni: BoolFilter
   slackEmail: StringFilter
   roomNumber: IntFilter
   postNumber: IntFilter
   programs: ProgramListRelationFilter
   houses: HouseListRelationFilter
   homes: HomeListRelationFilter
-  coCos: CoCoListRelationFilter
+  committee: CommitteeListRelationFilter
   clubs: ClubListRelationFilter
   createdAt: DateTimeFilter
   updatedAt: DateTimeFilter
@@ -688,7 +633,7 @@ input PhotoWhereInput {
   profiles: ProfileListRelationFilter
   houses: HouseListRelationFilter
   homes: HomeListRelationFilter
-  coCos: CoCoListRelationFilter
+  committee: CommitteeListRelationFilter
   clubs: ClubListRelationFilter
   createdAt: DateTimeFilter
   updatedAt: DateTimeFilter
@@ -720,16 +665,16 @@ input HomeWhereInput {
   updatedAt: DateTimeFilter
 }
 
-input CoCoListRelationFilter {
-  every: CoCoWhereInput
-  some: CoCoWhereInput
-  none: CoCoWhereInput
+input CommitteeListRelationFilter {
+  every: CommitteeWhereInput
+  some: CommitteeWhereInput
+  none: CommitteeWhereInput
 }
 
-input CoCoWhereInput {
-  AND: [CoCoWhereInput!]
-  OR: [CoCoWhereInput!]
-  NOT: [CoCoWhereInput!]
+input CommitteeWhereInput {
+  AND: [CommitteeWhereInput!]
+  OR: [CommitteeWhereInput!]
+  NOT: [CommitteeWhereInput!]
   id: IntFilter
   name: StringFilter
   imageUrl: StringNullableFilter
@@ -793,7 +738,7 @@ input RootsWhereInput {
   NOT: [RootsWhereInput!]
   id: IntFilter
   name: StringFilter
-  RootsType: EnumRootsTypeFilter
+  rootsType: EnumRootsTypeFilter
   googleMapUrl: StringNullableFilter
   introductionUrl: StringNullableFilter
   myRoots: MyRootsListRelationFilter
@@ -911,923 +856,4 @@ input UserWhereUniqueInput {
 
 type Mutation {
   login(firebaseIdToken: String!): Auth!
-  registerProfile(data: ProfileCreateWithoutUserInput!): Profile!
-}
-
-input ProfileCreateWithoutUserInput {
-  username: String!
-  firstName: String!
-  lastName: String!
-  nickName: String
-  showOnlyNickname: Boolean!
-  birthday: DateTime!
-  showAge: Boolean!
-  position: String!
-  socialLinks: SocialLinkCreateNestedManyWithoutProfileInput
-  shimokitaCollegeProfile: ShimokitaCollegeProfileCreateNestedOneWithoutProfileInput
-  myRoots: MyRootsCreateNestedManyWithoutProfileInput
-  mySkills: MySkillsCreateNestedManyWithoutProfileInput
-  bio: String!
-  tags: TagCreateNestedManyWithoutProfilesInput
-  photos: PhotoCreateNestedManyWithoutProfilesInput
-  createdAt: DateTime
-  updatedAt: DateTime
-}
-
-input SocialLinkCreateNestedManyWithoutProfileInput {
-  create: [SocialLinkCreateWithoutProfileInput!]
-  connectOrCreate: [SocialLinkCreateOrConnectWithoutProfileInput!]
-  createMany: SocialLinkCreateManyProfileInputEnvelope
-  connect: [SocialLinkWhereUniqueInput!]
-}
-
-input SocialLinkCreateWithoutProfileInput {
-  name: String!
-  socialLinkType: SocialLinkType!
-  url: String!
-}
-
-input SocialLinkCreateOrConnectWithoutProfileInput {
-  where: SocialLinkWhereUniqueInput!
-  create: SocialLinkCreateWithoutProfileInput!
-}
-
-input SocialLinkWhereUniqueInput {
-  id: Int
-}
-
-input SocialLinkCreateManyProfileInputEnvelope {
-  data: [SocialLinkCreateManyProfileInput!]!
-  skipDuplicates: Boolean
-}
-
-input SocialLinkCreateManyProfileInput {
-  id: Int
-  name: String!
-  socialLinkType: SocialLinkType!
-  url: String!
-}
-
-input ShimokitaCollegeProfileCreateNestedOneWithoutProfileInput {
-  create: ShimokitaCollegeProfileCreateWithoutProfileInput
-  connectOrCreate: ShimokitaCollegeProfileCreateOrConnectWithoutProfileInput
-  connect: ShimokitaCollegeProfileWhereUniqueInput
-}
-
-input ShimokitaCollegeProfileCreateWithoutProfileInput {
-  slackEmail: String!
-  roomNumber: Int!
-  postNumber: Int!
-  programs: ProgramCreateNestedManyWithoutShimokitaCollegeProfilesInput
-  houses: HouseCreateNestedManyWithoutShimokitaCollegeProfilesInput
-  homes: HomeCreateNestedManyWithoutShimokitaCollegeProfilesInput
-  coCos: CoCoCreateNestedManyWithoutShimokitaCollegeProfilesInput
-  clubs: ClubCreateNestedManyWithoutShimokitaCollegeProfilesInput
-  createdAt: DateTime
-  updatedAt: DateTime
-}
-
-input ProgramCreateNestedManyWithoutShimokitaCollegeProfilesInput {
-  create: [ProgramCreateWithoutShimokitaCollegeProfilesInput!]
-  connectOrCreate: [ProgramCreateOrConnectWithoutShimokitaCollegeProfilesInput!]
-  connect: [ProgramWhereUniqueInput!]
-}
-
-input ProgramCreateWithoutShimokitaCollegeProfilesInput {
-  name: String!
-  from: DateTime
-  to: DateTime
-  createdAt: DateTime
-  updatedAt: DateTime
-}
-
-input ProgramCreateOrConnectWithoutShimokitaCollegeProfilesInput {
-  where: ProgramWhereUniqueInput!
-  create: ProgramCreateWithoutShimokitaCollegeProfilesInput!
-}
-
-input ProgramWhereUniqueInput {
-  id: Int
-  name: String
-}
-
-input HouseCreateNestedManyWithoutShimokitaCollegeProfilesInput {
-  create: [HouseCreateWithoutShimokitaCollegeProfilesInput!]
-  connectOrCreate: [HouseCreateOrConnectWithoutShimokitaCollegeProfilesInput!]
-  connect: [HouseWhereUniqueInput!]
-}
-
-input HouseCreateWithoutShimokitaCollegeProfilesInput {
-  name: String!
-  from: DateTime
-  to: DateTime
-  photos: PhotoCreateNestedManyWithoutHousesInput
-  createdAt: DateTime
-  updatedAt: DateTime
-}
-
-input PhotoCreateNestedManyWithoutHousesInput {
-  create: [PhotoCreateWithoutHousesInput!]
-  connectOrCreate: [PhotoCreateOrConnectWithoutHousesInput!]
-  connect: [PhotoWhereUniqueInput!]
-}
-
-input PhotoCreateWithoutHousesInput {
-  imageUrl: String!
-  alt: String!
-  profiles: ProfileCreateNestedManyWithoutPhotosInput
-  homes: HomeCreateNestedManyWithoutPhotosInput
-  coCos: CoCoCreateNestedManyWithoutPhotosInput
-  clubs: ClubCreateNestedManyWithoutPhotosInput
-  createdAt: DateTime
-  updatedAt: DateTime
-}
-
-input ProfileCreateNestedManyWithoutPhotosInput {
-  create: [ProfileCreateWithoutPhotosInput!]
-  connectOrCreate: [ProfileCreateOrConnectWithoutPhotosInput!]
-  connect: [ProfileWhereUniqueInput!]
-}
-
-input ProfileCreateWithoutPhotosInput {
-  user: UserCreateNestedOneWithoutProfileInput!
-  username: String!
-  firstName: String!
-  lastName: String!
-  nickName: String
-  showOnlyNickname: Boolean!
-  birthday: DateTime!
-  showAge: Boolean!
-  position: String!
-  socialLinks: SocialLinkCreateNestedManyWithoutProfileInput
-  shimokitaCollegeProfile: ShimokitaCollegeProfileCreateNestedOneWithoutProfileInput
-  myRoots: MyRootsCreateNestedManyWithoutProfileInput
-  mySkills: MySkillsCreateNestedManyWithoutProfileInput
-  bio: String!
-  tags: TagCreateNestedManyWithoutProfilesInput
-  createdAt: DateTime
-  updatedAt: DateTime
-}
-
-input UserCreateNestedOneWithoutProfileInput {
-  create: UserCreateWithoutProfileInput
-  connectOrCreate: UserCreateOrConnectWithoutProfileInput
-  connect: UserWhereUniqueInput
-}
-
-input UserCreateWithoutProfileInput {
-  id: String
-  firebaseAuthUid: String!
-  email: String
-  imageUrl: String
-  disabled: Boolean
-  createdAt: DateTime
-  updatedAt: DateTime
-}
-
-input UserCreateOrConnectWithoutProfileInput {
-  where: UserWhereUniqueInput!
-  create: UserCreateWithoutProfileInput!
-}
-
-input MyRootsCreateNestedManyWithoutProfileInput {
-  create: [MyRootsCreateWithoutProfileInput!]
-  connectOrCreate: [MyRootsCreateOrConnectWithoutProfileInput!]
-  createMany: MyRootsCreateManyProfileInputEnvelope
-  connect: [MyRootsWhereUniqueInput!]
-}
-
-input MyRootsCreateWithoutProfileInput {
-  roots: RootsCreateNestedOneWithoutMyRootsInput!
-  from: DateTime
-  to: DateTime
-  profilesOnSkills: MySkillsCreateNestedManyWithoutMyRootsInput
-}
-
-input RootsCreateNestedOneWithoutMyRootsInput {
-  create: RootsCreateWithoutMyRootsInput
-  connectOrCreate: RootsCreateOrConnectWithoutMyRootsInput
-  connect: RootsWhereUniqueInput
-}
-
-input RootsCreateWithoutMyRootsInput {
-  name: String!
-  RootsType: RootsType!
-  googleMapUrl: String
-  introductionUrl: String
-  createdAt: DateTime
-  updatedAt: DateTime
-}
-
-input RootsCreateOrConnectWithoutMyRootsInput {
-  where: RootsWhereUniqueInput!
-  create: RootsCreateWithoutMyRootsInput!
-}
-
-input RootsWhereUniqueInput {
-  id: Int
-  name: String
-}
-
-input MySkillsCreateNestedManyWithoutMyRootsInput {
-  create: [MySkillsCreateWithoutMyRootsInput!]
-  connectOrCreate: [MySkillsCreateOrConnectWithoutMyRootsInput!]
-  createMany: MySkillsCreateManyMyRootsInputEnvelope
-  connect: [MySkillsWhereUniqueInput!]
-}
-
-input MySkillsCreateWithoutMyRootsInput {
-  profile: ProfileCreateNestedOneWithoutMySkillsInput!
-  skill: SkillCreateNestedOneWithoutProfilesInput!
-}
-
-input ProfileCreateNestedOneWithoutMySkillsInput {
-  create: ProfileCreateWithoutMySkillsInput
-  connectOrCreate: ProfileCreateOrConnectWithoutMySkillsInput
-  connect: ProfileWhereUniqueInput
-}
-
-input ProfileCreateWithoutMySkillsInput {
-  user: UserCreateNestedOneWithoutProfileInput!
-  username: String!
-  firstName: String!
-  lastName: String!
-  nickName: String
-  showOnlyNickname: Boolean!
-  birthday: DateTime!
-  showAge: Boolean!
-  position: String!
-  socialLinks: SocialLinkCreateNestedManyWithoutProfileInput
-  shimokitaCollegeProfile: ShimokitaCollegeProfileCreateNestedOneWithoutProfileInput
-  myRoots: MyRootsCreateNestedManyWithoutProfileInput
-  bio: String!
-  tags: TagCreateNestedManyWithoutProfilesInput
-  photos: PhotoCreateNestedManyWithoutProfilesInput
-  createdAt: DateTime
-  updatedAt: DateTime
-}
-
-input TagCreateNestedManyWithoutProfilesInput {
-  create: [TagCreateWithoutProfilesInput!]
-  connectOrCreate: [TagCreateOrConnectWithoutProfilesInput!]
-  connect: [TagWhereUniqueInput!]
-}
-
-input TagCreateWithoutProfilesInput {
-  name: String!
-  iconUrl: String
-  createdAt: DateTime
-  updatedAt: DateTime
-}
-
-input TagCreateOrConnectWithoutProfilesInput {
-  where: TagWhereUniqueInput!
-  create: TagCreateWithoutProfilesInput!
-}
-
-input TagWhereUniqueInput {
-  id: Int
-}
-
-input PhotoCreateNestedManyWithoutProfilesInput {
-  create: [PhotoCreateWithoutProfilesInput!]
-  connectOrCreate: [PhotoCreateOrConnectWithoutProfilesInput!]
-  connect: [PhotoWhereUniqueInput!]
-}
-
-input PhotoCreateWithoutProfilesInput {
-  imageUrl: String!
-  alt: String!
-  houses: HouseCreateNestedManyWithoutPhotosInput
-  homes: HomeCreateNestedManyWithoutPhotosInput
-  coCos: CoCoCreateNestedManyWithoutPhotosInput
-  clubs: ClubCreateNestedManyWithoutPhotosInput
-  createdAt: DateTime
-  updatedAt: DateTime
-}
-
-input HouseCreateNestedManyWithoutPhotosInput {
-  create: [HouseCreateWithoutPhotosInput!]
-  connectOrCreate: [HouseCreateOrConnectWithoutPhotosInput!]
-  connect: [HouseWhereUniqueInput!]
-}
-
-input HouseCreateWithoutPhotosInput {
-  name: String!
-  from: DateTime
-  to: DateTime
-  shimokitaCollegeProfiles: ShimokitaCollegeProfileCreateNestedManyWithoutHousesInput
-  createdAt: DateTime
-  updatedAt: DateTime
-}
-
-input ShimokitaCollegeProfileCreateNestedManyWithoutHousesInput {
-  create: [ShimokitaCollegeProfileCreateWithoutHousesInput!]
-  connectOrCreate: [ShimokitaCollegeProfileCreateOrConnectWithoutHousesInput!]
-  connect: [ShimokitaCollegeProfileWhereUniqueInput!]
-}
-
-input ShimokitaCollegeProfileCreateWithoutHousesInput {
-  profile: ProfileCreateNestedOneWithoutShimokitaCollegeProfileInput!
-  slackEmail: String!
-  roomNumber: Int!
-  postNumber: Int!
-  programs: ProgramCreateNestedManyWithoutShimokitaCollegeProfilesInput
-  homes: HomeCreateNestedManyWithoutShimokitaCollegeProfilesInput
-  coCos: CoCoCreateNestedManyWithoutShimokitaCollegeProfilesInput
-  clubs: ClubCreateNestedManyWithoutShimokitaCollegeProfilesInput
-  createdAt: DateTime
-  updatedAt: DateTime
-}
-
-input ProfileCreateNestedOneWithoutShimokitaCollegeProfileInput {
-  create: ProfileCreateWithoutShimokitaCollegeProfileInput
-  connectOrCreate: ProfileCreateOrConnectWithoutShimokitaCollegeProfileInput
-  connect: ProfileWhereUniqueInput
-}
-
-input ProfileCreateWithoutShimokitaCollegeProfileInput {
-  user: UserCreateNestedOneWithoutProfileInput!
-  username: String!
-  firstName: String!
-  lastName: String!
-  nickName: String
-  showOnlyNickname: Boolean!
-  birthday: DateTime!
-  showAge: Boolean!
-  position: String!
-  socialLinks: SocialLinkCreateNestedManyWithoutProfileInput
-  myRoots: MyRootsCreateNestedManyWithoutProfileInput
-  mySkills: MySkillsCreateNestedManyWithoutProfileInput
-  bio: String!
-  tags: TagCreateNestedManyWithoutProfilesInput
-  photos: PhotoCreateNestedManyWithoutProfilesInput
-  createdAt: DateTime
-  updatedAt: DateTime
-}
-
-input MySkillsCreateNestedManyWithoutProfileInput {
-  create: [MySkillsCreateWithoutProfileInput!]
-  connectOrCreate: [MySkillsCreateOrConnectWithoutProfileInput!]
-  createMany: MySkillsCreateManyProfileInputEnvelope
-  connect: [MySkillsWhereUniqueInput!]
-}
-
-input MySkillsCreateWithoutProfileInput {
-  skill: SkillCreateNestedOneWithoutProfilesInput!
-  myRoots: MyRootsCreateNestedOneWithoutProfilesOnSkillsInput
-}
-
-input SkillCreateNestedOneWithoutProfilesInput {
-  create: SkillCreateWithoutProfilesInput
-  connectOrCreate: SkillCreateOrConnectWithoutProfilesInput
-  connect: SkillWhereUniqueInput
-}
-
-input SkillCreateWithoutProfilesInput {
-  name: String!
-  parent: SkillCreateNestedOneWithoutChildrenInput
-  children: SkillCreateNestedManyWithoutParentInput
-  createdAt: DateTime
-  updatedAt: DateTime
-}
-
-input SkillCreateNestedOneWithoutChildrenInput {
-  create: SkillCreateWithoutChildrenInput
-  connectOrCreate: SkillCreateOrConnectWithoutChildrenInput
-  connect: SkillWhereUniqueInput
-}
-
-input SkillCreateWithoutChildrenInput {
-  name: String!
-  parent: SkillCreateNestedOneWithoutChildrenInput
-  profiles: MySkillsCreateNestedManyWithoutSkillInput
-  createdAt: DateTime
-  updatedAt: DateTime
-}
-
-input MySkillsCreateNestedManyWithoutSkillInput {
-  create: [MySkillsCreateWithoutSkillInput!]
-  connectOrCreate: [MySkillsCreateOrConnectWithoutSkillInput!]
-  createMany: MySkillsCreateManySkillInputEnvelope
-  connect: [MySkillsWhereUniqueInput!]
-}
-
-input MySkillsCreateWithoutSkillInput {
-  profile: ProfileCreateNestedOneWithoutMySkillsInput!
-  myRoots: MyRootsCreateNestedOneWithoutProfilesOnSkillsInput
-}
-
-input MyRootsCreateNestedOneWithoutProfilesOnSkillsInput {
-  create: MyRootsCreateWithoutProfilesOnSkillsInput
-  connectOrCreate: MyRootsCreateOrConnectWithoutProfilesOnSkillsInput
-  connect: MyRootsWhereUniqueInput
-}
-
-input MyRootsCreateWithoutProfilesOnSkillsInput {
-  profile: ProfileCreateNestedOneWithoutMyRootsInput!
-  roots: RootsCreateNestedOneWithoutMyRootsInput!
-  from: DateTime
-  to: DateTime
-}
-
-input ProfileCreateNestedOneWithoutMyRootsInput {
-  create: ProfileCreateWithoutMyRootsInput
-  connectOrCreate: ProfileCreateOrConnectWithoutMyRootsInput
-  connect: ProfileWhereUniqueInput
-}
-
-input ProfileCreateWithoutMyRootsInput {
-  user: UserCreateNestedOneWithoutProfileInput!
-  username: String!
-  firstName: String!
-  lastName: String!
-  nickName: String
-  showOnlyNickname: Boolean!
-  birthday: DateTime!
-  showAge: Boolean!
-  position: String!
-  socialLinks: SocialLinkCreateNestedManyWithoutProfileInput
-  shimokitaCollegeProfile: ShimokitaCollegeProfileCreateNestedOneWithoutProfileInput
-  mySkills: MySkillsCreateNestedManyWithoutProfileInput
-  bio: String!
-  tags: TagCreateNestedManyWithoutProfilesInput
-  photos: PhotoCreateNestedManyWithoutProfilesInput
-  createdAt: DateTime
-  updatedAt: DateTime
-}
-
-input ProfileCreateOrConnectWithoutMyRootsInput {
-  where: ProfileWhereUniqueInput!
-  create: ProfileCreateWithoutMyRootsInput!
-}
-
-input ProfileWhereUniqueInput {
-  id: Int
-  userId: String
-  username: String
-}
-
-input MyRootsCreateOrConnectWithoutProfilesOnSkillsInput {
-  where: MyRootsWhereUniqueInput!
-  create: MyRootsCreateWithoutProfilesOnSkillsInput!
-}
-
-input MyRootsWhereUniqueInput {
-  id: Int
-}
-
-input MySkillsCreateOrConnectWithoutSkillInput {
-  where: MySkillsWhereUniqueInput!
-  create: MySkillsCreateWithoutSkillInput!
-}
-
-input MySkillsWhereUniqueInput {
-  profileId_skillId: MySkillsProfileIdSkillIdCompoundUniqueInput
-}
-
-input MySkillsProfileIdSkillIdCompoundUniqueInput {
-  profileId: Int!
-  skillId: Int!
-}
-
-input MySkillsCreateManySkillInputEnvelope {
-  data: [MySkillsCreateManySkillInput!]!
-  skipDuplicates: Boolean
-}
-
-input MySkillsCreateManySkillInput {
-  profileId: Int!
-  myRootsId: Int
-}
-
-input SkillCreateOrConnectWithoutChildrenInput {
-  where: SkillWhereUniqueInput!
-  create: SkillCreateWithoutChildrenInput!
-}
-
-input SkillWhereUniqueInput {
-  id: Int
-  name: String
-}
-
-input SkillCreateNestedManyWithoutParentInput {
-  create: [SkillCreateWithoutParentInput!]
-  connectOrCreate: [SkillCreateOrConnectWithoutParentInput!]
-  createMany: SkillCreateManyParentInputEnvelope
-  connect: [SkillWhereUniqueInput!]
-}
-
-input SkillCreateWithoutParentInput {
-  name: String!
-  children: SkillCreateNestedManyWithoutParentInput
-  profiles: MySkillsCreateNestedManyWithoutSkillInput
-  createdAt: DateTime
-  updatedAt: DateTime
-}
-
-input SkillCreateOrConnectWithoutParentInput {
-  where: SkillWhereUniqueInput!
-  create: SkillCreateWithoutParentInput!
-}
-
-input SkillCreateManyParentInputEnvelope {
-  data: [SkillCreateManyParentInput!]!
-  skipDuplicates: Boolean
-}
-
-input SkillCreateManyParentInput {
-  id: Int
-  name: String!
-  createdAt: DateTime
-  updatedAt: DateTime
-}
-
-input SkillCreateOrConnectWithoutProfilesInput {
-  where: SkillWhereUniqueInput!
-  create: SkillCreateWithoutProfilesInput!
-}
-
-input MySkillsCreateOrConnectWithoutProfileInput {
-  where: MySkillsWhereUniqueInput!
-  create: MySkillsCreateWithoutProfileInput!
-}
-
-input MySkillsCreateManyProfileInputEnvelope {
-  data: [MySkillsCreateManyProfileInput!]!
-  skipDuplicates: Boolean
-}
-
-input MySkillsCreateManyProfileInput {
-  skillId: Int!
-  myRootsId: Int
-}
-
-input ProfileCreateOrConnectWithoutShimokitaCollegeProfileInput {
-  where: ProfileWhereUniqueInput!
-  create: ProfileCreateWithoutShimokitaCollegeProfileInput!
-}
-
-input HomeCreateNestedManyWithoutShimokitaCollegeProfilesInput {
-  create: [HomeCreateWithoutShimokitaCollegeProfilesInput!]
-  connectOrCreate: [HomeCreateOrConnectWithoutShimokitaCollegeProfilesInput!]
-  connect: [HomeWhereUniqueInput!]
-}
-
-input HomeCreateWithoutShimokitaCollegeProfilesInput {
-  name: String!
-  from: DateTime
-  to: DateTime
-  photos: PhotoCreateNestedManyWithoutHomesInput
-  createdAt: DateTime
-  updatedAt: DateTime
-}
-
-input PhotoCreateNestedManyWithoutHomesInput {
-  create: [PhotoCreateWithoutHomesInput!]
-  connectOrCreate: [PhotoCreateOrConnectWithoutHomesInput!]
-  connect: [PhotoWhereUniqueInput!]
-}
-
-input PhotoCreateWithoutHomesInput {
-  imageUrl: String!
-  alt: String!
-  profiles: ProfileCreateNestedManyWithoutPhotosInput
-  houses: HouseCreateNestedManyWithoutPhotosInput
-  coCos: CoCoCreateNestedManyWithoutPhotosInput
-  clubs: ClubCreateNestedManyWithoutPhotosInput
-  createdAt: DateTime
-  updatedAt: DateTime
-}
-
-input CoCoCreateNestedManyWithoutPhotosInput {
-  create: [CoCoCreateWithoutPhotosInput!]
-  connectOrCreate: [CoCoCreateOrConnectWithoutPhotosInput!]
-  connect: [CoCoWhereUniqueInput!]
-}
-
-input CoCoCreateWithoutPhotosInput {
-  name: String!
-  imageUrl: String
-  slackChannel: String
-  description: String
-  shimokitaCollegeProfiles: ShimokitaCollegeProfileCreateNestedManyWithoutCoCosInput
-  createdAt: DateTime
-  updatedAt: DateTime
-}
-
-input ShimokitaCollegeProfileCreateNestedManyWithoutCoCosInput {
-  create: [ShimokitaCollegeProfileCreateWithoutCoCosInput!]
-  connectOrCreate: [ShimokitaCollegeProfileCreateOrConnectWithoutCoCosInput!]
-  connect: [ShimokitaCollegeProfileWhereUniqueInput!]
-}
-
-input ShimokitaCollegeProfileCreateWithoutCoCosInput {
-  profile: ProfileCreateNestedOneWithoutShimokitaCollegeProfileInput!
-  slackEmail: String!
-  roomNumber: Int!
-  postNumber: Int!
-  programs: ProgramCreateNestedManyWithoutShimokitaCollegeProfilesInput
-  houses: HouseCreateNestedManyWithoutShimokitaCollegeProfilesInput
-  homes: HomeCreateNestedManyWithoutShimokitaCollegeProfilesInput
-  clubs: ClubCreateNestedManyWithoutShimokitaCollegeProfilesInput
-  createdAt: DateTime
-  updatedAt: DateTime
-}
-
-input ClubCreateNestedManyWithoutShimokitaCollegeProfilesInput {
-  create: [ClubCreateWithoutShimokitaCollegeProfilesInput!]
-  connectOrCreate: [ClubCreateOrConnectWithoutShimokitaCollegeProfilesInput!]
-  connect: [ClubWhereUniqueInput!]
-}
-
-input ClubCreateWithoutShimokitaCollegeProfilesInput {
-  name: String!
-  imageUrl: String
-  slackChannel: String
-  description: String
-  photos: PhotoCreateNestedManyWithoutClubsInput
-  createdAt: DateTime
-  updatedAt: DateTime
-}
-
-input PhotoCreateNestedManyWithoutClubsInput {
-  create: [PhotoCreateWithoutClubsInput!]
-  connectOrCreate: [PhotoCreateOrConnectWithoutClubsInput!]
-  connect: [PhotoWhereUniqueInput!]
-}
-
-input PhotoCreateWithoutClubsInput {
-  imageUrl: String!
-  alt: String!
-  profiles: ProfileCreateNestedManyWithoutPhotosInput
-  houses: HouseCreateNestedManyWithoutPhotosInput
-  homes: HomeCreateNestedManyWithoutPhotosInput
-  coCos: CoCoCreateNestedManyWithoutPhotosInput
-  createdAt: DateTime
-  updatedAt: DateTime
-}
-
-input HomeCreateNestedManyWithoutPhotosInput {
-  create: [HomeCreateWithoutPhotosInput!]
-  connectOrCreate: [HomeCreateOrConnectWithoutPhotosInput!]
-  connect: [HomeWhereUniqueInput!]
-}
-
-input HomeCreateWithoutPhotosInput {
-  name: String!
-  from: DateTime
-  to: DateTime
-  shimokitaCollegeProfiles: ShimokitaCollegeProfileCreateNestedManyWithoutHomesInput
-  createdAt: DateTime
-  updatedAt: DateTime
-}
-
-input ShimokitaCollegeProfileCreateNestedManyWithoutHomesInput {
-  create: [ShimokitaCollegeProfileCreateWithoutHomesInput!]
-  connectOrCreate: [ShimokitaCollegeProfileCreateOrConnectWithoutHomesInput!]
-  connect: [ShimokitaCollegeProfileWhereUniqueInput!]
-}
-
-input ShimokitaCollegeProfileCreateWithoutHomesInput {
-  profile: ProfileCreateNestedOneWithoutShimokitaCollegeProfileInput!
-  slackEmail: String!
-  roomNumber: Int!
-  postNumber: Int!
-  programs: ProgramCreateNestedManyWithoutShimokitaCollegeProfilesInput
-  houses: HouseCreateNestedManyWithoutShimokitaCollegeProfilesInput
-  coCos: CoCoCreateNestedManyWithoutShimokitaCollegeProfilesInput
-  clubs: ClubCreateNestedManyWithoutShimokitaCollegeProfilesInput
-  createdAt: DateTime
-  updatedAt: DateTime
-}
-
-input CoCoCreateNestedManyWithoutShimokitaCollegeProfilesInput {
-  create: [CoCoCreateWithoutShimokitaCollegeProfilesInput!]
-  connectOrCreate: [CoCoCreateOrConnectWithoutShimokitaCollegeProfilesInput!]
-  connect: [CoCoWhereUniqueInput!]
-}
-
-input CoCoCreateWithoutShimokitaCollegeProfilesInput {
-  name: String!
-  imageUrl: String
-  slackChannel: String
-  description: String
-  photos: PhotoCreateNestedManyWithoutCoCosInput
-  createdAt: DateTime
-  updatedAt: DateTime
-}
-
-input PhotoCreateNestedManyWithoutCoCosInput {
-  create: [PhotoCreateWithoutCoCosInput!]
-  connectOrCreate: [PhotoCreateOrConnectWithoutCoCosInput!]
-  connect: [PhotoWhereUniqueInput!]
-}
-
-input PhotoCreateWithoutCoCosInput {
-  imageUrl: String!
-  alt: String!
-  profiles: ProfileCreateNestedManyWithoutPhotosInput
-  houses: HouseCreateNestedManyWithoutPhotosInput
-  homes: HomeCreateNestedManyWithoutPhotosInput
-  clubs: ClubCreateNestedManyWithoutPhotosInput
-  createdAt: DateTime
-  updatedAt: DateTime
-}
-
-input ClubCreateNestedManyWithoutPhotosInput {
-  create: [ClubCreateWithoutPhotosInput!]
-  connectOrCreate: [ClubCreateOrConnectWithoutPhotosInput!]
-  connect: [ClubWhereUniqueInput!]
-}
-
-input ClubCreateWithoutPhotosInput {
-  name: String!
-  imageUrl: String
-  slackChannel: String
-  description: String
-  shimokitaCollegeProfiles: ShimokitaCollegeProfileCreateNestedManyWithoutClubsInput
-  createdAt: DateTime
-  updatedAt: DateTime
-}
-
-input ShimokitaCollegeProfileCreateNestedManyWithoutClubsInput {
-  create: [ShimokitaCollegeProfileCreateWithoutClubsInput!]
-  connectOrCreate: [ShimokitaCollegeProfileCreateOrConnectWithoutClubsInput!]
-  connect: [ShimokitaCollegeProfileWhereUniqueInput!]
-}
-
-input ShimokitaCollegeProfileCreateWithoutClubsInput {
-  profile: ProfileCreateNestedOneWithoutShimokitaCollegeProfileInput!
-  slackEmail: String!
-  roomNumber: Int!
-  postNumber: Int!
-  programs: ProgramCreateNestedManyWithoutShimokitaCollegeProfilesInput
-  houses: HouseCreateNestedManyWithoutShimokitaCollegeProfilesInput
-  homes: HomeCreateNestedManyWithoutShimokitaCollegeProfilesInput
-  coCos: CoCoCreateNestedManyWithoutShimokitaCollegeProfilesInput
-  createdAt: DateTime
-  updatedAt: DateTime
-}
-
-input ShimokitaCollegeProfileCreateOrConnectWithoutClubsInput {
-  where: ShimokitaCollegeProfileWhereUniqueInput!
-  create: ShimokitaCollegeProfileCreateWithoutClubsInput!
-}
-
-input ShimokitaCollegeProfileWhereUniqueInput {
-  id: Int
-  profileId: Int
-  slackEmail: String
-}
-
-input ClubCreateOrConnectWithoutPhotosInput {
-  where: ClubWhereUniqueInput!
-  create: ClubCreateWithoutPhotosInput!
-}
-
-input ClubWhereUniqueInput {
-  id: Int
-  name: String
-}
-
-input PhotoCreateOrConnectWithoutCoCosInput {
-  where: PhotoWhereUniqueInput!
-  create: PhotoCreateWithoutCoCosInput!
-}
-
-input PhotoWhereUniqueInput {
-  id: Int
-}
-
-input CoCoCreateOrConnectWithoutShimokitaCollegeProfilesInput {
-  where: CoCoWhereUniqueInput!
-  create: CoCoCreateWithoutShimokitaCollegeProfilesInput!
-}
-
-input CoCoWhereUniqueInput {
-  id: Int
-  name: String
-}
-
-input ShimokitaCollegeProfileCreateOrConnectWithoutHomesInput {
-  where: ShimokitaCollegeProfileWhereUniqueInput!
-  create: ShimokitaCollegeProfileCreateWithoutHomesInput!
-}
-
-input HomeCreateOrConnectWithoutPhotosInput {
-  where: HomeWhereUniqueInput!
-  create: HomeCreateWithoutPhotosInput!
-}
-
-input HomeWhereUniqueInput {
-  id: Int
-  name: String
-}
-
-input PhotoCreateOrConnectWithoutClubsInput {
-  where: PhotoWhereUniqueInput!
-  create: PhotoCreateWithoutClubsInput!
-}
-
-input ClubCreateOrConnectWithoutShimokitaCollegeProfilesInput {
-  where: ClubWhereUniqueInput!
-  create: ClubCreateWithoutShimokitaCollegeProfilesInput!
-}
-
-input ShimokitaCollegeProfileCreateOrConnectWithoutCoCosInput {
-  where: ShimokitaCollegeProfileWhereUniqueInput!
-  create: ShimokitaCollegeProfileCreateWithoutCoCosInput!
-}
-
-input CoCoCreateOrConnectWithoutPhotosInput {
-  where: CoCoWhereUniqueInput!
-  create: CoCoCreateWithoutPhotosInput!
-}
-
-input PhotoCreateOrConnectWithoutHomesInput {
-  where: PhotoWhereUniqueInput!
-  create: PhotoCreateWithoutHomesInput!
-}
-
-input HomeCreateOrConnectWithoutShimokitaCollegeProfilesInput {
-  where: HomeWhereUniqueInput!
-  create: HomeCreateWithoutShimokitaCollegeProfilesInput!
-}
-
-input ShimokitaCollegeProfileCreateOrConnectWithoutHousesInput {
-  where: ShimokitaCollegeProfileWhereUniqueInput!
-  create: ShimokitaCollegeProfileCreateWithoutHousesInput!
-}
-
-input HouseCreateOrConnectWithoutPhotosInput {
-  where: HouseWhereUniqueInput!
-  create: HouseCreateWithoutPhotosInput!
-}
-
-input HouseWhereUniqueInput {
-  id: Int
-  name: String
-}
-
-input PhotoCreateOrConnectWithoutProfilesInput {
-  where: PhotoWhereUniqueInput!
-  create: PhotoCreateWithoutProfilesInput!
-}
-
-input ProfileCreateOrConnectWithoutMySkillsInput {
-  where: ProfileWhereUniqueInput!
-  create: ProfileCreateWithoutMySkillsInput!
-}
-
-input MySkillsCreateOrConnectWithoutMyRootsInput {
-  where: MySkillsWhereUniqueInput!
-  create: MySkillsCreateWithoutMyRootsInput!
-}
-
-input MySkillsCreateManyMyRootsInputEnvelope {
-  data: [MySkillsCreateManyMyRootsInput!]!
-  skipDuplicates: Boolean
-}
-
-input MySkillsCreateManyMyRootsInput {
-  profileId: Int!
-  skillId: Int!
-}
-
-input MyRootsCreateOrConnectWithoutProfileInput {
-  where: MyRootsWhereUniqueInput!
-  create: MyRootsCreateWithoutProfileInput!
-}
-
-input MyRootsCreateManyProfileInputEnvelope {
-  data: [MyRootsCreateManyProfileInput!]!
-  skipDuplicates: Boolean
-}
-
-input MyRootsCreateManyProfileInput {
-  id: Int
-  rootsId: Int!
-  from: DateTime
-  to: DateTime
-}
-
-input ProfileCreateOrConnectWithoutPhotosInput {
-  where: ProfileWhereUniqueInput!
-  create: ProfileCreateWithoutPhotosInput!
-}
-
-input PhotoCreateOrConnectWithoutHousesInput {
-  where: PhotoWhereUniqueInput!
-  create: PhotoCreateWithoutHousesInput!
-}
-
-input HouseCreateOrConnectWithoutShimokitaCollegeProfilesInput {
-  where: HouseWhereUniqueInput!
-  create: HouseCreateWithoutShimokitaCollegeProfilesInput!
-}
-
-input ShimokitaCollegeProfileCreateOrConnectWithoutProfileInput {
-  where: ShimokitaCollegeProfileWhereUniqueInput!
-  create: ShimokitaCollegeProfileCreateWithoutProfileInput!
 }
