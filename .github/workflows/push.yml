@@ -42,4 +42,4 @@ jobs:
           # https://docs.github.com/en/actions/reference/workflow-commands-for-github-actions#adding-a-system-path
           echo "$HOME/.rover/bin" >> $GITHUB_PATH
       - run: |
-          rover subgraph publish college-app-supergraph@main --schema ./src/schema.gql --background
+          rover subgraph publish college-app-supergraph@main --schema ./src/schema.gql --name college-app
