@@ -2,10 +2,12 @@ import { Resolver, Query, Args } from '@nestjs/graphql';
 import { UsersService } from './users.service';
 import { User } from 'src/prisma/graphql/user/user.model';
 import { UserWhereInput, UserWhereUniqueInput } from 'src/prisma/graphql/user';
-import { IsValid } from './models/is-valid.output';
 import { CurrentUser } from 'src/auth/decorators/current-user.decorator';
 import { JwtPayload } from 'src/auth/strategies/jwt.strategy';
+import { JtwAuthGuard } from 'src/auth/guards/jwt-auth.guard';
+import { UseGuards } from '@nestjs/common';
 
+@UseGuards(JtwAuthGuard)
 @Resolver(() => User)
 export class UsersResolver {
   constructor(private readonly usersService: UsersService) {}
@@ -15,11 +17,6 @@ export class UsersResolver {
     return this.usersService.findUnique({
       where: { id: user.id },
     });
-  }
-
-  @Query(() => IsValid)
-  async validateUsername(@Args('username') username: string): Promise<IsValid> {
-    return { isValid: await this.usersService.validateUsername(username) };
   }
 
   @Query(() => [User], { name: 'users' })

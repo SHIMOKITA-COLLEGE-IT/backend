@@ -4,9 +4,8 @@ import { AuthService } from './auth.service';
 import { AuthResolver } from './auth.resolver';
 import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
-import { APP_GUARD } from '@nestjs/core';
-import { GqlAuthGuard } from './guards/gql-auth.guard';
 import { JwtStrategy } from './strategies/jwt.strategy';
+import { FirebaseAuthStrategy } from './strategies/firebase-auth.strategy';
 
 @Module({
   imports: [
@@ -17,11 +16,6 @@ import { JwtStrategy } from './strategies/jwt.strategy';
       signOptions: { expiresIn: '2 days' },
     }),
   ],
-  providers: [
-    AuthService,
-    AuthResolver,
-    { provide: APP_GUARD, useClass: GqlAuthGuard },
-    JwtStrategy,
-  ],
+  providers: [AuthService, AuthResolver, FirebaseAuthStrategy, JwtStrategy],
 })
 export class AuthModule {}

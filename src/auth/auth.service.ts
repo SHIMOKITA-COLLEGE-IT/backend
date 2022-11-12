@@ -1,38 +1,40 @@
-import {
-  ForbiddenException,
-  Injectable,
-  UnauthorizedException,
-} from '@nestjs/common';
-import { JwtService } from '@nestjs/jwt';
-import { initializeApp } from 'firebase-admin/app';
-import { getAuth } from 'firebase-admin/auth';
+import { ForbiddenException, Injectable } from '@nestjs/common';
 import { UsersService } from 'src/users/users.service';
 import { JwtPayload } from './strategies/jwt.strategy';
-import { Auth } from './models';
+import { AuthLogin, AuthSignup, AuthSignupInput } from './models';
+import { JwtService } from '@nestjs/jwt';
+import { UserCreateInput } from 'src/prisma/graphql/user';
 
 @Injectable()
 export class AuthService {
   constructor(
-    private usersService: UsersService,
+    private readonly usersService: UsersService,
     private readonly jwtService: JwtService,
-  ) {
-    initializeApp();
-  }
+  ) {}
 
-  async login(firebaseIdToken: string): Promise<Auth> {
-    const { uid } = await getAuth()
-      .verifyIdToken(firebaseIdToken)
-      .catch((error) => {
-        throw new UnauthorizedException(error);
-      });
-
+  async login(firebaseAuthUid: string): Promise<AuthLogin> {
     const user = await this.usersService.findUniqueOrThrow({
-      where: { firebaseAuthUid: uid },
+      where: { firebaseAuthUid },
     });
 
     if (user.disabled) throw new ForbiddenException();
 
     const payload: JwtPayload = { id: user.id };
     return { accessToken: this.jwtService.sign(payload) };
+  }
+
+  async signup({
+    firebaseAuthUid,
+    data,
+  }: {
+    firebaseAuthUid: string;
+    data: AuthSignupInput;
+  }): Promise<AuthSignup> {
+    const user = await this.usersService.create({
+      data: { firebaseAuthUid, ...data },
+    });
+
+    const payload: JwtPayload = { id: user.id };
+    return { accessToken: this.jwtService.sign(payload), user };
   }
 }
