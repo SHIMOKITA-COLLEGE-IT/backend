@@ -1,10 +1,12 @@
 import { UseGuards } from '@nestjs/common';
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
-import { User, UserCreateInput } from 'src/prisma/graphql/user';
 import { UsersService } from 'src/users/users.service';
 import { AuthService } from './auth.service';
 import { CurrentUser } from './decorators/current-user.decorator';
-import { FirebaseAuthGuard } from './guards/firebase-auth.guard';
+import {
+  FirebaseAuthGuard,
+  FIREBASE_AUTH_DESCRIPTION,
+} from './guards/firebase-auth.guard';
 import { AuthLogin, AuthSignup, AuthSignupInput, IsValid } from './models';
 import { FirebaseAuthPayload } from './strategies/firebase-auth.strategy';
 
@@ -16,12 +18,16 @@ export class AuthResolver {
     private readonly usersService: UsersService,
   ) {}
 
-  @Mutation(() => AuthLogin)
+  @Mutation(() => AuthLogin, {
+    description: FIREBASE_AUTH_DESCRIPTION,
+  })
   login(@CurrentUser() user: FirebaseAuthPayload): Promise<AuthLogin> {
     return this.authService.login(user.uid);
   }
 
-  @Mutation(() => AuthSignup)
+  @Mutation(() => AuthSignup, {
+    description: FIREBASE_AUTH_DESCRIPTION,
+  })
   signup(
     @CurrentUser() user: FirebaseAuthPayload,
     @Args('data') data: AuthSignupInput,
@@ -29,7 +35,9 @@ export class AuthResolver {
     return this.authService.signup({ firebaseAuthUid: user.uid, data });
   }
 
-  @Query(() => IsValid)
+  @Query(() => IsValid, {
+    description: FIREBASE_AUTH_DESCRIPTION,
+  })
   async validateUsername(@Args('username') username: string): Promise<IsValid> {
     return { isValid: await this.usersService.validateUsername(username) };
   }

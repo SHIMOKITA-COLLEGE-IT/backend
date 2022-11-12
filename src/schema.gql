@@ -277,9 +277,16 @@ type AuthSignup {
 }
 
 type Query {
+  """{ Authorization: Bearer <firebaseIdToken> }"""
   validateUsername(username: String!): IsValid!
+
+  """{ Authorization: Bearer <accessToken> }"""
   whoAmI: User!
+
+  """{ Authorization: Bearer <accessToken> }"""
   users(where: UserWhereInput!): [User!]!
+
+  """{ Authorization: Bearer <accessToken> }"""
   user(where: UserWhereUniqueInput!): User!
 }
 
@@ -691,7 +698,10 @@ input UserWhereUniqueInput {
 }
 
 type Mutation {
+  """{ Authorization: Bearer <firebaseIdToken> }"""
   login: AuthLogin!
+
+  """{ Authorization: Bearer <firebaseIdToken> }"""
   signup(data: AuthSignupInput!): AuthSignup!
 }
 

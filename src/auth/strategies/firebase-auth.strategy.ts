@@ -3,7 +3,6 @@ import { PassportStrategy } from '@nestjs/passport';
 import { initializeApp } from 'firebase-admin/app';
 import { DecodedIdToken, getAuth } from 'firebase-admin/auth';
 import { Strategy } from 'passport-http-bearer';
-import { UsersService } from 'src/users/users.service';
 
 export const FIREBASE_AUTH_STRATEGY = 'firebase-auth';
 
@@ -17,7 +16,7 @@ export class FirebaseAuthStrategy extends PassportStrategy(
   Strategy,
   FIREBASE_AUTH_STRATEGY,
 ) {
-  constructor(private readonly usersService: UsersService) {
+  constructor() {
     super();
     initializeApp();
   }
