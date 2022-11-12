@@ -4,8 +4,8 @@
 
 type SocialLink {
   id: ID!
-  profile: Profile!
-  profileId: Int!
+  user: User!
+  userId: String!
   name: String!
   socialLinkType: SocialLinkType!
   url: String!
@@ -21,24 +21,37 @@ enum SocialLinkType {
   TIKTOK
   YOUTUBE
   GITHUB
-  BEREAL
   LINKTREE
   OTHER
 }
 
-type ProgramCount {
-  shimokitaCollegeProfiles: Int!
+type GroupCount {
+  users: Int!
 }
 
-type Program {
+type Group {
   id: ID!
+  groupType: GroupType!
   name: String!
   from: DateTime
   to: DateTime
-  shimokitaCollegeProfiles: [ShimokitaCollegeProfile!]
+  emoji: String
+  imageUrl: String
+  slackChannel: String
+  description: String
+  photoUrls: [String!]
+  users: [User!]
   createdAt: DateTime!
   updatedAt: DateTime!
-  _count: ProgramCount!
+  _count: GroupCount!
+}
+
+enum GroupType {
+  PROGRAM
+  HOUSE
+  HOME
+  COMMITTEE
+  CLUB
 }
 
 """
@@ -46,126 +59,8 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 """
 scalar DateTime
 
-type HomeCount {
-  photos: Int!
-  shimokitaCollegeProfiles: Int!
-}
-
-type Home {
-  id: ID!
-  name: String!
-  from: DateTime
-  to: DateTime
-  photos: [Photo!]
-  shimokitaCollegeProfiles: [ShimokitaCollegeProfile!]
-  createdAt: DateTime!
-  updatedAt: DateTime!
-  _count: HomeCount!
-}
-
-type CommitteeCount {
-  photos: Int!
-  shimokitaCollegeProfiles: Int!
-}
-
-type Committee {
-  id: ID!
-  name: String!
-  imageUrl: String
-  slackChannel: String
-  description: String
-  photos: [Photo!]
-  shimokitaCollegeProfiles: [ShimokitaCollegeProfile!]
-  createdAt: DateTime!
-  updatedAt: DateTime!
-  _count: CommitteeCount!
-}
-
-type ClubCount {
-  photos: Int!
-  shimokitaCollegeProfiles: Int!
-}
-
-type Club {
-  id: ID!
-  name: String!
-  imageUrl: String
-  slackChannel: String
-  description: String
-  photos: [Photo!]
-  shimokitaCollegeProfiles: [ShimokitaCollegeProfile!]
-  createdAt: DateTime!
-  updatedAt: DateTime!
-  _count: ClubCount!
-}
-
-type PhotoCount {
-  profiles: Int!
-  houses: Int!
-  homes: Int!
-  committee: Int!
-  clubs: Int!
-}
-
-type Photo {
-  id: ID!
-  imageUrl: String!
-  alt: String!
-  profiles: [Profile!]
-  houses: [House!]
-  homes: [Home!]
-  committee: [Committee!]
-  clubs: [Club!]
-  createdAt: DateTime!
-  updatedAt: DateTime!
-  _count: PhotoCount!
-}
-
-type HouseCount {
-  photos: Int!
-  shimokitaCollegeProfiles: Int!
-}
-
-type House {
-  id: ID!
-  name: String!
-  from: DateTime
-  to: DateTime
-  photos: [Photo!]
-  shimokitaCollegeProfiles: [ShimokitaCollegeProfile!]
-  createdAt: DateTime!
-  updatedAt: DateTime!
-  _count: HouseCount!
-}
-
-type ShimokitaCollegeProfileCount {
-  programs: Int!
-  houses: Int!
-  homes: Int!
-  committee: Int!
-  clubs: Int!
-}
-
-type ShimokitaCollegeProfile {
-  id: ID!
-  profile: Profile!
-  profileId: Int!
-  isAlumni: Boolean!
-  slackEmail: String!
-  roomNumber: Int!
-  postNumber: Int!
-  programs: [Program!]
-  houses: [House!]
-  homes: [Home!]
-  committee: [Committee!]
-  clubs: [Club!]
-  createdAt: DateTime!
-  updatedAt: DateTime!
-  _count: ShimokitaCollegeProfileCount!
-}
-
 type RootsCount {
-  myRoots: Int!
+  users: Int!
 }
 
 type Roots {
@@ -174,7 +69,7 @@ type Roots {
   rootsType: RootsType!
   googleMapUrl: String
   introductionUrl: String
-  myRoots: [MyRoots!]
+  users: [UserRootsTracing!]
   createdAt: DateTime!
   updatedAt: DateTime!
   _count: RootsCount!
@@ -190,7 +85,7 @@ enum RootsType {
 
 type SkillCount {
   children: Int!
-  profiles: Int!
+  users: Int!
 }
 
 type Skill {
@@ -199,64 +94,65 @@ type Skill {
   parentId: Int
   parent: Skill
   children: [Skill!]
-  profiles: [MySkills!]
+  users: [UserSkillAcquisition!]
   createdAt: DateTime!
   updatedAt: DateTime!
   _count: SkillCount!
 }
 
-type MySkills {
-  profile: Profile!
-  profileId: Int!
+type UserSkillAcquisition {
+  user: User!
+  userId: String!
   skill: Skill!
   skillId: Int!
-  myRoots: MyRoots
-  myRootsId: Int
+  userRootsTracing: UserRootsTracing
+  rootsId: Int
 }
 
-type MyRootsCount {
-  profilesOnSkills: Int!
+type UserRootsTracingCount {
+  userSkillAcquisitions: Int!
 }
 
-type MyRoots {
-  id: ID!
-  profile: Profile!
-  profileId: Int!
+type UserRootsTracing {
+  user: User!
+  userId: String!
   roots: Roots!
   rootsId: Int!
   from: DateTime
   to: DateTime
-  profilesOnSkills: [MySkills!]
-  _count: MyRootsCount!
+  userSkillAcquisitions: [UserSkillAcquisition!]
+  _count: UserRootsTracingCount!
 }
 
 type TagCount {
-  profiles: Int!
+  users: Int!
 }
 
 type Tag {
   id: ID!
   name: String!
   iconUrl: String
-  profiles: [Profile!]
+  users: [User!]
   createdAt: DateTime!
   updatedAt: DateTime!
   _count: TagCount!
 }
 
-type ProfileCount {
+type UserCount {
   socialLinks: Int!
-  myRoots: Int!
-  mySkills: Int!
+  groups: Int!
+  roots: Int!
+  skills: Int!
   tags: Int!
-  photos: Int!
 }
 
-type Profile {
+type User {
   id: ID!
-  user: User!
-  userId: String!
-  username: String!
+  firebaseAuthUid: String!
+  email: String!
+  disabled: Boolean!
+  imageUrl: String
+  username: String
   firstName: String!
   lastName: String!
   nickName: String
@@ -265,45 +161,82 @@ type Profile {
   hideAge: Boolean!
   position: String!
   socialLinks: [SocialLink!]
-  shimokitaCollegeProfile: ShimokitaCollegeProfile
-  myRoots: [MyRoots!]
-  mySkills: [MySkills!]
+  isAlumni: Boolean!
+
+  """
+  @Validator.@Min(100)
+  @Validator.@Max(599)
+  """
+  roomNumber: Int!
+
+  """
+  @Validator.@Min(100)
+  @Validator.@Max(599)
+  """
+  postNumber: Int!
+  groups: [Group!]
+  roots: [UserRootsTracing!]
+  skills: [UserSkillAcquisition!]
   bio: String!
   tags: [Tag!]
-  photos: [Photo!]
+  photoUrls: [String!]
   createdAt: DateTime!
   updatedAt: DateTime!
-  _count: ProfileCount!
-}
-
-type User {
-  id: ID!
-  firebaseAuthUid: String!
-  email: String
-  imageUrl: String
-  disabled: Boolean!
-  createdAt: DateTime!
-  updatedAt: DateTime!
-  profile: Profile
+  _count: UserCount!
 }
 
 type UserCountAggregate {
   id: Int!
   firebaseAuthUid: Int!
   email: Int!
-  imageUrl: Int!
   disabled: Int!
+  imageUrl: Int!
+  username: Int!
+  firstName: Int!
+  lastName: Int!
+  nickName: Int!
+  showOnlyNickname: Int!
+  birthday: Int!
+  hideAge: Int!
+  position: Int!
+  isAlumni: Int!
+  roomNumber: Int!
+  postNumber: Int!
+  bio: Int!
+  photoUrls: Int!
   createdAt: Int!
   updatedAt: Int!
   _all: Int!
+}
+
+type UserAvgAggregate {
+  roomNumber: Float
+  postNumber: Float
+}
+
+type UserSumAggregate {
+  roomNumber: Int
+  postNumber: Int
 }
 
 type UserMinAggregate {
   id: String
   firebaseAuthUid: String
   email: String
-  imageUrl: String
   disabled: Boolean
+  imageUrl: String
+  username: String
+  firstName: String
+  lastName: String
+  nickName: String
+  showOnlyNickname: Boolean
+  birthday: DateTime
+  hideAge: Boolean
+  position: String
+  isAlumni: Boolean
+  roomNumber: Int
+  postNumber: Int
+  bio: String
   createdAt: DateTime
   updatedAt: DateTime
 }
@@ -312,23 +245,40 @@ type UserMaxAggregate {
   id: String
   firebaseAuthUid: String
   email: String
-  imageUrl: String
   disabled: Boolean
+  imageUrl: String
+  username: String
+  firstName: String
+  lastName: String
+  nickName: String
+  showOnlyNickname: Boolean
+  birthday: DateTime
+  hideAge: Boolean
+  position: String
+  isAlumni: Boolean
+  roomNumber: Int
+  postNumber: Int
+  bio: String
   createdAt: DateTime
   updatedAt: DateTime
+}
+
+type AuthLogin {
+  accessToken: String!
 }
 
 type IsValid {
   isValid: Boolean!
 }
 
-type Auth {
+type AuthSignup {
   accessToken: String!
+  user: User!
 }
 
 type Query {
-  whoAmI: User!
   validateUsername(username: String!): IsValid!
+  whoAmI: User!
   users(where: UserWhereInput!): [User!]!
   user(where: UserWhereUniqueInput!): User!
 }
@@ -339,12 +289,29 @@ input UserWhereInput {
   NOT: [UserWhereInput!]
   id: StringFilter
   firebaseAuthUid: StringFilter
-  email: StringNullableFilter
-  imageUrl: StringNullableFilter
+  email: StringFilter
   disabled: BoolFilter
+  imageUrl: StringNullableFilter
+  username: StringNullableFilter
+  firstName: StringFilter
+  lastName: StringFilter
+  nickName: StringNullableFilter
+  showOnlyNickname: BoolFilter
+  birthday: DateTimeFilter
+  hideAge: BoolFilter
+  position: StringFilter
+  socialLinks: SocialLinkListRelationFilter
+  isAlumni: BoolFilter
+  roomNumber: IntFilter
+  postNumber: IntFilter
+  groups: GroupListRelationFilter
+  roots: UserRootsTracingListRelationFilter
+  skills: UserSkillAcquisitionListRelationFilter
+  bio: StringFilter
+  tags: TagListRelationFilter
+  photoUrls: StringNullableListFilter
   createdAt: DateTimeFilter
   updatedAt: DateTimeFilter
-  profile: ProfileRelationFilter
 }
 
 input StringFilter {
@@ -358,7 +325,13 @@ input StringFilter {
   contains: String
   startsWith: String
   endsWith: String
+  mode: QueryMode
   not: NestedStringFilter
+}
+
+enum QueryMode {
+  default
+  insensitive
 }
 
 input NestedStringFilter {
@@ -375,6 +348,16 @@ input NestedStringFilter {
   not: NestedStringFilter
 }
 
+input BoolFilter {
+  equals: Boolean
+  not: NestedBoolFilter
+}
+
+input NestedBoolFilter {
+  equals: Boolean
+  not: NestedBoolFilter
+}
+
 input StringNullableFilter {
   equals: String
   in: [String!]
@@ -386,6 +369,7 @@ input StringNullableFilter {
   contains: String
   startsWith: String
   endsWith: String
+  mode: QueryMode
   not: NestedStringNullableFilter
 }
 
@@ -401,16 +385,6 @@ input NestedStringNullableFilter {
   startsWith: String
   endsWith: String
   not: NestedStringNullableFilter
-}
-
-input BoolFilter {
-  equals: Boolean
-  not: NestedBoolFilter
-}
-
-input NestedBoolFilter {
-  equals: Boolean
-  not: NestedBoolFilter
 }
 
 input DateTimeFilter {
@@ -435,35 +409,22 @@ input NestedDateTimeFilter {
   not: NestedDateTimeFilter
 }
 
-input ProfileRelationFilter {
-  is: ProfileWhereInput
-  isNot: ProfileWhereInput
+input SocialLinkListRelationFilter {
+  every: SocialLinkWhereInput
+  some: SocialLinkWhereInput
+  none: SocialLinkWhereInput
 }
 
-input ProfileWhereInput {
-  AND: [ProfileWhereInput!]
-  OR: [ProfileWhereInput!]
-  NOT: [ProfileWhereInput!]
+input SocialLinkWhereInput {
+  AND: [SocialLinkWhereInput!]
+  OR: [SocialLinkWhereInput!]
+  NOT: [SocialLinkWhereInput!]
   id: IntFilter
   user: UserRelationFilter
   userId: StringFilter
-  username: StringFilter
-  firstName: StringFilter
-  lastName: StringFilter
-  nickName: StringNullableFilter
-  showOnlyNickname: BoolFilter
-  birthday: DateTimeFilter
-  hideAge: BoolFilter
-  position: StringFilter
-  socialLinks: SocialLinkListRelationFilter
-  shimokitaCollegeProfile: ShimokitaCollegeProfileRelationFilter
-  myRoots: MyRootsListRelationFilter
-  mySkills: MySkillsListRelationFilter
-  bio: StringFilter
-  tags: TagListRelationFilter
-  photos: PhotoListRelationFilter
-  createdAt: DateTimeFilter
-  updatedAt: DateTimeFilter
+  name: StringFilter
+  socialLinkType: EnumSocialLinkTypeFilter
+  url: StringFilter
 }
 
 input IntFilter {
@@ -493,24 +454,6 @@ input UserRelationFilter {
   isNot: UserWhereInput
 }
 
-input SocialLinkListRelationFilter {
-  every: SocialLinkWhereInput
-  some: SocialLinkWhereInput
-  none: SocialLinkWhereInput
-}
-
-input SocialLinkWhereInput {
-  AND: [SocialLinkWhereInput!]
-  OR: [SocialLinkWhereInput!]
-  NOT: [SocialLinkWhereInput!]
-  id: IntFilter
-  profile: ProfileRelationFilter
-  profileId: IntFilter
-  name: StringFilter
-  socialLinkType: EnumSocialLinkTypeFilter
-  url: StringFilter
-}
-
 input EnumSocialLinkTypeFilter {
   equals: SocialLinkType
   in: [SocialLinkType!]
@@ -525,48 +468,43 @@ input NestedEnumSocialLinkTypeFilter {
   not: NestedEnumSocialLinkTypeFilter
 }
 
-input ShimokitaCollegeProfileRelationFilter {
-  is: ShimokitaCollegeProfileWhereInput
-  isNot: ShimokitaCollegeProfileWhereInput
+input GroupListRelationFilter {
+  every: GroupWhereInput
+  some: GroupWhereInput
+  none: GroupWhereInput
 }
 
-input ShimokitaCollegeProfileWhereInput {
-  AND: [ShimokitaCollegeProfileWhereInput!]
-  OR: [ShimokitaCollegeProfileWhereInput!]
-  NOT: [ShimokitaCollegeProfileWhereInput!]
+input GroupWhereInput {
+  AND: [GroupWhereInput!]
+  OR: [GroupWhereInput!]
+  NOT: [GroupWhereInput!]
   id: IntFilter
-  profile: ProfileRelationFilter
-  profileId: IntFilter
-  isAlumni: BoolFilter
-  slackEmail: StringFilter
-  roomNumber: IntFilter
-  postNumber: IntFilter
-  programs: ProgramListRelationFilter
-  houses: HouseListRelationFilter
-  homes: HomeListRelationFilter
-  committee: CommitteeListRelationFilter
-  clubs: ClubListRelationFilter
-  createdAt: DateTimeFilter
-  updatedAt: DateTimeFilter
-}
-
-input ProgramListRelationFilter {
-  every: ProgramWhereInput
-  some: ProgramWhereInput
-  none: ProgramWhereInput
-}
-
-input ProgramWhereInput {
-  AND: [ProgramWhereInput!]
-  OR: [ProgramWhereInput!]
-  NOT: [ProgramWhereInput!]
-  id: IntFilter
+  groupType: EnumGroupTypeFilter
   name: StringFilter
   from: DateTimeNullableFilter
   to: DateTimeNullableFilter
-  shimokitaCollegeProfiles: ShimokitaCollegeProfileListRelationFilter
+  emoji: StringNullableFilter
+  imageUrl: StringNullableFilter
+  slackChannel: StringNullableFilter
+  description: StringNullableFilter
+  photoUrls: StringNullableListFilter
+  users: UserListRelationFilter
   createdAt: DateTimeFilter
   updatedAt: DateTimeFilter
+}
+
+input EnumGroupTypeFilter {
+  equals: GroupType
+  in: [GroupType!]
+  notIn: [GroupType!]
+  not: NestedEnumGroupTypeFilter
+}
+
+input NestedEnumGroupTypeFilter {
+  equals: GroupType
+  in: [GroupType!]
+  notIn: [GroupType!]
+  not: NestedEnumGroupTypeFilter
 }
 
 input DateTimeNullableFilter {
@@ -591,140 +529,37 @@ input NestedDateTimeNullableFilter {
   not: NestedDateTimeNullableFilter
 }
 
-input ShimokitaCollegeProfileListRelationFilter {
-  every: ShimokitaCollegeProfileWhereInput
-  some: ShimokitaCollegeProfileWhereInput
-  none: ShimokitaCollegeProfileWhereInput
+input StringNullableListFilter {
+  equals: [String!]
+  has: String
+  hasEvery: [String!]
+  hasSome: [String!]
+  isEmpty: Boolean
 }
 
-input HouseListRelationFilter {
-  every: HouseWhereInput
-  some: HouseWhereInput
-  none: HouseWhereInput
+input UserListRelationFilter {
+  every: UserWhereInput
+  some: UserWhereInput
+  none: UserWhereInput
 }
 
-input HouseWhereInput {
-  AND: [HouseWhereInput!]
-  OR: [HouseWhereInput!]
-  NOT: [HouseWhereInput!]
-  id: IntFilter
-  name: StringFilter
-  from: DateTimeNullableFilter
-  to: DateTimeNullableFilter
-  photos: PhotoListRelationFilter
-  shimokitaCollegeProfiles: ShimokitaCollegeProfileListRelationFilter
-  createdAt: DateTimeFilter
-  updatedAt: DateTimeFilter
+input UserRootsTracingListRelationFilter {
+  every: UserRootsTracingWhereInput
+  some: UserRootsTracingWhereInput
+  none: UserRootsTracingWhereInput
 }
 
-input PhotoListRelationFilter {
-  every: PhotoWhereInput
-  some: PhotoWhereInput
-  none: PhotoWhereInput
-}
-
-input PhotoWhereInput {
-  AND: [PhotoWhereInput!]
-  OR: [PhotoWhereInput!]
-  NOT: [PhotoWhereInput!]
-  id: IntFilter
-  imageUrl: StringFilter
-  alt: StringFilter
-  profiles: ProfileListRelationFilter
-  houses: HouseListRelationFilter
-  homes: HomeListRelationFilter
-  committee: CommitteeListRelationFilter
-  clubs: ClubListRelationFilter
-  createdAt: DateTimeFilter
-  updatedAt: DateTimeFilter
-}
-
-input ProfileListRelationFilter {
-  every: ProfileWhereInput
-  some: ProfileWhereInput
-  none: ProfileWhereInput
-}
-
-input HomeListRelationFilter {
-  every: HomeWhereInput
-  some: HomeWhereInput
-  none: HomeWhereInput
-}
-
-input HomeWhereInput {
-  AND: [HomeWhereInput!]
-  OR: [HomeWhereInput!]
-  NOT: [HomeWhereInput!]
-  id: IntFilter
-  name: StringFilter
-  from: DateTimeNullableFilter
-  to: DateTimeNullableFilter
-  photos: PhotoListRelationFilter
-  shimokitaCollegeProfiles: ShimokitaCollegeProfileListRelationFilter
-  createdAt: DateTimeFilter
-  updatedAt: DateTimeFilter
-}
-
-input CommitteeListRelationFilter {
-  every: CommitteeWhereInput
-  some: CommitteeWhereInput
-  none: CommitteeWhereInput
-}
-
-input CommitteeWhereInput {
-  AND: [CommitteeWhereInput!]
-  OR: [CommitteeWhereInput!]
-  NOT: [CommitteeWhereInput!]
-  id: IntFilter
-  name: StringFilter
-  imageUrl: StringNullableFilter
-  slackChannel: StringNullableFilter
-  description: StringNullableFilter
-  photos: PhotoListRelationFilter
-  shimokitaCollegeProfiles: ShimokitaCollegeProfileListRelationFilter
-  createdAt: DateTimeFilter
-  updatedAt: DateTimeFilter
-}
-
-input ClubListRelationFilter {
-  every: ClubWhereInput
-  some: ClubWhereInput
-  none: ClubWhereInput
-}
-
-input ClubWhereInput {
-  AND: [ClubWhereInput!]
-  OR: [ClubWhereInput!]
-  NOT: [ClubWhereInput!]
-  id: IntFilter
-  name: StringFilter
-  imageUrl: StringNullableFilter
-  slackChannel: StringNullableFilter
-  description: StringNullableFilter
-  photos: PhotoListRelationFilter
-  shimokitaCollegeProfiles: ShimokitaCollegeProfileListRelationFilter
-  createdAt: DateTimeFilter
-  updatedAt: DateTimeFilter
-}
-
-input MyRootsListRelationFilter {
-  every: MyRootsWhereInput
-  some: MyRootsWhereInput
-  none: MyRootsWhereInput
-}
-
-input MyRootsWhereInput {
-  AND: [MyRootsWhereInput!]
-  OR: [MyRootsWhereInput!]
-  NOT: [MyRootsWhereInput!]
-  id: IntFilter
-  profile: ProfileRelationFilter
-  profileId: IntFilter
+input UserRootsTracingWhereInput {
+  AND: [UserRootsTracingWhereInput!]
+  OR: [UserRootsTracingWhereInput!]
+  NOT: [UserRootsTracingWhereInput!]
+  user: UserRelationFilter
+  userId: StringFilter
   roots: RootsRelationFilter
   rootsId: IntFilter
   from: DateTimeNullableFilter
   to: DateTimeNullableFilter
-  profilesOnSkills: MySkillsListRelationFilter
+  userSkillAcquisitions: UserSkillAcquisitionListRelationFilter
 }
 
 input RootsRelationFilter {
@@ -741,7 +576,7 @@ input RootsWhereInput {
   rootsType: EnumRootsTypeFilter
   googleMapUrl: StringNullableFilter
   introductionUrl: StringNullableFilter
-  myRoots: MyRootsListRelationFilter
+  users: UserRootsTracingListRelationFilter
   createdAt: DateTimeFilter
   updatedAt: DateTimeFilter
 }
@@ -760,22 +595,22 @@ input NestedEnumRootsTypeFilter {
   not: NestedEnumRootsTypeFilter
 }
 
-input MySkillsListRelationFilter {
-  every: MySkillsWhereInput
-  some: MySkillsWhereInput
-  none: MySkillsWhereInput
+input UserSkillAcquisitionListRelationFilter {
+  every: UserSkillAcquisitionWhereInput
+  some: UserSkillAcquisitionWhereInput
+  none: UserSkillAcquisitionWhereInput
 }
 
-input MySkillsWhereInput {
-  AND: [MySkillsWhereInput!]
-  OR: [MySkillsWhereInput!]
-  NOT: [MySkillsWhereInput!]
-  profile: ProfileRelationFilter
-  profileId: IntFilter
+input UserSkillAcquisitionWhereInput {
+  AND: [UserSkillAcquisitionWhereInput!]
+  OR: [UserSkillAcquisitionWhereInput!]
+  NOT: [UserSkillAcquisitionWhereInput!]
+  user: UserRelationFilter
+  userId: StringFilter
   skill: SkillRelationFilter
   skillId: IntFilter
-  myRoots: MyRootsRelationFilter
-  myRootsId: IntNullableFilter
+  userRootsTracing: UserRootsTracingRelationFilter
+  rootsId: IntNullableFilter
 }
 
 input SkillRelationFilter {
@@ -792,7 +627,7 @@ input SkillWhereInput {
   parentId: IntNullableFilter
   parent: SkillRelationFilter
   children: SkillListRelationFilter
-  profiles: MySkillsListRelationFilter
+  users: UserSkillAcquisitionListRelationFilter
   createdAt: DateTimeFilter
   updatedAt: DateTimeFilter
 }
@@ -825,9 +660,9 @@ input SkillListRelationFilter {
   none: SkillWhereInput
 }
 
-input MyRootsRelationFilter {
-  is: MyRootsWhereInput
-  isNot: MyRootsWhereInput
+input UserRootsTracingRelationFilter {
+  is: UserRootsTracingWhereInput
+  isNot: UserRootsTracingWhereInput
 }
 
 input TagListRelationFilter {
@@ -843,7 +678,7 @@ input TagWhereInput {
   id: IntFilter
   name: StringFilter
   iconUrl: StringNullableFilter
-  profiles: ProfileListRelationFilter
+  users: UserListRelationFilter
   createdAt: DateTimeFilter
   updatedAt: DateTimeFilter
 }
@@ -852,8 +687,461 @@ input UserWhereUniqueInput {
   id: String
   firebaseAuthUid: String
   email: String
+  username: String
 }
 
 type Mutation {
-  login(firebaseIdToken: String!): Auth!
+  login: AuthLogin!
+  signup(data: AuthSignupInput!): AuthSignup!
+}
+
+input AuthSignupInput {
+  email: String!
+  imageUrl: String
+  username: String
+  firstName: String!
+  lastName: String!
+  nickName: String
+  showOnlyNickname: Boolean
+  birthday: DateTime!
+  hideAge: Boolean
+  position: String!
+  socialLinks: SocialLinkCreateNestedManyWithoutUserInput
+  isAlumni: Boolean
+  roomNumber: Int!
+  postNumber: Int!
+  groups: GroupCreateNestedManyWithoutUsersInput
+  roots: UserRootsTracingCreateNestedManyWithoutUserInput
+  skills: UserSkillAcquisitionCreateNestedManyWithoutUserInput
+  bio: String!
+  tags: TagCreateNestedManyWithoutUsersInput
+  photoUrls: UserCreatephotoUrlsInput
+}
+
+input SocialLinkCreateNestedManyWithoutUserInput {
+  create: [SocialLinkCreateWithoutUserInput!]
+  connectOrCreate: [SocialLinkCreateOrConnectWithoutUserInput!]
+  createMany: SocialLinkCreateManyUserInputEnvelope
+  connect: [SocialLinkWhereUniqueInput!]
+}
+
+input SocialLinkCreateWithoutUserInput {
+  name: String!
+  socialLinkType: SocialLinkType!
+  url: String!
+}
+
+input SocialLinkCreateOrConnectWithoutUserInput {
+  where: SocialLinkWhereUniqueInput!
+  create: SocialLinkCreateWithoutUserInput!
+}
+
+input SocialLinkWhereUniqueInput {
+  id: Int
+}
+
+input SocialLinkCreateManyUserInputEnvelope {
+  data: [SocialLinkCreateManyUserInput!]!
+  skipDuplicates: Boolean
+}
+
+input SocialLinkCreateManyUserInput {
+  id: Int
+  name: String!
+  socialLinkType: SocialLinkType!
+  url: String!
+}
+
+input GroupCreateNestedManyWithoutUsersInput {
+  create: [GroupCreateWithoutUsersInput!]
+  connectOrCreate: [GroupCreateOrConnectWithoutUsersInput!]
+  connect: [GroupWhereUniqueInput!]
+}
+
+input GroupCreateWithoutUsersInput {
+  groupType: GroupType!
+  name: String!
+  from: DateTime
+  to: DateTime
+  emoji: String
+  imageUrl: String
+  slackChannel: String
+  description: String
+  photoUrls: GroupCreatephotoUrlsInput
+  createdAt: DateTime
+  updatedAt: DateTime
+}
+
+input GroupCreatephotoUrlsInput {
+  set: [String!]!
+}
+
+input GroupCreateOrConnectWithoutUsersInput {
+  where: GroupWhereUniqueInput!
+  create: GroupCreateWithoutUsersInput!
+}
+
+input GroupWhereUniqueInput {
+  id: Int
+  groupType_name_from_to: GroupGroupTypeNameFromToCompoundUniqueInput
+}
+
+input GroupGroupTypeNameFromToCompoundUniqueInput {
+  groupType: GroupType!
+  name: String!
+  from: DateTime!
+  to: DateTime!
+}
+
+input UserRootsTracingCreateNestedManyWithoutUserInput {
+  create: [UserRootsTracingCreateWithoutUserInput!]
+  connectOrCreate: [UserRootsTracingCreateOrConnectWithoutUserInput!]
+  createMany: UserRootsTracingCreateManyUserInputEnvelope
+  connect: [UserRootsTracingWhereUniqueInput!]
+}
+
+input UserRootsTracingCreateWithoutUserInput {
+  roots: RootsCreateNestedOneWithoutUsersInput!
+  from: DateTime
+  to: DateTime
+  userSkillAcquisitions: UserSkillAcquisitionCreateNestedManyWithoutUserRootsTracingInput
+}
+
+input RootsCreateNestedOneWithoutUsersInput {
+  create: RootsCreateWithoutUsersInput
+  connectOrCreate: RootsCreateOrConnectWithoutUsersInput
+  connect: RootsWhereUniqueInput
+}
+
+input RootsCreateWithoutUsersInput {
+  name: String!
+  rootsType: RootsType!
+  googleMapUrl: String
+  introductionUrl: String
+  createdAt: DateTime
+  updatedAt: DateTime
+}
+
+input RootsCreateOrConnectWithoutUsersInput {
+  where: RootsWhereUniqueInput!
+  create: RootsCreateWithoutUsersInput!
+}
+
+input RootsWhereUniqueInput {
+  id: Int
+  name_rootsType: RootsNameRootsTypeCompoundUniqueInput
+}
+
+input RootsNameRootsTypeCompoundUniqueInput {
+  name: String!
+  rootsType: RootsType!
+}
+
+input UserSkillAcquisitionCreateNestedManyWithoutUserRootsTracingInput {
+  create: [UserSkillAcquisitionCreateWithoutUserRootsTracingInput!]
+  connectOrCreate: [UserSkillAcquisitionCreateOrConnectWithoutUserRootsTracingInput!]
+  createMany: UserSkillAcquisitionCreateManyUserRootsTracingInputEnvelope
+  connect: [UserSkillAcquisitionWhereUniqueInput!]
+}
+
+input UserSkillAcquisitionCreateWithoutUserRootsTracingInput {
+  user: UserCreateNestedOneWithoutSkillsInput!
+  skill: SkillCreateNestedOneWithoutUsersInput!
+}
+
+input UserCreateNestedOneWithoutSkillsInput {
+  create: UserCreateWithoutSkillsInput
+  connectOrCreate: UserCreateOrConnectWithoutSkillsInput
+  connect: UserWhereUniqueInput
+}
+
+input UserCreateWithoutSkillsInput {
+  id: String
+  firebaseAuthUid: String!
+  email: String!
+  disabled: Boolean
+  imageUrl: String
+  username: String
+  firstName: String!
+  lastName: String!
+  nickName: String
+  showOnlyNickname: Boolean
+  birthday: DateTime!
+  hideAge: Boolean
+  position: String!
+  socialLinks: SocialLinkCreateNestedManyWithoutUserInput
+  isAlumni: Boolean
+  roomNumber: Int!
+  postNumber: Int!
+  groups: GroupCreateNestedManyWithoutUsersInput
+  roots: UserRootsTracingCreateNestedManyWithoutUserInput
+  bio: String!
+  tags: TagCreateNestedManyWithoutUsersInput
+  photoUrls: UserCreatephotoUrlsInput
+  createdAt: DateTime
+  updatedAt: DateTime
+}
+
+input TagCreateNestedManyWithoutUsersInput {
+  create: [TagCreateWithoutUsersInput!]
+  connectOrCreate: [TagCreateOrConnectWithoutUsersInput!]
+  connect: [TagWhereUniqueInput!]
+}
+
+input TagCreateWithoutUsersInput {
+  name: String!
+  iconUrl: String
+  createdAt: DateTime
+  updatedAt: DateTime
+}
+
+input TagCreateOrConnectWithoutUsersInput {
+  where: TagWhereUniqueInput!
+  create: TagCreateWithoutUsersInput!
+}
+
+input TagWhereUniqueInput {
+  id: Int
+}
+
+input UserCreatephotoUrlsInput {
+  set: [String!]!
+}
+
+input UserCreateOrConnectWithoutSkillsInput {
+  where: UserWhereUniqueInput!
+  create: UserCreateWithoutSkillsInput!
+}
+
+input SkillCreateNestedOneWithoutUsersInput {
+  create: SkillCreateWithoutUsersInput
+  connectOrCreate: SkillCreateOrConnectWithoutUsersInput
+  connect: SkillWhereUniqueInput
+}
+
+input SkillCreateWithoutUsersInput {
+  name: String!
+  parent: SkillCreateNestedOneWithoutChildrenInput
+  children: SkillCreateNestedManyWithoutParentInput
+  createdAt: DateTime
+  updatedAt: DateTime
+}
+
+input SkillCreateNestedOneWithoutChildrenInput {
+  create: SkillCreateWithoutChildrenInput
+  connectOrCreate: SkillCreateOrConnectWithoutChildrenInput
+  connect: SkillWhereUniqueInput
+}
+
+input SkillCreateWithoutChildrenInput {
+  name: String!
+  parent: SkillCreateNestedOneWithoutChildrenInput
+  users: UserSkillAcquisitionCreateNestedManyWithoutSkillInput
+  createdAt: DateTime
+  updatedAt: DateTime
+}
+
+input UserSkillAcquisitionCreateNestedManyWithoutSkillInput {
+  create: [UserSkillAcquisitionCreateWithoutSkillInput!]
+  connectOrCreate: [UserSkillAcquisitionCreateOrConnectWithoutSkillInput!]
+  createMany: UserSkillAcquisitionCreateManySkillInputEnvelope
+  connect: [UserSkillAcquisitionWhereUniqueInput!]
+}
+
+input UserSkillAcquisitionCreateWithoutSkillInput {
+  user: UserCreateNestedOneWithoutSkillsInput!
+  userRootsTracing: UserRootsTracingCreateNestedOneWithoutUserSkillAcquisitionsInput
+}
+
+input UserRootsTracingCreateNestedOneWithoutUserSkillAcquisitionsInput {
+  create: UserRootsTracingCreateWithoutUserSkillAcquisitionsInput
+  connectOrCreate: UserRootsTracingCreateOrConnectWithoutUserSkillAcquisitionsInput
+  connect: UserRootsTracingWhereUniqueInput
+}
+
+input UserRootsTracingCreateWithoutUserSkillAcquisitionsInput {
+  user: UserCreateNestedOneWithoutRootsInput!
+  roots: RootsCreateNestedOneWithoutUsersInput!
+  from: DateTime
+  to: DateTime
+}
+
+input UserCreateNestedOneWithoutRootsInput {
+  create: UserCreateWithoutRootsInput
+  connectOrCreate: UserCreateOrConnectWithoutRootsInput
+  connect: UserWhereUniqueInput
+}
+
+input UserCreateWithoutRootsInput {
+  id: String
+  firebaseAuthUid: String!
+  email: String!
+  disabled: Boolean
+  imageUrl: String
+  username: String
+  firstName: String!
+  lastName: String!
+  nickName: String
+  showOnlyNickname: Boolean
+  birthday: DateTime!
+  hideAge: Boolean
+  position: String!
+  socialLinks: SocialLinkCreateNestedManyWithoutUserInput
+  isAlumni: Boolean
+  roomNumber: Int!
+  postNumber: Int!
+  groups: GroupCreateNestedManyWithoutUsersInput
+  skills: UserSkillAcquisitionCreateNestedManyWithoutUserInput
+  bio: String!
+  tags: TagCreateNestedManyWithoutUsersInput
+  photoUrls: UserCreatephotoUrlsInput
+  createdAt: DateTime
+  updatedAt: DateTime
+}
+
+input UserSkillAcquisitionCreateNestedManyWithoutUserInput {
+  create: [UserSkillAcquisitionCreateWithoutUserInput!]
+  connectOrCreate: [UserSkillAcquisitionCreateOrConnectWithoutUserInput!]
+  createMany: UserSkillAcquisitionCreateManyUserInputEnvelope
+  connect: [UserSkillAcquisitionWhereUniqueInput!]
+}
+
+input UserSkillAcquisitionCreateWithoutUserInput {
+  skill: SkillCreateNestedOneWithoutUsersInput!
+  userRootsTracing: UserRootsTracingCreateNestedOneWithoutUserSkillAcquisitionsInput
+}
+
+input UserSkillAcquisitionCreateOrConnectWithoutUserInput {
+  where: UserSkillAcquisitionWhereUniqueInput!
+  create: UserSkillAcquisitionCreateWithoutUserInput!
+}
+
+input UserSkillAcquisitionWhereUniqueInput {
+  userId_skillId: UserSkillAcquisitionUserIdSkillIdCompoundUniqueInput
+}
+
+input UserSkillAcquisitionUserIdSkillIdCompoundUniqueInput {
+  userId: String!
+  skillId: Int!
+}
+
+input UserSkillAcquisitionCreateManyUserInputEnvelope {
+  data: [UserSkillAcquisitionCreateManyUserInput!]!
+  skipDuplicates: Boolean
+}
+
+input UserSkillAcquisitionCreateManyUserInput {
+  skillId: Int!
+  rootsId: Int
+}
+
+input UserCreateOrConnectWithoutRootsInput {
+  where: UserWhereUniqueInput!
+  create: UserCreateWithoutRootsInput!
+}
+
+input UserRootsTracingCreateOrConnectWithoutUserSkillAcquisitionsInput {
+  where: UserRootsTracingWhereUniqueInput!
+  create: UserRootsTracingCreateWithoutUserSkillAcquisitionsInput!
+}
+
+input UserRootsTracingWhereUniqueInput {
+  userId_rootsId: UserRootsTracingUserIdRootsIdCompoundUniqueInput
+}
+
+input UserRootsTracingUserIdRootsIdCompoundUniqueInput {
+  userId: String!
+  rootsId: Int!
+}
+
+input UserSkillAcquisitionCreateOrConnectWithoutSkillInput {
+  where: UserSkillAcquisitionWhereUniqueInput!
+  create: UserSkillAcquisitionCreateWithoutSkillInput!
+}
+
+input UserSkillAcquisitionCreateManySkillInputEnvelope {
+  data: [UserSkillAcquisitionCreateManySkillInput!]!
+  skipDuplicates: Boolean
+}
+
+input UserSkillAcquisitionCreateManySkillInput {
+  userId: String!
+  rootsId: Int
+}
+
+input SkillCreateOrConnectWithoutChildrenInput {
+  where: SkillWhereUniqueInput!
+  create: SkillCreateWithoutChildrenInput!
+}
+
+input SkillWhereUniqueInput {
+  id: Int
+  name: String
+}
+
+input SkillCreateNestedManyWithoutParentInput {
+  create: [SkillCreateWithoutParentInput!]
+  connectOrCreate: [SkillCreateOrConnectWithoutParentInput!]
+  createMany: SkillCreateManyParentInputEnvelope
+  connect: [SkillWhereUniqueInput!]
+}
+
+input SkillCreateWithoutParentInput {
+  name: String!
+  children: SkillCreateNestedManyWithoutParentInput
+  users: UserSkillAcquisitionCreateNestedManyWithoutSkillInput
+  createdAt: DateTime
+  updatedAt: DateTime
+}
+
+input SkillCreateOrConnectWithoutParentInput {
+  where: SkillWhereUniqueInput!
+  create: SkillCreateWithoutParentInput!
+}
+
+input SkillCreateManyParentInputEnvelope {
+  data: [SkillCreateManyParentInput!]!
+  skipDuplicates: Boolean
+}
+
+input SkillCreateManyParentInput {
+  id: Int
+  name: String!
+  createdAt: DateTime
+  updatedAt: DateTime
+}
+
+input SkillCreateOrConnectWithoutUsersInput {
+  where: SkillWhereUniqueInput!
+  create: SkillCreateWithoutUsersInput!
+}
+
+input UserSkillAcquisitionCreateOrConnectWithoutUserRootsTracingInput {
+  where: UserSkillAcquisitionWhereUniqueInput!
+  create: UserSkillAcquisitionCreateWithoutUserRootsTracingInput!
+}
+
+input UserSkillAcquisitionCreateManyUserRootsTracingInputEnvelope {
+  data: [UserSkillAcquisitionCreateManyUserRootsTracingInput!]!
+  skipDuplicates: Boolean
+}
+
+input UserSkillAcquisitionCreateManyUserRootsTracingInput {
+  skillId: Int!
+}
+
+input UserRootsTracingCreateOrConnectWithoutUserInput {
+  where: UserRootsTracingWhereUniqueInput!
+  create: UserRootsTracingCreateWithoutUserInput!
+}
+
+input UserRootsTracingCreateManyUserInputEnvelope {
+  data: [UserRootsTracingCreateManyUserInput!]!
+  skipDuplicates: Boolean
+}
+
+input UserRootsTracingCreateManyUserInput {
+  rootsId: Int!
+  from: DateTime
+  to: DateTime
 }

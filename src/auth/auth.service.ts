@@ -3,7 +3,6 @@ import { UsersService } from 'src/users/users.service';
 import { JwtPayload } from './strategies/jwt.strategy';
 import { AuthLogin, AuthSignup, AuthSignupInput } from './models';
 import { JwtService } from '@nestjs/jwt';
-import { UserCreateInput } from 'src/prisma/graphql/user';
 
 @Injectable()
 export class AuthService {
