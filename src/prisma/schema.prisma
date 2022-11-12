@@ -10,6 +10,7 @@ generator nestgraphql {
   output                 = "./graphql"
   fields_Validator_from  = "class-validator"
   fields_Validator_input = true
+  purgeOutput            = true
   reExport               = Directories
 }
 
