@@ -20,16 +20,14 @@ export class AuthService {
   }
 
   async login(firebaseIdToken: string): Promise<Auth> {
-    const { uid, email, picture } = await getAuth()
+    const { uid } = await getAuth()
       .verifyIdToken(firebaseIdToken)
       .catch((error) => {
         throw new UnauthorizedException(error);
       });
 
-    const user = await this.usersService.upsert({
+    const user = await this.usersService.findUniqueOrThrow({
       where: { firebaseAuthUid: uid },
-      create: { firebaseAuthUid: uid, email, imageUrl: picture },
-      update: { firebaseAuthUid: uid, email, imageUrl: picture },
     });
 
     if (user.disabled) throw new ForbiddenException();

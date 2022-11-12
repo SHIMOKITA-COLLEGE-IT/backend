@@ -6,6 +6,7 @@ export class UsersService {
   constructor(private readonly prismaService: PrismaService) {}
   findMany = this.prismaService.user.findMany;
   findUnique = this.prismaService.user.findUnique;
+  findUniqueOrThrow = this.prismaService.user.findUniqueOrThrow;
   upsert = this.prismaService.user.upsert;
 
   async validateUsername(username: string): Promise<boolean> {
