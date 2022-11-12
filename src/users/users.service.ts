@@ -9,9 +9,9 @@ export class UsersService {
   upsert = this.prismaService.user.upsert;
 
   async validateUsername(username: string): Promise<boolean> {
-    const profile = await this.prismaService.profile.findUnique({
+    const user = await this.prismaService.user.findUnique({
       where: { username },
     });
-    return !!profile;
+    return !user;
   }
 }
