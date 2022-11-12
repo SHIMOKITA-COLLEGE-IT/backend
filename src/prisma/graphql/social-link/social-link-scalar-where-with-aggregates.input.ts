@@ -19,8 +19,8 @@ export class SocialLinkScalarWhereWithAggregatesInput {
     @Field(() => IntWithAggregatesFilter, {nullable:true})
     id?: IntWithAggregatesFilter;
 
-    @Field(() => IntWithAggregatesFilter, {nullable:true})
-    profileId?: IntWithAggregatesFilter;
+    @Field(() => StringWithAggregatesFilter, {nullable:true})
+    userId?: StringWithAggregatesFilter;
 
     @Field(() => StringWithAggregatesFilter, {nullable:true})
     name?: StringWithAggregatesFilter;

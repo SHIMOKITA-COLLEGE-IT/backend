@@ -2,7 +2,7 @@ import { Field } from '@nestjs/graphql';
 import { InputType } from '@nestjs/graphql';
 import { SortOrder } from '../prisma/sort-order.enum';
 import { SkillOrderByRelationAggregateInput } from './skill-order-by-relation-aggregate.input';
-import { MySkillsOrderByRelationAggregateInput } from '../my-skills/my-skills-order-by-relation-aggregate.input';
+import { UserSkillAcquisitionOrderByRelationAggregateInput } from '../user-skill-acquisition/user-skill-acquisition-order-by-relation-aggregate.input';
 
 @InputType()
 export class SkillOrderByWithRelationInput {
@@ -22,8 +22,8 @@ export class SkillOrderByWithRelationInput {
     @Field(() => SkillOrderByRelationAggregateInput, {nullable:true})
     children?: SkillOrderByRelationAggregateInput;
 
-    @Field(() => MySkillsOrderByRelationAggregateInput, {nullable:true})
-    profiles?: MySkillsOrderByRelationAggregateInput;
+    @Field(() => UserSkillAcquisitionOrderByRelationAggregateInput, {nullable:true})
+    users?: UserSkillAcquisitionOrderByRelationAggregateInput;
 
     @Field(() => SortOrder, {nullable:true})
     createdAt?: keyof typeof SortOrder;

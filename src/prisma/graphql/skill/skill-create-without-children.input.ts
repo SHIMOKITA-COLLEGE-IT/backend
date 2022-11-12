@@ -1,7 +1,7 @@
 import { Field } from '@nestjs/graphql';
 import { InputType } from '@nestjs/graphql';
 import { SkillCreateNestedOneWithoutChildrenInput } from './skill-create-nested-one-without-children.input';
-import { MySkillsCreateNestedManyWithoutSkillInput } from '../my-skills/my-skills-create-nested-many-without-skill.input';
+import { UserSkillAcquisitionCreateNestedManyWithoutSkillInput } from '../user-skill-acquisition/user-skill-acquisition-create-nested-many-without-skill.input';
 
 @InputType()
 export class SkillCreateWithoutChildrenInput {
@@ -12,8 +12,8 @@ export class SkillCreateWithoutChildrenInput {
     @Field(() => SkillCreateNestedOneWithoutChildrenInput, {nullable:true})
     parent?: SkillCreateNestedOneWithoutChildrenInput;
 
-    @Field(() => MySkillsCreateNestedManyWithoutSkillInput, {nullable:true})
-    profiles?: MySkillsCreateNestedManyWithoutSkillInput;
+    @Field(() => UserSkillAcquisitionCreateNestedManyWithoutSkillInput, {nullable:true})
+    users?: UserSkillAcquisitionCreateNestedManyWithoutSkillInput;
 
     @Field(() => Date, {nullable:true})
     createdAt?: Date | string;

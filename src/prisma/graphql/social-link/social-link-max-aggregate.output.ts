@@ -9,8 +9,8 @@ export class SocialLinkMaxAggregate {
     @Field(() => Int, {nullable:true})
     id?: number;
 
-    @Field(() => Int, {nullable:true})
-    profileId?: number;
+    @Field(() => String, {nullable:true})
+    userId?: string;
 
     @Field(() => String, {nullable:true})
     name?: string;

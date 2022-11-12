@@ -1,18 +1,21 @@
 import { Field } from '@nestjs/graphql';
 import { InputType } from '@nestjs/graphql';
-import { ProfileCreateNestedManyWithoutTagsInput } from '../profile/profile-create-nested-many-without-tags.input';
+import * as Validator from 'class-validator';
+import { UserCreateNestedManyWithoutTagsInput } from '../user/user-create-nested-many-without-tags.input';
 
 @InputType()
 export class TagCreateInput {
 
     @Field(() => String, {nullable:false})
+    @Validator.IsNotEmpty()
     name!: string;
 
     @Field(() => String, {nullable:true})
+    @Validator.IsUrl()
     iconUrl?: string;
 
-    @Field(() => ProfileCreateNestedManyWithoutTagsInput, {nullable:true})
-    profiles?: ProfileCreateNestedManyWithoutTagsInput;
+    @Field(() => UserCreateNestedManyWithoutTagsInput, {nullable:true})
+    users?: UserCreateNestedManyWithoutTagsInput;
 
     @Field(() => Date, {nullable:true})
     createdAt?: Date | string;

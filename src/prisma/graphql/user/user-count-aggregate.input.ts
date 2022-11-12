@@ -14,10 +14,49 @@ export class UserCountAggregateInput {
     email?: true;
 
     @Field(() => Boolean, {nullable:true})
+    disabled?: true;
+
+    @Field(() => Boolean, {nullable:true})
     imageUrl?: true;
 
     @Field(() => Boolean, {nullable:true})
-    disabled?: true;
+    username?: true;
+
+    @Field(() => Boolean, {nullable:true})
+    firstName?: true;
+
+    @Field(() => Boolean, {nullable:true})
+    lastName?: true;
+
+    @Field(() => Boolean, {nullable:true})
+    nickName?: true;
+
+    @Field(() => Boolean, {nullable:true})
+    showOnlyNickname?: true;
+
+    @Field(() => Boolean, {nullable:true})
+    birthday?: true;
+
+    @Field(() => Boolean, {nullable:true})
+    hideAge?: true;
+
+    @Field(() => Boolean, {nullable:true})
+    position?: true;
+
+    @Field(() => Boolean, {nullable:true})
+    isAlumni?: true;
+
+    @Field(() => Boolean, {nullable:true})
+    roomNumber?: true;
+
+    @Field(() => Boolean, {nullable:true})
+    postNumber?: true;
+
+    @Field(() => Boolean, {nullable:true})
+    bio?: true;
+
+    @Field(() => Boolean, {nullable:true})
+    photoUrls?: true;
 
     @Field(() => Boolean, {nullable:true})
     createdAt?: true;

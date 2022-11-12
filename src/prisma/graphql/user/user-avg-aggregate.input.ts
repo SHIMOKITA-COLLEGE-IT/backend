@@ -5,5 +5,8 @@ import { InputType } from '@nestjs/graphql';
 export class UserAvgAggregateInput {
 
     @Field(() => Boolean, {nullable:true})
-    id?: true;
+    roomNumber?: true;
+
+    @Field(() => Boolean, {nullable:true})
+    postNumber?: true;
 }

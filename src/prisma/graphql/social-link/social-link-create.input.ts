@@ -1,13 +1,14 @@
 import { Field } from '@nestjs/graphql';
 import { InputType } from '@nestjs/graphql';
-import { ProfileCreateNestedOneWithoutSocialLinksInput } from '../profile/profile-create-nested-one-without-social-links.input';
+import { UserCreateNestedOneWithoutSocialLinksInput } from '../user/user-create-nested-one-without-social-links.input';
 import { SocialLinkType } from '../prisma/social-link-type.enum';
+import * as Validator from 'class-validator';
 
 @InputType()
 export class SocialLinkCreateInput {
 
-    @Field(() => ProfileCreateNestedOneWithoutSocialLinksInput, {nullable:false})
-    profile!: ProfileCreateNestedOneWithoutSocialLinksInput;
+    @Field(() => UserCreateNestedOneWithoutSocialLinksInput, {nullable:false})
+    user!: UserCreateNestedOneWithoutSocialLinksInput;
 
     @Field(() => String, {nullable:false})
     name!: string;
@@ -16,5 +17,6 @@ export class SocialLinkCreateInput {
     socialLinkType!: keyof typeof SocialLinkType;
 
     @Field(() => String, {nullable:false})
+    @Validator.IsUrl()
     url!: string;
 }

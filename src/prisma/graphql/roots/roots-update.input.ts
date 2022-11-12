@@ -3,7 +3,7 @@ import { InputType } from '@nestjs/graphql';
 import { StringFieldUpdateOperationsInput } from '../prisma/string-field-update-operations.input';
 import { EnumRootsTypeFieldUpdateOperationsInput } from '../prisma/enum-roots-type-field-update-operations.input';
 import { NullableStringFieldUpdateOperationsInput } from '../prisma/nullable-string-field-update-operations.input';
-import { MyRootsUpdateManyWithoutRootsNestedInput } from '../my-roots/my-roots-update-many-without-roots-nested.input';
+import { UserRootsTracingUpdateManyWithoutRootsNestedInput } from '../user-roots-tracing/user-roots-tracing-update-many-without-roots-nested.input';
 import { DateTimeFieldUpdateOperationsInput } from '../prisma/date-time-field-update-operations.input';
 
 @InputType()
@@ -21,8 +21,8 @@ export class RootsUpdateInput {
     @Field(() => NullableStringFieldUpdateOperationsInput, {nullable:true})
     introductionUrl?: NullableStringFieldUpdateOperationsInput;
 
-    @Field(() => MyRootsUpdateManyWithoutRootsNestedInput, {nullable:true})
-    myRoots?: MyRootsUpdateManyWithoutRootsNestedInput;
+    @Field(() => UserRootsTracingUpdateManyWithoutRootsNestedInput, {nullable:true})
+    users?: UserRootsTracingUpdateManyWithoutRootsNestedInput;
 
     @Field(() => DateTimeFieldUpdateOperationsInput, {nullable:true})
     createdAt?: DateTimeFieldUpdateOperationsInput;

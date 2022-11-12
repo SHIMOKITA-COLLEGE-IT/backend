@@ -19,8 +19,8 @@ export class SocialLinkScalarWhereInput {
     @Field(() => IntFilter, {nullable:true})
     id?: IntFilter;
 
-    @Field(() => IntFilter, {nullable:true})
-    profileId?: IntFilter;
+    @Field(() => StringFilter, {nullable:true})
+    userId?: StringFilter;
 
     @Field(() => StringFilter, {nullable:true})
     name?: StringFilter;

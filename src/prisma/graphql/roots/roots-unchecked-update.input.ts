@@ -4,7 +4,7 @@ import { IntFieldUpdateOperationsInput } from '../prisma/int-field-update-operat
 import { StringFieldUpdateOperationsInput } from '../prisma/string-field-update-operations.input';
 import { EnumRootsTypeFieldUpdateOperationsInput } from '../prisma/enum-roots-type-field-update-operations.input';
 import { NullableStringFieldUpdateOperationsInput } from '../prisma/nullable-string-field-update-operations.input';
-import { MyRootsUncheckedUpdateManyWithoutRootsNestedInput } from '../my-roots/my-roots-unchecked-update-many-without-roots-nested.input';
+import { UserRootsTracingUncheckedUpdateManyWithoutRootsNestedInput } from '../user-roots-tracing/user-roots-tracing-unchecked-update-many-without-roots-nested.input';
 import { DateTimeFieldUpdateOperationsInput } from '../prisma/date-time-field-update-operations.input';
 
 @InputType()
@@ -25,8 +25,8 @@ export class RootsUncheckedUpdateInput {
     @Field(() => NullableStringFieldUpdateOperationsInput, {nullable:true})
     introductionUrl?: NullableStringFieldUpdateOperationsInput;
 
-    @Field(() => MyRootsUncheckedUpdateManyWithoutRootsNestedInput, {nullable:true})
-    myRoots?: MyRootsUncheckedUpdateManyWithoutRootsNestedInput;
+    @Field(() => UserRootsTracingUncheckedUpdateManyWithoutRootsNestedInput, {nullable:true})
+    users?: UserRootsTracingUncheckedUpdateManyWithoutRootsNestedInput;
 
     @Field(() => DateTimeFieldUpdateOperationsInput, {nullable:true})
     createdAt?: DateTimeFieldUpdateOperationsInput;

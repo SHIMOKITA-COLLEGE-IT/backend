@@ -1,0 +1,18 @@
+import { Field } from '@nestjs/graphql';
+import { InputType } from '@nestjs/graphql';
+
+@InputType()
+export class UserSkillAcquisitionCountAggregateInput {
+
+    @Field(() => Boolean, {nullable:true})
+    userId?: true;
+
+    @Field(() => Boolean, {nullable:true})
+    skillId?: true;
+
+    @Field(() => Boolean, {nullable:true})
+    rootsId?: true;
+
+    @Field(() => Boolean, {nullable:true})
+    _all?: true;
+}

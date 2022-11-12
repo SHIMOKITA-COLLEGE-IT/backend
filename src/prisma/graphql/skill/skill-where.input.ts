@@ -5,7 +5,7 @@ import { StringFilter } from '../prisma/string-filter.input';
 import { IntNullableFilter } from '../prisma/int-nullable-filter.input';
 import { SkillRelationFilter } from './skill-relation-filter.input';
 import { SkillListRelationFilter } from './skill-list-relation-filter.input';
-import { MySkillsListRelationFilter } from '../my-skills/my-skills-list-relation-filter.input';
+import { UserSkillAcquisitionListRelationFilter } from '../user-skill-acquisition/user-skill-acquisition-list-relation-filter.input';
 import { DateTimeFilter } from '../prisma/date-time-filter.input';
 
 @InputType()
@@ -35,8 +35,8 @@ export class SkillWhereInput {
     @Field(() => SkillListRelationFilter, {nullable:true})
     children?: SkillListRelationFilter;
 
-    @Field(() => MySkillsListRelationFilter, {nullable:true})
-    profiles?: MySkillsListRelationFilter;
+    @Field(() => UserSkillAcquisitionListRelationFilter, {nullable:true})
+    users?: UserSkillAcquisitionListRelationFilter;
 
     @Field(() => DateTimeFilter, {nullable:true})
     createdAt?: DateTimeFilter;

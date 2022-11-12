@@ -9,7 +9,7 @@ export class SocialLinkMinOrderByAggregateInput {
     id?: keyof typeof SortOrder;
 
     @Field(() => SortOrder, {nullable:true})
-    profileId?: keyof typeof SortOrder;
+    userId?: keyof typeof SortOrder;
 
     @Field(() => SortOrder, {nullable:true})
     name?: keyof typeof SortOrder;

@@ -2,7 +2,7 @@ import { Field } from '@nestjs/graphql';
 import { ObjectType } from '@nestjs/graphql';
 import { ID } from '@nestjs/graphql';
 import { Int } from '@nestjs/graphql';
-import { MySkills } from '../my-skills/my-skills.model';
+import { UserSkillAcquisition } from '../user-skill-acquisition/user-skill-acquisition.model';
 import { SkillCount } from './skill-count.output';
 
 @ObjectType()
@@ -23,8 +23,8 @@ export class Skill {
     @Field(() => [Skill], {nullable:true})
     children?: Array<Skill>;
 
-    @Field(() => [MySkills], {nullable:true})
-    profiles?: Array<MySkills>;
+    @Field(() => [UserSkillAcquisition], {nullable:true})
+    users?: Array<UserSkillAcquisition>;
 
     @Field(() => Date, {nullable:false})
     createdAt!: Date;

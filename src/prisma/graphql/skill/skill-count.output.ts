@@ -9,5 +9,5 @@ export class SkillCount {
     children?: number;
 
     @Field(() => Int, {nullable:false})
-    profiles?: number;
+    users?: number;
 }

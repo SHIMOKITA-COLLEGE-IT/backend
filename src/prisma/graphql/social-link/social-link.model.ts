@@ -1,8 +1,7 @@
 import { Field } from '@nestjs/graphql';
 import { ObjectType } from '@nestjs/graphql';
 import { ID } from '@nestjs/graphql';
-import { Profile } from '../profile/profile.model';
-import { Int } from '@nestjs/graphql';
+import { User } from '../user/user.model';
 import { SocialLinkType } from '../prisma/social-link-type.enum';
 
 @ObjectType()
@@ -11,11 +10,11 @@ export class SocialLink {
     @Field(() => ID, {nullable:false})
     id!: number;
 
-    @Field(() => Profile, {nullable:false})
-    profile?: Profile;
+    @Field(() => User, {nullable:false})
+    user?: User;
 
-    @Field(() => Int, {nullable:false})
-    profileId!: number;
+    @Field(() => String, {nullable:false})
+    userId!: string;
 
     @Field(() => String, {nullable:false})
     name!: string;

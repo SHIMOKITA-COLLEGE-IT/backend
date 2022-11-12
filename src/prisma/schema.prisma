@@ -2,8 +2,7 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-  provider        = "prisma-client-js"
-  previewFeatures = ["referentialIntegrity"]
+  provider = "prisma-client-js"
 }
 
 generator nestgraphql {
@@ -19,141 +18,100 @@ generator dbml {
 }
 
 datasource db {
-  provider             = "mysql"
-  url                  = env("DATABASE_URL")
-  referentialIntegrity = "prisma"
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
 model User {
-  id              String   @id @default(uuid())
-  firebaseAuthUid String   @unique
-  email           String?  @unique
-  imageUrl        String?
-  disabled        Boolean  @default(false)
-  createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt
-  profile         Profile?
-}
+  id              String  @id @default(uuid())
+  firebaseAuthUid String  @unique
+  /// @Validator.IsEmail()
+  email           String  @unique
+  disabled        Boolean @default(false)
 
-model Profile {
-  id                      Int                      @id @default(autoincrement())
-  user                    User                     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId                  String                   @unique
+  // Step 1
+  /// @Validator.IsUrl()
+  imageUrl String?
   /// @Validator.IsAlphanumeric()
   /// @Validator.Length(4, 12)
-  username                String                   @unique
-  firstName               String
-  lastName                String
-  nickName                String?
-  showOnlyNickname        Boolean                  @default(false)
-  birthday                DateTime
-  hideAge                 Boolean                  @default(false)
-  position                String
-  socialLinks             SocialLink[]
-  shimokitaCollegeProfile ShimokitaCollegeProfile?
-  myRoots                 MyRoots[]
-  mySkills                MySkills[]
-  bio                     String
-  tags                    Tag[]
-  photos                  Photo[]
-  createdAt               DateTime                 @default(now())
-  updatedAt               DateTime                 @updatedAt
-}
+  username String? @unique
 
-model ShimokitaCollegeProfile {
-  id         Int         @id @default(autoincrement())
-  profile    Profile     @relation(fields: [profileId], references: [id], onDelete: Cascade)
-  profileId  Int         @unique
-  isAlumni   Boolean     @default(false)
-  /// @Validator.IsEmail()
-  slackEmail String      @unique
+  // Step 2
+  /// @Validator.IsNotEmpty()
+  firstName        String
+  /// @Validator.IsNotEmpty()
+  lastName         String
+  nickName         String?
+  showOnlyNickname Boolean      @default(false)
+  birthday         DateTime
+  hideAge          Boolean      @default(false)
+  /// @Validator.IsNotEmpty()
+  position         String
+  socialLinks      SocialLink[]
+
+  // Step 3
+  isAlumni   Boolean @default(false)
+  /// @Validator.@Min(100)
+  /// @Validator.@Max(599)
   roomNumber Int
+  /// @Validator.@Min(100)
+  /// @Validator.@Max(599)
   postNumber Int
-  programs   Program[]
-  houses     House[]
-  homes      Home[]
-  committee  Committee[]
-  clubs      Club[]
-  createdAt  DateTime    @default(now())
-  updatedAt  DateTime    @updatedAt
+  groups     Group[]
+
+  // Step 4
+  roots  UserRootsTracing[]
+  skills UserSkillAcquisition[]
+
+  // Step 5
+  /// @Validator.IsNotEmpty()
+  bio       String
+  tags      Tag[]
+  /// @Validator.IsUrl(undefined, { each: true })
+  photoUrls String[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
-model Program {
-  id                       Int                       @id @default(autoincrement())
-  name                     String                    @unique
-  from                     DateTime?
-  to                       DateTime?
-  shimokitaCollegeProfiles ShimokitaCollegeProfile[]
-  createdAt                DateTime                  @default(now())
-  updatedAt                DateTime                  @updatedAt
+model Group {
+  id        Int       @id @default(autoincrement())
+  groupType GroupType
+  name      String
+  from      DateTime?
+  to        DateTime?
+
+  emoji        String?
+  imageUrl     String?
+  slackChannel String?
+  description  String?
+  /// @Validator.IsUrl(undefined, { each: true })
+  photoUrls    String[]
+
+  users User[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([groupType, name, from, to])
 }
 
-model House {
-  id                       Int                       @id @default(autoincrement())
-  name                     String                    @unique
-  from                     DateTime?
-  to                       DateTime?
-  photos                   Photo[]
-  shimokitaCollegeProfiles ShimokitaCollegeProfile[]
-  createdAt                DateTime                  @default(now())
-  updatedAt                DateTime                  @updatedAt
-}
-
-model Home {
-  id                       Int                       @id @default(autoincrement())
-  name                     String                    @unique
-  from                     DateTime?
-  to                       DateTime?
-  photos                   Photo[]
-  shimokitaCollegeProfiles ShimokitaCollegeProfile[]
-  createdAt                DateTime                  @default(now())
-  updatedAt                DateTime                  @updatedAt
-}
-
-model Committee {
-  id                       Int                       @id @default(autoincrement())
-  name                     String                    @unique
-  imageUrl                 String?
-  slackChannel             String?
-  description              String?
-  photos                   Photo[]
-  shimokitaCollegeProfiles ShimokitaCollegeProfile[]
-  createdAt                DateTime                  @default(now())
-  updatedAt                DateTime                  @updatedAt
-}
-
-model Club {
-  id                       Int                       @id @default(autoincrement())
-  name                     String                    @unique
-  imageUrl                 String?
-  slackChannel             String?
-  description              String?
-  photos                   Photo[]
-  shimokitaCollegeProfiles ShimokitaCollegeProfile[]
-  createdAt                DateTime                  @default(now())
-  updatedAt                DateTime                  @updatedAt
-}
-
-model Photo {
-  id        Int         @id @default(autoincrement())
-  imageUrl  String
-  alt       String
-  profiles  Profile[]
-  houses    House[]
-  homes     Home[]
-  committee Committee[]
-  clubs     Club[]
-  createdAt DateTime    @default(now())
-  updatedAt DateTime    @updatedAt
+enum GroupType {
+  PROGRAM
+  HOUSE
+  HOME
+  COMMITTEE
+  CLUB
 }
 
 model SocialLink {
   id             Int            @id @default(autoincrement())
-  profile        Profile        @relation(fields: [profileId], references: [id], onDelete: Cascade)
-  profileId      Int
+  user           User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId         String
   name           String
   // For Icon
   socialLinkType SocialLinkType
+  /// @Validator.IsUrl()
   url            String
 }
 
@@ -167,33 +125,25 @@ enum SocialLinkType {
   TIKTOK
   YOUTUBE
   GITHUB
-  BEREAL
   LINKTREE
   OTHER
 }
 
 // seed ShimokitaCollege
-model MyRoots {
-  id               Int        @id @default(autoincrement())
-  profile          Profile    @relation(fields: [profileId], references: [id])
-  profileId        Int
-  roots            Roots      @relation(fields: [rootsId], references: [id])
-  rootsId          Int
-  from             DateTime?
-  to               DateTime?
-  profilesOnSkills MySkills[]
-}
 
 model Roots {
   id              Int       @id @default(autoincrement())
-  name            String    @unique
-  // For Icon
+  name            String
   rootsType       RootsType
   googleMapUrl    String?
   introductionUrl String?
-  myRoots         MyRoots[]
-  createdAt       DateTime  @default(now())
-  updatedAt       DateTime  @updatedAt
+
+  users UserRootsTracing[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([name, rootsType])
 }
 
 enum RootsType {
@@ -204,33 +154,53 @@ enum RootsType {
   GROUP
 }
 
-model MySkills {
-  profile   Profile  @relation(fields: [profileId], references: [id])
-  profileId Int
-  skill     Skill    @relation(fields: [skillId], references: [id])
-  skillId   Int
-  myRoots   MyRoots? @relation(fields: [myRootsId], references: [id])
-  myRootsId Int?
+model UserRootsTracing {
+  user    User      @relation(fields: [userId], references: [id])
+  userId  String
+  roots   Roots     @relation(fields: [rootsId], references: [id])
+  rootsId Int
+  from    DateTime?
+  to      DateTime?
 
-  @@id([profileId, skillId])
+  userSkillAcquisitions UserSkillAcquisition[]
+
+  @@id([userId, rootsId])
 }
 
 model Skill {
-  id        Int        @id @default(autoincrement())
-  name      String     @unique
-  parentId  Int?
-  parent    Skill?     @relation("SkillTree", fields: [parentId], references: [id], onDelete: Restrict, onUpdate: Restrict)
-  children  Skill[]    @relation("SkillTree")
-  profiles  MySkills[]
-  createdAt DateTime   @default(now())
-  updatedAt DateTime   @updatedAt
+  id       Int     @id @default(autoincrement())
+  name     String  @unique
+  parentId Int?
+  parent   Skill?  @relation("SkillTree", fields: [parentId], references: [id], onDelete: Restrict, onUpdate: Restrict)
+  children Skill[] @relation("SkillTree")
+
+  users UserSkillAcquisition[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model UserSkillAcquisition {
+  user    User   @relation(fields: [userId], references: [id])
+  userId  String
+  skill   Skill  @relation(fields: [skillId], references: [id])
+  skillId Int
+
+  userRootsTracing UserRootsTracing? @relation(fields: [userId, rootsId], references: [userId, rootsId])
+  rootsId          Int?
+
+  @@id([userId, skillId])
 }
 
 model Tag {
-  id        Int       @id @default(autoincrement())
-  name      String
-  iconUrl   String?
-  profiles  Profile[]
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
+  id      Int     @id @default(autoincrement())
+  /// @Validator.IsNotEmpty()
+  name    String
+  /// @Validator.IsUrl()
+  iconUrl String?
+
+  users User[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }

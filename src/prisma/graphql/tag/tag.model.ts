@@ -1,7 +1,7 @@
 import { Field } from '@nestjs/graphql';
 import { ObjectType } from '@nestjs/graphql';
 import { ID } from '@nestjs/graphql';
-import { Profile } from '../profile/profile.model';
+import { User } from '../user/user.model';
 import { TagCount } from './tag-count.output';
 
 @ObjectType()
@@ -16,8 +16,8 @@ export class Tag {
     @Field(() => String, {nullable:true})
     iconUrl!: string | null;
 
-    @Field(() => [Profile], {nullable:true})
-    profiles?: Array<Profile>;
+    @Field(() => [User], {nullable:true})
+    users?: Array<User>;
 
     @Field(() => Date, {nullable:false})
     createdAt!: Date;

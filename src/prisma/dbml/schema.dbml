@@ -5,165 +5,89 @@
 Table User {
   id String [pk]
   firebaseAuthUid String [unique, not null]
-  email String [unique]
-  imageUrl String
+  email String [unique, not null, note: '@Validator.IsEmail()']
   disabled Boolean [not null, default: false]
-  createdAt DateTime [default: `now()`, not null]
-  updatedAt DateTime [not null]
-  profile Profile
-}
-
-Table Profile {
-  id Int [pk, increment]
-  user User [not null]
-  userId String [unique, not null]
-  username String [unique, not null, note: '@Validator.IsAlphanumeric()
+  imageUrl String [note: '@Validator.IsUrl()']
+  username String [unique, note: '@Validator.IsAlphanumeric()
 @Validator.Length(4, 12)']
-  firstName String [not null]
-  lastName String [not null]
+  firstName String [not null, note: '@Validator.IsNotEmpty()']
+  lastName String [not null, note: '@Validator.IsNotEmpty()']
   nickName String
   showOnlyNickname Boolean [not null, default: false]
   birthday DateTime [not null]
   hideAge Boolean [not null, default: false]
-  position String [not null]
+  position String [not null, note: '@Validator.IsNotEmpty()']
   socialLinks SocialLink [not null]
-  shimokitaCollegeProfile ShimokitaCollegeProfile
-  myRoots MyRoots [not null]
-  mySkills MySkills [not null]
-  bio String [not null]
-  tags Tag [not null]
-  photos Photo [not null]
-  createdAt DateTime [default: `now()`, not null]
-  updatedAt DateTime [not null]
-}
-
-Table ShimokitaCollegeProfile {
-  id Int [pk, increment]
-  profile Profile [not null]
-  profileId Int [unique, not null]
   isAlumni Boolean [not null, default: false]
-  slackEmail String [unique, not null, note: '@Validator.IsEmail()']
-  roomNumber Int [not null]
-  postNumber Int [not null]
-  programs Program [not null]
-  houses House [not null]
-  homes Home [not null]
-  committee Committee [not null]
-  clubs Club [not null]
+  roomNumber Int [not null, note: '@Validator.@Min(100)
+@Validator.@Max(599)']
+  postNumber Int [not null, note: '@Validator.@Min(100)
+@Validator.@Max(599)']
+  groups Group [not null]
+  roots UserRootsTracing [not null]
+  skills UserSkillAcquisition [not null]
+  bio String [not null, note: '@Validator.IsNotEmpty()']
+  tags Tag [not null]
+  photoUrls String[] [not null, note: '@Validator.IsUrl(undefined, { each: true })']
   createdAt DateTime [default: `now()`, not null]
   updatedAt DateTime [not null]
 }
 
-Table Program {
+Table Group {
   id Int [pk, increment]
-  name String [unique, not null]
+  groupType GroupType [not null]
+  name String [not null]
   from DateTime
   to DateTime
-  shimokitaCollegeProfiles ShimokitaCollegeProfile [not null]
-  createdAt DateTime [default: `now()`, not null]
-  updatedAt DateTime [not null]
-}
-
-Table House {
-  id Int [pk, increment]
-  name String [unique, not null]
-  from DateTime
-  to DateTime
-  photos Photo [not null]
-  shimokitaCollegeProfiles ShimokitaCollegeProfile [not null]
-  createdAt DateTime [default: `now()`, not null]
-  updatedAt DateTime [not null]
-}
-
-Table Home {
-  id Int [pk, increment]
-  name String [unique, not null]
-  from DateTime
-  to DateTime
-  photos Photo [not null]
-  shimokitaCollegeProfiles ShimokitaCollegeProfile [not null]
-  createdAt DateTime [default: `now()`, not null]
-  updatedAt DateTime [not null]
-}
-
-Table Committee {
-  id Int [pk, increment]
-  name String [unique, not null]
+  emoji String
   imageUrl String
   slackChannel String
   description String
-  photos Photo [not null]
-  shimokitaCollegeProfiles ShimokitaCollegeProfile [not null]
+  photoUrls String[] [not null, note: '@Validator.IsUrl(undefined, { each: true })']
+  users User [not null]
   createdAt DateTime [default: `now()`, not null]
   updatedAt DateTime [not null]
-}
 
-Table Club {
-  id Int [pk, increment]
-  name String [unique, not null]
-  imageUrl String
-  slackChannel String
-  description String
-  photos Photo [not null]
-  shimokitaCollegeProfiles ShimokitaCollegeProfile [not null]
-  createdAt DateTime [default: `now()`, not null]
-  updatedAt DateTime [not null]
-}
-
-Table Photo {
-  id Int [pk, increment]
-  imageUrl String [not null]
-  alt String [not null]
-  profiles Profile [not null]
-  houses House [not null]
-  homes Home [not null]
-  committee Committee [not null]
-  clubs Club [not null]
-  createdAt DateTime [default: `now()`, not null]
-  updatedAt DateTime [not null]
+  indexes {
+    (groupType, name, from, to) [unique]
+  }
 }
 
 Table SocialLink {
   id Int [pk, increment]
-  profile Profile [not null]
-  profileId Int [not null]
+  user User [not null]
+  userId String [not null]
   name String [not null]
   socialLinkType SocialLinkType [not null]
-  url String [not null]
-}
-
-Table MyRoots {
-  id Int [pk, increment]
-  profile Profile [not null]
-  profileId Int [not null]
-  roots Roots [not null]
-  rootsId Int [not null]
-  from DateTime
-  to DateTime
-  profilesOnSkills MySkills [not null]
+  url String [not null, note: '@Validator.IsUrl()']
 }
 
 Table Roots {
   id Int [pk, increment]
-  name String [unique, not null]
+  name String [not null]
   rootsType RootsType [not null]
   googleMapUrl String
   introductionUrl String
-  myRoots MyRoots [not null]
+  users UserRootsTracing [not null]
   createdAt DateTime [default: `now()`, not null]
   updatedAt DateTime [not null]
-}
-
-Table MySkills {
-  profile Profile [not null]
-  profileId Int [not null]
-  skill Skill [not null]
-  skillId Int [not null]
-  myRoots MyRoots
-  myRootsId Int
 
   indexes {
-    (profileId, skillId) [pk]
+    (name, rootsType) [unique]
+  }
+}
+
+Table UserRootsTracing {
+  user User [not null]
+  userId String [not null]
+  roots Roots [not null]
+  rootsId Int [not null]
+  from DateTime
+  to DateTime
+  userSkillAcquisitions UserSkillAcquisition [not null]
+
+  indexes {
+    (userId, rootsId) [pk]
   }
 }
 
@@ -173,73 +97,49 @@ Table Skill {
   parentId Int
   parent Skill
   children Skill [not null]
-  profiles MySkills [not null]
+  users UserSkillAcquisition [not null]
   createdAt DateTime [default: `now()`, not null]
   updatedAt DateTime [not null]
+}
+
+Table UserSkillAcquisition {
+  user User [not null]
+  userId String [not null]
+  skill Skill [not null]
+  skillId Int [not null]
+  userRootsTracing UserRootsTracing
+  rootsId Int
+
+  indexes {
+    (userId, skillId) [pk]
+  }
 }
 
 Table Tag {
   id Int [pk, increment]
-  name String [not null]
-  iconUrl String
-  profiles Profile [not null]
+  name String [not null, note: '@Validator.IsNotEmpty()']
+  iconUrl String [note: '@Validator.IsUrl()']
+  users User [not null]
   createdAt DateTime [default: `now()`, not null]
   updatedAt DateTime [not null]
 }
 
-Table ProfileToTag {
+Table GroupToUser {
+  groupsId Int [ref: > Group.id]
+  usersId String [ref: > User.id]
+}
+
+Table TagToUser {
   tagsId Int [ref: > Tag.id]
-  profilesId Int [ref: > Profile.id]
+  usersId String [ref: > User.id]
 }
 
-Table PhotoToProfile {
-  photosId Int [ref: > Photo.id]
-  profilesId Int [ref: > Profile.id]
-}
-
-Table ProgramToShimokitaCollegeProfile {
-  programsId Int [ref: > Program.id]
-  shimokitacollegeprofilesId Int [ref: > ShimokitaCollegeProfile.id]
-}
-
-Table HouseToShimokitaCollegeProfile {
-  housesId Int [ref: > House.id]
-  shimokitacollegeprofilesId Int [ref: > ShimokitaCollegeProfile.id]
-}
-
-Table HomeToShimokitaCollegeProfile {
-  homesId Int [ref: > Home.id]
-  shimokitacollegeprofilesId Int [ref: > ShimokitaCollegeProfile.id]
-}
-
-Table CommitteeToShimokitaCollegeProfile {
-  committeeId Int [ref: > Committee.id]
-  shimokitacollegeprofilesId Int [ref: > ShimokitaCollegeProfile.id]
-}
-
-Table ClubToShimokitaCollegeProfile {
-  clubsId Int [ref: > Club.id]
-  shimokitacollegeprofilesId Int [ref: > ShimokitaCollegeProfile.id]
-}
-
-Table HouseToPhoto {
-  photosId Int [ref: > Photo.id]
-  housesId Int [ref: > House.id]
-}
-
-Table HomeToPhoto {
-  photosId Int [ref: > Photo.id]
-  homesId Int [ref: > Home.id]
-}
-
-Table CommitteeToPhoto {
-  photosId Int [ref: > Photo.id]
-  committeeId Int [ref: > Committee.id]
-}
-
-Table ClubToPhoto {
-  photosId Int [ref: > Photo.id]
-  clubsId Int [ref: > Club.id]
+Enum GroupType {
+  PROGRAM
+  HOUSE
+  HOME
+  COMMITTEE
+  CLUB
 }
 
 Enum SocialLinkType {
@@ -252,7 +152,6 @@ Enum SocialLinkType {
   TIKTOK
   YOUTUBE
   GITHUB
-  BEREAL
   LINKTREE
   OTHER
 }
@@ -265,20 +164,16 @@ Enum RootsType {
   GROUP
 }
 
-Ref: Profile.userId - User.id [delete: Cascade]
+Ref: SocialLink.userId > User.id [delete: Cascade]
 
-Ref: ShimokitaCollegeProfile.profileId - Profile.id [delete: Cascade]
+Ref: UserRootsTracing.userId > User.id
 
-Ref: SocialLink.profileId > Profile.id [delete: Cascade]
-
-Ref: MyRoots.profileId > Profile.id
-
-Ref: MyRoots.rootsId > Roots.id
-
-Ref: MySkills.profileId > Profile.id
-
-Ref: MySkills.skillId > Skill.id
-
-Ref: MySkills.myRootsId > MyRoots.id
+Ref: UserRootsTracing.rootsId > Roots.id
 
 Ref: Skill.parentId - Skill.id [delete: Restrict]
+
+Ref: UserSkillAcquisition.userId > User.id
+
+Ref: UserSkillAcquisition.skillId > Skill.id
+
+Ref: UserSkillAcquisition.(userId, rootsId) > UserRootsTracing.(userId, rootsId)

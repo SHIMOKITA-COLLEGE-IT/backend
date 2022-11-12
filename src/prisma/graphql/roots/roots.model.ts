@@ -2,7 +2,7 @@ import { Field } from '@nestjs/graphql';
 import { ObjectType } from '@nestjs/graphql';
 import { ID } from '@nestjs/graphql';
 import { RootsType } from '../prisma/roots-type.enum';
-import { MyRoots } from '../my-roots/my-roots.model';
+import { UserRootsTracing } from '../user-roots-tracing/user-roots-tracing.model';
 import { RootsCount } from './roots-count.output';
 
 @ObjectType()
@@ -23,8 +23,8 @@ export class Roots {
     @Field(() => String, {nullable:true})
     introductionUrl!: string | null;
 
-    @Field(() => [MyRoots], {nullable:true})
-    myRoots?: Array<MyRoots>;
+    @Field(() => [UserRootsTracing], {nullable:true})
+    users?: Array<UserRootsTracing>;
 
     @Field(() => Date, {nullable:false})
     createdAt!: Date;

@@ -9,7 +9,7 @@ export class SocialLinkCountAggregate {
     id!: number;
 
     @Field(() => Int, {nullable:false})
-    profileId!: number;
+    userId!: number;
 
     @Field(() => Int, {nullable:false})
     name!: number;

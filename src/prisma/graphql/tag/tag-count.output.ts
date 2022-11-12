@@ -6,5 +6,5 @@ import { Int } from '@nestjs/graphql';
 export class TagCount {
 
     @Field(() => Int, {nullable:false})
-    profiles?: number;
+    users?: number;
 }

@@ -2,7 +2,7 @@ import { Field } from '@nestjs/graphql';
 import { InputType } from '@nestjs/graphql';
 import { Int } from '@nestjs/graphql';
 import { RootsType } from '../prisma/roots-type.enum';
-import { MyRootsUncheckedCreateNestedManyWithoutRootsInput } from '../my-roots/my-roots-unchecked-create-nested-many-without-roots.input';
+import { UserRootsTracingUncheckedCreateNestedManyWithoutRootsInput } from '../user-roots-tracing/user-roots-tracing-unchecked-create-nested-many-without-roots.input';
 
 @InputType()
 export class RootsUncheckedCreateInput {
@@ -22,8 +22,8 @@ export class RootsUncheckedCreateInput {
     @Field(() => String, {nullable:true})
     introductionUrl?: string;
 
-    @Field(() => MyRootsUncheckedCreateNestedManyWithoutRootsInput, {nullable:true})
-    myRoots?: MyRootsUncheckedCreateNestedManyWithoutRootsInput;
+    @Field(() => UserRootsTracingUncheckedCreateNestedManyWithoutRootsInput, {nullable:true})
+    users?: UserRootsTracingUncheckedCreateNestedManyWithoutRootsInput;
 
     @Field(() => Date, {nullable:true})
     createdAt?: Date | string;

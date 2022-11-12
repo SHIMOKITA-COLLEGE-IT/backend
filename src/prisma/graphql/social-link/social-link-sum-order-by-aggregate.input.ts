@@ -7,7 +7,4 @@ export class SocialLinkSumOrderByAggregateInput {
 
     @Field(() => SortOrder, {nullable:true})
     id?: keyof typeof SortOrder;
-
-    @Field(() => SortOrder, {nullable:true})
-    profileId?: keyof typeof SortOrder;
 }

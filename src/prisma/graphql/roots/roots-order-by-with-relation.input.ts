@@ -1,7 +1,7 @@
 import { Field } from '@nestjs/graphql';
 import { InputType } from '@nestjs/graphql';
 import { SortOrder } from '../prisma/sort-order.enum';
-import { MyRootsOrderByRelationAggregateInput } from '../my-roots/my-roots-order-by-relation-aggregate.input';
+import { UserRootsTracingOrderByRelationAggregateInput } from '../user-roots-tracing/user-roots-tracing-order-by-relation-aggregate.input';
 
 @InputType()
 export class RootsOrderByWithRelationInput {
@@ -21,8 +21,8 @@ export class RootsOrderByWithRelationInput {
     @Field(() => SortOrder, {nullable:true})
     introductionUrl?: keyof typeof SortOrder;
 
-    @Field(() => MyRootsOrderByRelationAggregateInput, {nullable:true})
-    myRoots?: MyRootsOrderByRelationAggregateInput;
+    @Field(() => UserRootsTracingOrderByRelationAggregateInput, {nullable:true})
+    users?: UserRootsTracingOrderByRelationAggregateInput;
 
     @Field(() => SortOrder, {nullable:true})
     createdAt?: keyof typeof SortOrder;

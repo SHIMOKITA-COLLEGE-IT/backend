@@ -8,7 +8,7 @@ export class SocialLinkMinAggregateInput {
     id?: true;
 
     @Field(() => Boolean, {nullable:true})
-    profileId?: true;
+    userId?: true;
 
     @Field(() => Boolean, {nullable:true})
     name?: true;

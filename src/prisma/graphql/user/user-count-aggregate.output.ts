@@ -15,10 +15,49 @@ export class UserCountAggregate {
     email!: number;
 
     @Field(() => Int, {nullable:false})
+    disabled!: number;
+
+    @Field(() => Int, {nullable:false})
     imageUrl!: number;
 
     @Field(() => Int, {nullable:false})
-    disabled!: number;
+    username!: number;
+
+    @Field(() => Int, {nullable:false})
+    firstName!: number;
+
+    @Field(() => Int, {nullable:false})
+    lastName!: number;
+
+    @Field(() => Int, {nullable:false})
+    nickName!: number;
+
+    @Field(() => Int, {nullable:false})
+    showOnlyNickname!: number;
+
+    @Field(() => Int, {nullable:false})
+    birthday!: number;
+
+    @Field(() => Int, {nullable:false})
+    hideAge!: number;
+
+    @Field(() => Int, {nullable:false})
+    position!: number;
+
+    @Field(() => Int, {nullable:false})
+    isAlumni!: number;
+
+    @Field(() => Int, {nullable:false})
+    roomNumber!: number;
+
+    @Field(() => Int, {nullable:false})
+    postNumber!: number;
+
+    @Field(() => Int, {nullable:false})
+    bio!: number;
+
+    @Field(() => Int, {nullable:false})
+    photoUrls!: number;
 
     @Field(() => Int, {nullable:false})
     createdAt!: number;

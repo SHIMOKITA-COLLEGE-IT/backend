@@ -7,7 +7,4 @@ export class SocialLinkAvgAggregate {
 
     @Field(() => Float, {nullable:true})
     id?: number;
-
-    @Field(() => Float, {nullable:true})
-    profileId?: number;
 }

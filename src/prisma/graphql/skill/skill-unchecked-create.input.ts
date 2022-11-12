@@ -2,7 +2,7 @@ import { Field } from '@nestjs/graphql';
 import { InputType } from '@nestjs/graphql';
 import { Int } from '@nestjs/graphql';
 import { SkillUncheckedCreateNestedManyWithoutParentInput } from './skill-unchecked-create-nested-many-without-parent.input';
-import { MySkillsUncheckedCreateNestedManyWithoutSkillInput } from '../my-skills/my-skills-unchecked-create-nested-many-without-skill.input';
+import { UserSkillAcquisitionUncheckedCreateNestedManyWithoutSkillInput } from '../user-skill-acquisition/user-skill-acquisition-unchecked-create-nested-many-without-skill.input';
 
 @InputType()
 export class SkillUncheckedCreateInput {
@@ -19,8 +19,8 @@ export class SkillUncheckedCreateInput {
     @Field(() => SkillUncheckedCreateNestedManyWithoutParentInput, {nullable:true})
     children?: SkillUncheckedCreateNestedManyWithoutParentInput;
 
-    @Field(() => MySkillsUncheckedCreateNestedManyWithoutSkillInput, {nullable:true})
-    profiles?: MySkillsUncheckedCreateNestedManyWithoutSkillInput;
+    @Field(() => UserSkillAcquisitionUncheckedCreateNestedManyWithoutSkillInput, {nullable:true})
+    users?: UserSkillAcquisitionUncheckedCreateNestedManyWithoutSkillInput;
 
     @Field(() => Date, {nullable:true})
     createdAt?: Date | string;

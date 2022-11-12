@@ -2,7 +2,7 @@ import { registerEnumType } from '@nestjs/graphql';
 
 export enum SocialLinkScalarFieldEnum {
     id = "id",
-    profileId = "profileId",
+    userId = "userId",
     name = "name",
     socialLinkType = "socialLinkType",
     url = "url"

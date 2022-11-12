@@ -4,7 +4,7 @@ import { IntFieldUpdateOperationsInput } from '../prisma/int-field-update-operat
 import { StringFieldUpdateOperationsInput } from '../prisma/string-field-update-operations.input';
 import { NullableIntFieldUpdateOperationsInput } from '../prisma/nullable-int-field-update-operations.input';
 import { SkillUncheckedUpdateManyWithoutParentNestedInput } from './skill-unchecked-update-many-without-parent-nested.input';
-import { MySkillsUncheckedUpdateManyWithoutSkillNestedInput } from '../my-skills/my-skills-unchecked-update-many-without-skill-nested.input';
+import { UserSkillAcquisitionUncheckedUpdateManyWithoutSkillNestedInput } from '../user-skill-acquisition/user-skill-acquisition-unchecked-update-many-without-skill-nested.input';
 import { DateTimeFieldUpdateOperationsInput } from '../prisma/date-time-field-update-operations.input';
 
 @InputType()
@@ -22,8 +22,8 @@ export class SkillUncheckedUpdateInput {
     @Field(() => SkillUncheckedUpdateManyWithoutParentNestedInput, {nullable:true})
     children?: SkillUncheckedUpdateManyWithoutParentNestedInput;
 
-    @Field(() => MySkillsUncheckedUpdateManyWithoutSkillNestedInput, {nullable:true})
-    profiles?: MySkillsUncheckedUpdateManyWithoutSkillNestedInput;
+    @Field(() => UserSkillAcquisitionUncheckedUpdateManyWithoutSkillNestedInput, {nullable:true})
+    users?: UserSkillAcquisitionUncheckedUpdateManyWithoutSkillNestedInput;
 
     @Field(() => DateTimeFieldUpdateOperationsInput, {nullable:true})
     createdAt?: DateTimeFieldUpdateOperationsInput;

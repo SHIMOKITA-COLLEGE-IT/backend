@@ -10,8 +10,8 @@ export class SocialLinkUncheckedUpdateInput {
     @Field(() => IntFieldUpdateOperationsInput, {nullable:true})
     id?: IntFieldUpdateOperationsInput;
 
-    @Field(() => IntFieldUpdateOperationsInput, {nullable:true})
-    profileId?: IntFieldUpdateOperationsInput;
+    @Field(() => StringFieldUpdateOperationsInput, {nullable:true})
+    userId?: StringFieldUpdateOperationsInput;
 
     @Field(() => StringFieldUpdateOperationsInput, {nullable:true})
     name?: StringFieldUpdateOperationsInput;

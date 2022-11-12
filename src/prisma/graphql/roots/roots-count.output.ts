@@ -6,5 +6,5 @@ import { Int } from '@nestjs/graphql';
 export class RootsCount {
 
     @Field(() => Int, {nullable:false})
-    myRoots?: number;
+    users?: number;
 }

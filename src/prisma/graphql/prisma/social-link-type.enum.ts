@@ -10,7 +10,6 @@ export enum SocialLinkType {
     TIKTOK = "TIKTOK",
     YOUTUBE = "YOUTUBE",
     GITHUB = "GITHUB",
-    BEREAL = "BEREAL",
     LINKTREE = "LINKTREE",
     OTHER = "OTHER"
 }

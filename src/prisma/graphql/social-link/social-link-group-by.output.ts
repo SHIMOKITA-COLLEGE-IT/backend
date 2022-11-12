@@ -14,8 +14,8 @@ export class SocialLinkGroupBy {
     @Field(() => Int, {nullable:false})
     id!: number;
 
-    @Field(() => Int, {nullable:false})
-    profileId!: number;
+    @Field(() => String, {nullable:false})
+    userId!: string;
 
     @Field(() => String, {nullable:false})
     name!: string;

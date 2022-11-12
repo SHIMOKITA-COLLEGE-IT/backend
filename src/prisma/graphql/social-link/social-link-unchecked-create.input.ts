@@ -2,6 +2,7 @@ import { Field } from '@nestjs/graphql';
 import { InputType } from '@nestjs/graphql';
 import { Int } from '@nestjs/graphql';
 import { SocialLinkType } from '../prisma/social-link-type.enum';
+import * as Validator from 'class-validator';
 
 @InputType()
 export class SocialLinkUncheckedCreateInput {
@@ -9,8 +10,8 @@ export class SocialLinkUncheckedCreateInput {
     @Field(() => Int, {nullable:true})
     id?: number;
 
-    @Field(() => Int, {nullable:false})
-    profileId!: number;
+    @Field(() => String, {nullable:false})
+    userId!: string;
 
     @Field(() => String, {nullable:false})
     name!: string;
@@ -19,5 +20,6 @@ export class SocialLinkUncheckedCreateInput {
     socialLinkType!: keyof typeof SocialLinkType;
 
     @Field(() => String, {nullable:false})
+    @Validator.IsUrl()
     url!: string;
 }
