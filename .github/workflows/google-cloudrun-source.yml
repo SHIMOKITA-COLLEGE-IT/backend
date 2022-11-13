@@ -93,7 +93,10 @@ jobs:
 
       # If required, use the Cloud Run url output in later steps
       - name: Show Output
-        run: echo ${{ steps.deploy.outputs.url }}
+        run: |
+          echo ${{ steps.deploy.outputs.url }}
+          echo ${{ steps.auth.outputs.access_token }}
+          
   migration:
     needs: deploy
     runs-on: ubuntu-latest
