@@ -101,7 +101,7 @@ jobs:
     services:
       proxy:
         image: gcr.io/college-app-366823/csap
-        credentials: 
+        credentials:
           username: oauth2accesstoken
           password: ${{ needs.deploy.outputs.access_token }}
         options: >-
