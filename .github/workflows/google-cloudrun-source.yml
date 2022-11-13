@@ -63,8 +63,6 @@ jobs:
       id-token: 'write'
 
     runs-on: ubuntu-latest
-    outputs:
-      access_token: '${{ steps.auth.outputs.access_token }}'
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -75,7 +73,6 @@ jobs:
         with:
           workload_identity_provider: "${{ secrets.WIF_PROVIDER }}"
           service_account: "${{ secrets.WIF_SERVICE_ACCOUNT }}"
-          token_format: "access_token"
 
       - name: "Set up Cloud SDK"
         uses: "google-github-actions/setup-gcloud@v1"
@@ -93,26 +90,4 @@ jobs:
 
       # If required, use the Cloud Run url output in later steps
       - name: Show Output
-        run: echo ${{ steps.deploy.outputs.url }} ${{ steps.auth.outputs.access_token }}
-          
-  migration:
-    needs: deploy
-    runs-on: ubuntu-latest
-    container: node:18
-    services:
-      proxy:
-        image: gcr.io/college-app-366823/csap
-        credentials:
-          username: oauth2accesstoken
-          password: ${{ needs.deploy.outputs.access_token }}
-        options: >-
-          --health-cmd 'curl -f http://localhost:8090 || exit 1'
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
-    steps:
-      - uses: actions/checkout@v3
-      - name: Cloud SQL migration
-        run: npx prisma migrate deploy
-        env: 
-          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+        run: echo ${{ steps.deploy.outputs.url }}
