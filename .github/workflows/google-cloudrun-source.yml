@@ -97,21 +97,17 @@ jobs:
   migration:
     needs: deploy
     runs-on: ubuntu-latest
+    container: node:18
+    services:
+      proxy:
+        image: gcr.io/college-app-366823/csap
+        options: >-
+          --health-cmd 'curl -f http://localhost:8090 || exit 1'
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
     steps:
-      - name: Start Cloud SQL Proxy
-        run: |
-          echo '${{ secrets.CS_SA_KEY }}' > sa_key
-          docker pull gcr.io/cloudsql-docker/gce-proxy
-          docker run -d \
-            -v $PWD/sa_key:/config \
-            -p 127.0.0.1:5432:5432 \
-            gcr.io/cloudsql-docker/gce-proxy /cloud_sql_proxy \
-            -instances=college-app-366823:asia-northeast1:college-app=tcp:0.0.0.0:5432 \
-            -credential_file=/config
       - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 18.12
       - name: Cloud SQL migration
         run: npx prisma migrate deploy
         env: 

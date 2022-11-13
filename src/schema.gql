@@ -1,6 +1,101 @@
-# ------------------------------------------------------
-# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
-# ------------------------------------------------------
+type AuthLogin {
+  accessToken: String!
+}
+
+type IsValid {
+  isValid: Boolean!
+}
+
+type UserCountAggregate {
+  id: Int!
+  firebaseAuthUid: Int!
+  email: Int!
+  disabled: Int!
+  imageUrl: Int!
+  username: Int!
+  firstName: Int!
+  lastName: Int!
+  nickName: Int!
+  showOnlyNickname: Int!
+  birthday: Int!
+  hideAge: Int!
+  position: Int!
+  isAlumni: Int!
+  roomNumber: Int!
+  postNumber: Int!
+  bio: Int!
+  photoUrls: Int!
+  createdAt: Int!
+  updatedAt: Int!
+  _all: Int!
+}
+
+type UserAvgAggregate {
+  roomNumber: Float
+  postNumber: Float
+}
+
+type UserSumAggregate {
+  roomNumber: Int
+  postNumber: Int
+}
+
+type UserMinAggregate {
+  id: String
+  firebaseAuthUid: String
+  email: String
+  disabled: Boolean
+  imageUrl: String
+  username: String
+  firstName: String
+  lastName: String
+  nickName: String
+  showOnlyNickname: Boolean
+  birthday: DateTime
+  hideAge: Boolean
+  position: String
+  isAlumni: Boolean
+  roomNumber: Int
+  postNumber: Int
+  bio: String
+  createdAt: DateTime
+  updatedAt: DateTime
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type UserMaxAggregate {
+  id: String
+  firebaseAuthUid: String
+  email: String
+  disabled: Boolean
+  imageUrl: String
+  username: String
+  firstName: String
+  lastName: String
+  nickName: String
+  showOnlyNickname: Boolean
+  birthday: DateTime
+  hideAge: Boolean
+  position: String
+  isAlumni: Boolean
+  roomNumber: Int
+  postNumber: Int
+  bio: String
+  createdAt: DateTime
+  updatedAt: DateTime
+}
+
+type UserCount {
+  socialLinks: Int!
+  groups: Int!
+  roots: Int!
+  skills: Int!
+  tags: Int!
+}
 
 type SocialLink {
   id: ID!
@@ -53,11 +148,6 @@ enum GroupType {
   COMMITTEE
   CLUB
 }
-
-"""
-A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
-"""
-scalar DateTime
 
 type RootsCount {
   users: Int!
@@ -138,14 +228,6 @@ type Tag {
   _count: TagCount!
 }
 
-type UserCount {
-  socialLinks: Int!
-  groups: Int!
-  roots: Int!
-  skills: Int!
-  tags: Int!
-}
-
 type User {
   id: ID!
   firebaseAuthUid: String!
@@ -185,101 +267,12 @@ type User {
   _count: UserCount!
 }
 
-type UserCountAggregate {
-  id: Int!
-  firebaseAuthUid: Int!
-  email: Int!
-  disabled: Int!
-  imageUrl: Int!
-  username: Int!
-  firstName: Int!
-  lastName: Int!
-  nickName: Int!
-  showOnlyNickname: Int!
-  birthday: Int!
-  hideAge: Int!
-  position: Int!
-  isAlumni: Int!
-  roomNumber: Int!
-  postNumber: Int!
-  bio: Int!
-  photoUrls: Int!
-  createdAt: Int!
-  updatedAt: Int!
-  _all: Int!
-}
-
-type UserAvgAggregate {
-  roomNumber: Float
-  postNumber: Float
-}
-
-type UserSumAggregate {
-  roomNumber: Int
-  postNumber: Int
-}
-
-type UserMinAggregate {
-  id: String
-  firebaseAuthUid: String
-  email: String
-  disabled: Boolean
-  imageUrl: String
-  username: String
-  firstName: String
-  lastName: String
-  nickName: String
-  showOnlyNickname: Boolean
-  birthday: DateTime
-  hideAge: Boolean
-  position: String
-  isAlumni: Boolean
-  roomNumber: Int
-  postNumber: Int
-  bio: String
-  createdAt: DateTime
-  updatedAt: DateTime
-}
-
-type UserMaxAggregate {
-  id: String
-  firebaseAuthUid: String
-  email: String
-  disabled: Boolean
-  imageUrl: String
-  username: String
-  firstName: String
-  lastName: String
-  nickName: String
-  showOnlyNickname: Boolean
-  birthday: DateTime
-  hideAge: Boolean
-  position: String
-  isAlumni: Boolean
-  roomNumber: Int
-  postNumber: Int
-  bio: String
-  createdAt: DateTime
-  updatedAt: DateTime
-}
-
-type AuthLogin {
-  accessToken: String!
-}
-
-type IsValid {
-  isValid: Boolean!
-}
-
 type AuthSignup {
   accessToken: String!
   user: User!
 }
 
 type Query {
-  """{ Authorization: Bearer <firebaseIdToken> }"""
-  validateUsername(username: String!): IsValid!
-
   """{ Authorization: Bearer <accessToken> }"""
   whoAmI: User!
 
@@ -288,6 +281,9 @@ type Query {
 
   """{ Authorization: Bearer <accessToken> }"""
   user(where: UserWhereUniqueInput!): User!
+
+  """{ Authorization: Bearer <firebaseIdToken> }"""
+  validateUsername(username: String!): IsValid!
 }
 
 input UserWhereInput {
