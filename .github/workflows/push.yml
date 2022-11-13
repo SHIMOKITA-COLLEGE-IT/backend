@@ -23,7 +23,9 @@ jobs:
           node-version: 18.12
           cache: npm
       - run: npm ci
-      - run: npm start & sleep 10s
+      - run: npm run start:dev & sleep 10s
+        env: 
+          JWT_SECRET_KEY: hoge
   push:
     needs: build
     runs-on: ubuntu-latest
