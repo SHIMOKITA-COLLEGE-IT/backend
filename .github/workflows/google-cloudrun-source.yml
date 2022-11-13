@@ -94,7 +94,24 @@ jobs:
       # If required, use the Cloud Run url output in later steps
       - name: Show Output
         run: echo ${{ steps.deploy.outputs.url }}
-
+  migration:
+    needs: deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Start Cloud SQL Proxy
+        run: |
+          echo '${{ secrets.CS_SA_KEY }}' > sa_key
+          docker pull gcr.io/cloudsql-docker/gce-proxy
+          docker run -d \
+            -v $PWD/sa_key:/config \
+            -p 127.0.0.1:5432:5432 \
+            gcr.io/cloudsql-docker/gce-proxy /cloud_sql_proxy \
+            -instances=college-app-366823:asia-northeast1:college-app=tcp:0.0.0.0:5432 \
+            -credential_file=/config
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18.12
       - name: Cloud SQL migration
         run: npx prisma migrate deploy
         env: 
