@@ -58,7 +58,7 @@ jobs:
           echo "$HOME/.rover/bin" >> $GITHUB_PATH
 
       - run: npm ci
-      - run: npm run introspect:schema | rover subgraph publish college-app-supergraph@main --name college-app --schema -
+      - run: npm run --silent introspect:schema | rover subgraph publish college-app-supergraph@main --name college-app --schema -
         env: 
           JWT_SECRET_KEY: hoge
           DATABASE_URL: postgresql://postgres:postgres@localhost:5432/postgres
