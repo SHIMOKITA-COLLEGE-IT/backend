@@ -96,4 +96,4 @@ jobs:
         run: echo ${{ steps.deploy.outputs.url }}
 
       - name: Cloud SQL migration
-        run: npx prisma migrate deploy
+        run: export DATABASE_URL=${{ secrets.DATABASE_URL }} & npx prisma migrate deploy
