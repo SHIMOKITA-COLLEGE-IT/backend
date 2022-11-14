@@ -14,10 +14,4 @@ export class SkillCreateWithoutUsersInput {
 
     @Field(() => SkillCreateNestedManyWithoutParentInput, {nullable:true})
     children?: SkillCreateNestedManyWithoutParentInput;
-
-    @Field(() => Date, {nullable:true})
-    createdAt?: Date | string;
-
-    @Field(() => Date, {nullable:true})
-    updatedAt?: Date | string;
 }

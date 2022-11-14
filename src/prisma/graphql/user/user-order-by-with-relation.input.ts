@@ -2,6 +2,7 @@ import { Field } from '@nestjs/graphql';
 import { InputType } from '@nestjs/graphql';
 import { SortOrder } from '../prisma/sort-order.enum';
 import { SocialLinkOrderByRelationAggregateInput } from '../social-link/social-link-order-by-relation-aggregate.input';
+import { GenerationOrderByRelationAggregateInput } from '../generation/generation-order-by-relation-aggregate.input';
 import { GroupOrderByRelationAggregateInput } from '../group/group-order-by-relation-aggregate.input';
 import { UserRootsTracingOrderByRelationAggregateInput } from '../user-roots-tracing/user-roots-tracing-order-by-relation-aggregate.input';
 import { UserSkillAcquisitionOrderByRelationAggregateInput } from '../user-skill-acquisition/user-skill-acquisition-order-by-relation-aggregate.input';
@@ -60,6 +61,9 @@ export class UserOrderByWithRelationInput {
 
     @Field(() => SortOrder, {nullable:true})
     postNumber?: keyof typeof SortOrder;
+
+    @Field(() => GenerationOrderByRelationAggregateInput, {nullable:true})
+    generations?: GenerationOrderByRelationAggregateInput;
 
     @Field(() => GroupOrderByRelationAggregateInput, {nullable:true})
     groups?: GroupOrderByRelationAggregateInput;

@@ -5,7 +5,6 @@ import { StringFilter } from '../prisma/string-filter.input';
 import { EnumRootsTypeFilter } from '../prisma/enum-roots-type-filter.input';
 import { StringNullableFilter } from '../prisma/string-nullable-filter.input';
 import { UserRootsTracingListRelationFilter } from '../user-roots-tracing/user-roots-tracing-list-relation-filter.input';
-import { DateTimeFilter } from '../prisma/date-time-filter.input';
 
 @InputType()
 export class RootsWhereInput {
@@ -36,10 +35,4 @@ export class RootsWhereInput {
 
     @Field(() => UserRootsTracingListRelationFilter, {nullable:true})
     users?: UserRootsTracingListRelationFilter;
-
-    @Field(() => DateTimeFilter, {nullable:true})
-    createdAt?: DateTimeFilter;
-
-    @Field(() => DateTimeFilter, {nullable:true})
-    updatedAt?: DateTimeFilter;
 }

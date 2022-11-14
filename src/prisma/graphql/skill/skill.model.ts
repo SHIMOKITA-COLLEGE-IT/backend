@@ -26,12 +26,6 @@ export class Skill {
     @Field(() => [UserSkillAcquisition], {nullable:true})
     users?: Array<UserSkillAcquisition>;
 
-    @Field(() => Date, {nullable:false})
-    createdAt!: Date;
-
-    @Field(() => Date, {nullable:false})
-    updatedAt!: Date;
-
     @Field(() => SkillCount, {nullable:false})
     _count?: SkillCount;
 }

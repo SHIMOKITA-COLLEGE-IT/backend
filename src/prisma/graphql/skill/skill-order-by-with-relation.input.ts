@@ -24,10 +24,4 @@ export class SkillOrderByWithRelationInput {
 
     @Field(() => UserSkillAcquisitionOrderByRelationAggregateInput, {nullable:true})
     users?: UserSkillAcquisitionOrderByRelationAggregateInput;
-
-    @Field(() => SortOrder, {nullable:true})
-    createdAt?: keyof typeof SortOrder;
-
-    @Field(() => SortOrder, {nullable:true})
-    updatedAt?: keyof typeof SortOrder;
 }

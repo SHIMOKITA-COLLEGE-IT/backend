@@ -22,7 +22,7 @@ export { GroupCreateInput } from './group-create.input';
 export { GroupCreatephotoUrlsInput } from './group-createphoto-urls.input';
 export { GroupGroupByArgs } from './group-group-by.args';
 export { GroupGroupBy } from './group-group-by.output';
-export { GroupGroupTypeNameFromToCompoundUniqueInput } from './group-group-type-name-from-to-compound-unique.input';
+export { GroupGroupTypeNameCompoundUniqueInput } from './group-group-type-name-compound-unique.input';
 export { GroupListRelationFilter } from './group-list-relation-filter.input';
 export { GroupMaxAggregateInput } from './group-max-aggregate.input';
 export { GroupMaxAggregate } from './group-max-aggregate.output';

@@ -3,6 +3,7 @@ import { ObjectType } from '@nestjs/graphql';
 import { ID } from '@nestjs/graphql';
 import { SocialLink } from '../social-link/social-link.model';
 import { Int } from '@nestjs/graphql';
+import { Generation } from '../generation/generation.model';
 import { Group } from '../group/group.model';
 import { UserRootsTracing } from '../user-roots-tracing/user-roots-tracing.model';
 import { UserSkillAcquisition } from '../user-skill-acquisition/user-skill-acquisition.model';
@@ -27,8 +28,8 @@ export class User {
     @Field(() => String, {nullable:true})
     imageUrl!: string | null;
 
-    @Field(() => String, {nullable:true})
-    username!: string | null;
+    @Field(() => String, {nullable:false})
+    username!: string;
 
     @Field(() => String, {nullable:false})
     firstName!: string;
@@ -70,6 +71,9 @@ export class User {
      */
     @Field(() => Int, {nullable:true,description:'@Validator.@Min(100)\n@Validator.@Max(599)'})
     postNumber!: number | null;
+
+    @Field(() => [Generation], {nullable:true})
+    generations?: Array<Generation>;
 
     @Field(() => [Group], {nullable:true})
     groups?: Array<Group>;

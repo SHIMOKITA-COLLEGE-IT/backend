@@ -5,9 +5,7 @@ export enum RootsScalarFieldEnum {
     name = "name",
     rootsType = "rootsType",
     googleMapUrl = "googleMapUrl",
-    introductionUrl = "introductionUrl",
-    createdAt = "createdAt",
-    updatedAt = "updatedAt"
+    introductionUrl = "introductionUrl"
 }
 
 

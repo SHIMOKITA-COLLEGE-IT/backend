@@ -2,6 +2,7 @@ import { Field } from '@nestjs/graphql';
 import { InputType } from '@nestjs/graphql';
 import { Int } from '@nestjs/graphql';
 import { GroupType } from '../prisma/group-type.enum';
+import * as Validator from 'class-validator';
 import { GroupCreatephotoUrlsInput } from './group-createphoto-urls.input';
 import { UserUncheckedCreateNestedManyWithoutGroupsInput } from '../user/user-unchecked-create-nested-many-without-groups.input';
 
@@ -17,16 +18,11 @@ export class GroupUncheckedCreateInput {
     @Field(() => String, {nullable:false})
     name!: string;
 
-    @Field(() => Date, {nullable:true})
-    from?: Date | string;
-
-    @Field(() => Date, {nullable:true})
-    to?: Date | string;
-
     @Field(() => String, {nullable:true})
     emoji?: string;
 
     @Field(() => String, {nullable:true})
+    @Validator.IsUrl()
     imageUrl?: string;
 
     @Field(() => String, {nullable:true})

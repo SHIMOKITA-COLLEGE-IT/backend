@@ -12,10 +12,4 @@ export class SkillMinAggregateInput {
 
     @Field(() => Boolean, {nullable:true})
     parentId?: true;
-
-    @Field(() => Boolean, {nullable:true})
-    createdAt?: true;
-
-    @Field(() => Boolean, {nullable:true})
-    updatedAt?: true;
 }

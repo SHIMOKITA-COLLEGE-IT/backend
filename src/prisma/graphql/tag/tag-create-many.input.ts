@@ -16,10 +16,4 @@ export class TagCreateManyInput {
     @Field(() => String, {nullable:true})
     @Validator.IsUrl()
     iconUrl?: string;
-
-    @Field(() => Date, {nullable:true})
-    createdAt?: Date | string;
-
-    @Field(() => Date, {nullable:true})
-    updatedAt?: Date | string;
 }

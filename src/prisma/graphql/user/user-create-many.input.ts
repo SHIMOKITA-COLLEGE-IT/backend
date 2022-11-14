@@ -24,10 +24,10 @@ export class UserCreateManyInput {
     @Validator.IsUrl()
     imageUrl?: string;
 
-    @Field(() => String, {nullable:true})
+    @Field(() => String, {nullable:false})
     @Validator.IsAlphanumeric()
-    @Validator.Length(4, 12)
-    username?: string;
+    @Validator.Length(3, 12)
+    username!: string;
 
     @Field(() => String, {nullable:false})
     @Validator.IsNotEmpty()

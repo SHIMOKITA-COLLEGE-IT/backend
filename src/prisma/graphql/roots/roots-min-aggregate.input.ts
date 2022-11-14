@@ -18,10 +18,4 @@ export class RootsMinAggregateInput {
 
     @Field(() => Boolean, {nullable:true})
     introductionUrl?: true;
-
-    @Field(() => Boolean, {nullable:true})
-    createdAt?: true;
-
-    @Field(() => Boolean, {nullable:true})
-    updatedAt?: true;
 }

@@ -25,8 +25,8 @@ export class UserGroupBy {
     @Field(() => String, {nullable:true})
     imageUrl?: string;
 
-    @Field(() => String, {nullable:true})
-    username?: string;
+    @Field(() => String, {nullable:false})
+    username!: string;
 
     @Field(() => String, {nullable:false})
     firstName!: string;

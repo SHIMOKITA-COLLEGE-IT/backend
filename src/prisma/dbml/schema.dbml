@@ -8,8 +8,8 @@ Table User {
   email String [unique, not null, note: '@Validator.IsEmail()']
   disabled Boolean [not null, default: false]
   imageUrl String [note: '@Validator.IsUrl()']
-  username String [unique, note: '@Validator.IsAlphanumeric()
-@Validator.Length(4, 12)']
+  username String [unique, not null, note: '@Validator.IsAlphanumeric()
+@Validator.Length(3, 12)']
   firstName String [not null, note: '@Validator.IsNotEmpty()']
   lastName String [not null, note: '@Validator.IsNotEmpty()']
   nickName String
@@ -23,6 +23,7 @@ Table User {
 @Validator.@Max(599)']
   postNumber Int [note: '@Validator.@Min(100)
 @Validator.@Max(599)']
+  generations Generation [not null]
   groups Group [not null]
   roots UserRootsTracing [not null]
   skills UserSkillAcquisition [not null]
@@ -33,14 +34,15 @@ Table User {
   updatedAt DateTime [not null]
 }
 
-Table Group {
+Table Generation {
   id Int [pk, increment]
-  groupType GroupType [not null]
+  generationType GenerationType [not null]
   name String [not null]
-  from DateTime
-  to DateTime
+  from DateTime [not null]
+  to DateTime [not null]
   emoji String
-  imageUrl String
+  imageUrl String [note: '@Validator.IsUrl()']
+  hexColor String [note: '@Validator.IsHexColor()']
   slackChannel String
   description String
   photoUrls String[] [not null, note: '@Validator.IsUrl(undefined, { each: true })']
@@ -49,7 +51,25 @@ Table Group {
   updatedAt DateTime [not null]
 
   indexes {
-    (groupType, name, from, to) [unique]
+    (generationType, name, from, to) [unique]
+  }
+}
+
+Table Group {
+  id Int [pk, increment]
+  groupType GroupType [not null]
+  name String [not null]
+  emoji String
+  imageUrl String [note: '@Validator.IsUrl()']
+  slackChannel String
+  description String
+  photoUrls String[] [not null, note: '@Validator.IsUrl(undefined, { each: true })']
+  users User [not null]
+  createdAt DateTime [default: `now()`, not null]
+  updatedAt DateTime [not null]
+
+  indexes {
+    (groupType, name) [unique]
   }
 }
 
@@ -69,8 +89,6 @@ Table Roots {
   googleMapUrl String
   introductionUrl String
   users UserRootsTracing [not null]
-  createdAt DateTime [default: `now()`, not null]
-  updatedAt DateTime [not null]
 
   indexes {
     (name, rootsType) [unique]
@@ -98,8 +116,6 @@ Table Skill {
   parent Skill
   children Skill [not null]
   users UserSkillAcquisition [not null]
-  createdAt DateTime [default: `now()`, not null]
-  updatedAt DateTime [not null]
 }
 
 Table UserSkillAcquisition {
@@ -120,8 +136,11 @@ Table Tag {
   name String [not null, note: '@Validator.IsNotEmpty()']
   iconUrl String [note: '@Validator.IsUrl()']
   users User [not null]
-  createdAt DateTime [default: `now()`, not null]
-  updatedAt DateTime [not null]
+}
+
+Table GenerationToUser {
+  generationsId Int [ref: > Generation.id]
+  usersId String [ref: > User.id]
 }
 
 Table GroupToUser {
@@ -134,10 +153,13 @@ Table TagToUser {
   usersId String [ref: > User.id]
 }
 
-Enum GroupType {
+Enum GenerationType {
   PROGRAM
   HOUSE
   HOME
+}
+
+Enum GroupType {
   COMMITTEE
   CLUB
 }
@@ -165,14 +187,14 @@ Enum RootsType {
 
 Ref: SocialLink.userId > User.id [delete: Cascade]
 
-Ref: UserRootsTracing.userId > User.id
+Ref: UserRootsTracing.userId > User.id [delete: Cascade]
 
-Ref: UserRootsTracing.rootsId > Roots.id
+Ref: UserRootsTracing.rootsId > Roots.id [delete: Cascade]
 
 Ref: Skill.parentId - Skill.id [delete: Restrict]
 
-Ref: UserSkillAcquisition.userId > User.id
+Ref: UserSkillAcquisition.userId > User.id [delete: Cascade]
 
-Ref: UserSkillAcquisition.skillId > Skill.id
+Ref: UserSkillAcquisition.skillId > Skill.id [delete: Cascade]
 
 Ref: UserSkillAcquisition.(userId, rootsId) > UserRootsTracing.(userId, rootsId)

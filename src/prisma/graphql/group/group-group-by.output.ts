@@ -20,12 +20,6 @@ export class GroupGroupBy {
     @Field(() => String, {nullable:false})
     name!: string;
 
-    @Field(() => Date, {nullable:true})
-    from?: Date | string;
-
-    @Field(() => Date, {nullable:true})
-    to?: Date | string;
-
     @Field(() => String, {nullable:true})
     emoji?: string;
 

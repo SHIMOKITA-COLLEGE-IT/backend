@@ -23,10 +23,4 @@ export class RootsOrderByWithRelationInput {
 
     @Field(() => UserRootsTracingOrderByRelationAggregateInput, {nullable:true})
     users?: UserRootsTracingOrderByRelationAggregateInput;
-
-    @Field(() => SortOrder, {nullable:true})
-    createdAt?: keyof typeof SortOrder;
-
-    @Field(() => SortOrder, {nullable:true})
-    updatedAt?: keyof typeof SortOrder;
 }

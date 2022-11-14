@@ -3,9 +3,7 @@ import { registerEnumType } from '@nestjs/graphql';
 export enum SkillScalarFieldEnum {
     id = "id",
     name = "name",
-    parentId = "parentId",
-    createdAt = "createdAt",
-    updatedAt = "updatedAt"
+    parentId = "parentId"
 }
 
 

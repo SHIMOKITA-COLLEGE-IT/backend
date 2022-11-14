@@ -16,10 +16,4 @@ export class TagCreateInput {
 
     @Field(() => UserCreateNestedManyWithoutTagsInput, {nullable:true})
     users?: UserCreateNestedManyWithoutTagsInput;
-
-    @Field(() => Date, {nullable:true})
-    createdAt?: Date | string;
-
-    @Field(() => Date, {nullable:true})
-    updatedAt?: Date | string;
 }

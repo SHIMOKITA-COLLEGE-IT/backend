@@ -12,10 +12,4 @@ export class TagMinAggregateInput {
 
     @Field(() => Boolean, {nullable:true})
     iconUrl?: true;
-
-    @Field(() => Boolean, {nullable:true})
-    createdAt?: true;
-
-    @Field(() => Boolean, {nullable:true})
-    updatedAt?: true;
 }

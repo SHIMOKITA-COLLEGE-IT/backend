@@ -6,6 +6,7 @@ import { NullableStringFieldUpdateOperationsInput } from '../prisma/nullable-str
 import { DateTimeFieldUpdateOperationsInput } from '../prisma/date-time-field-update-operations.input';
 import { SocialLinkUncheckedUpdateManyWithoutUserNestedInput } from '../social-link/social-link-unchecked-update-many-without-user-nested.input';
 import { NullableIntFieldUpdateOperationsInput } from '../prisma/nullable-int-field-update-operations.input';
+import { GenerationUncheckedUpdateManyWithoutUsersNestedInput } from '../generation/generation-unchecked-update-many-without-users-nested.input';
 import { GroupUncheckedUpdateManyWithoutUsersNestedInput } from '../group/group-unchecked-update-many-without-users-nested.input';
 import { UserRootsTracingUncheckedUpdateManyWithoutUserNestedInput } from '../user-roots-tracing/user-roots-tracing-unchecked-update-many-without-user-nested.input';
 import { TagUncheckedUpdateManyWithoutUsersNestedInput } from '../tag/tag-unchecked-update-many-without-users-nested.input';
@@ -29,8 +30,8 @@ export class UserUncheckedUpdateWithoutSkillsInput {
     @Field(() => NullableStringFieldUpdateOperationsInput, {nullable:true})
     imageUrl?: NullableStringFieldUpdateOperationsInput;
 
-    @Field(() => NullableStringFieldUpdateOperationsInput, {nullable:true})
-    username?: NullableStringFieldUpdateOperationsInput;
+    @Field(() => StringFieldUpdateOperationsInput, {nullable:true})
+    username?: StringFieldUpdateOperationsInput;
 
     @Field(() => StringFieldUpdateOperationsInput, {nullable:true})
     firstName?: StringFieldUpdateOperationsInput;
@@ -64,6 +65,9 @@ export class UserUncheckedUpdateWithoutSkillsInput {
 
     @Field(() => NullableIntFieldUpdateOperationsInput, {nullable:true})
     postNumber?: NullableIntFieldUpdateOperationsInput;
+
+    @Field(() => GenerationUncheckedUpdateManyWithoutUsersNestedInput, {nullable:true})
+    generations?: GenerationUncheckedUpdateManyWithoutUsersNestedInput;
 
     @Field(() => GroupUncheckedUpdateManyWithoutUsersNestedInput, {nullable:true})
     groups?: GroupUncheckedUpdateManyWithoutUsersNestedInput;

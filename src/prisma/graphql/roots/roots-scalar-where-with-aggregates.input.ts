@@ -4,7 +4,6 @@ import { IntWithAggregatesFilter } from '../prisma/int-with-aggregates-filter.in
 import { StringWithAggregatesFilter } from '../prisma/string-with-aggregates-filter.input';
 import { EnumRootsTypeWithAggregatesFilter } from '../prisma/enum-roots-type-with-aggregates-filter.input';
 import { StringNullableWithAggregatesFilter } from '../prisma/string-nullable-with-aggregates-filter.input';
-import { DateTimeWithAggregatesFilter } from '../prisma/date-time-with-aggregates-filter.input';
 
 @InputType()
 export class RootsScalarWhereWithAggregatesInput {
@@ -32,10 +31,4 @@ export class RootsScalarWhereWithAggregatesInput {
 
     @Field(() => StringNullableWithAggregatesFilter, {nullable:true})
     introductionUrl?: StringNullableWithAggregatesFilter;
-
-    @Field(() => DateTimeWithAggregatesFilter, {nullable:true})
-    createdAt?: DateTimeWithAggregatesFilter;
-
-    @Field(() => DateTimeWithAggregatesFilter, {nullable:true})
-    updatedAt?: DateTimeWithAggregatesFilter;
 }

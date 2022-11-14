@@ -14,12 +14,6 @@ export class GroupMaxAggregateInput {
     name?: true;
 
     @Field(() => Boolean, {nullable:true})
-    from?: true;
-
-    @Field(() => Boolean, {nullable:true})
-    to?: true;
-
-    @Field(() => Boolean, {nullable:true})
     emoji?: true;
 
     @Field(() => Boolean, {nullable:true})

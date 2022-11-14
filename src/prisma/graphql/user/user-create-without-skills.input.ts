@@ -3,6 +3,7 @@ import { InputType } from '@nestjs/graphql';
 import * as Validator from 'class-validator';
 import { SocialLinkCreateNestedManyWithoutUserInput } from '../social-link/social-link-create-nested-many-without-user.input';
 import { Int } from '@nestjs/graphql';
+import { GenerationCreateNestedManyWithoutUsersInput } from '../generation/generation-create-nested-many-without-users.input';
 import { GroupCreateNestedManyWithoutUsersInput } from '../group/group-create-nested-many-without-users.input';
 import { UserRootsTracingCreateNestedManyWithoutUserInput } from '../user-roots-tracing/user-roots-tracing-create-nested-many-without-user.input';
 import { TagCreateNestedManyWithoutUsersInput } from '../tag/tag-create-nested-many-without-users.input';
@@ -28,10 +29,10 @@ export class UserCreateWithoutSkillsInput {
     @Validator.IsUrl()
     imageUrl?: string;
 
-    @Field(() => String, {nullable:true})
+    @Field(() => String, {nullable:false})
     @Validator.IsAlphanumeric()
-    @Validator.Length(4, 12)
-    username?: string;
+    @Validator.Length(3, 12)
+    username!: string;
 
     @Field(() => String, {nullable:false})
     @Validator.IsNotEmpty()
@@ -68,6 +69,9 @@ export class UserCreateWithoutSkillsInput {
 
     @Field(() => Int, {nullable:true})
     postNumber?: number;
+
+    @Field(() => GenerationCreateNestedManyWithoutUsersInput, {nullable:true})
+    generations?: GenerationCreateNestedManyWithoutUsersInput;
 
     @Field(() => GroupCreateNestedManyWithoutUsersInput, {nullable:true})
     groups?: GroupCreateNestedManyWithoutUsersInput;

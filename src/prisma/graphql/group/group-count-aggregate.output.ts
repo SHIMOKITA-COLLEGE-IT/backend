@@ -15,12 +15,6 @@ export class GroupCountAggregate {
     name!: number;
 
     @Field(() => Int, {nullable:false})
-    from!: number;
-
-    @Field(() => Int, {nullable:false})
-    to!: number;
-
-    @Field(() => Int, {nullable:false})
     emoji!: number;
 
     @Field(() => Int, {nullable:false})

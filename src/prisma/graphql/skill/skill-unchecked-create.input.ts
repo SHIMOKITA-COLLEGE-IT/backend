@@ -21,10 +21,4 @@ export class SkillUncheckedCreateInput {
 
     @Field(() => UserSkillAcquisitionUncheckedCreateNestedManyWithoutSkillInput, {nullable:true})
     users?: UserSkillAcquisitionUncheckedCreateNestedManyWithoutSkillInput;
-
-    @Field(() => Date, {nullable:true})
-    createdAt?: Date | string;
-
-    @Field(() => Date, {nullable:true})
-    updatedAt?: Date | string;
 }

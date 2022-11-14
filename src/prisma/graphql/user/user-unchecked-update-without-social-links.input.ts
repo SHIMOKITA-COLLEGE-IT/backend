@@ -5,6 +5,7 @@ import { BoolFieldUpdateOperationsInput } from '../prisma/bool-field-update-oper
 import { NullableStringFieldUpdateOperationsInput } from '../prisma/nullable-string-field-update-operations.input';
 import { DateTimeFieldUpdateOperationsInput } from '../prisma/date-time-field-update-operations.input';
 import { NullableIntFieldUpdateOperationsInput } from '../prisma/nullable-int-field-update-operations.input';
+import { GenerationUncheckedUpdateManyWithoutUsersNestedInput } from '../generation/generation-unchecked-update-many-without-users-nested.input';
 import { GroupUncheckedUpdateManyWithoutUsersNestedInput } from '../group/group-unchecked-update-many-without-users-nested.input';
 import { UserRootsTracingUncheckedUpdateManyWithoutUserNestedInput } from '../user-roots-tracing/user-roots-tracing-unchecked-update-many-without-user-nested.input';
 import { UserSkillAcquisitionUncheckedUpdateManyWithoutUserNestedInput } from '../user-skill-acquisition/user-skill-acquisition-unchecked-update-many-without-user-nested.input';
@@ -29,8 +30,8 @@ export class UserUncheckedUpdateWithoutSocialLinksInput {
     @Field(() => NullableStringFieldUpdateOperationsInput, {nullable:true})
     imageUrl?: NullableStringFieldUpdateOperationsInput;
 
-    @Field(() => NullableStringFieldUpdateOperationsInput, {nullable:true})
-    username?: NullableStringFieldUpdateOperationsInput;
+    @Field(() => StringFieldUpdateOperationsInput, {nullable:true})
+    username?: StringFieldUpdateOperationsInput;
 
     @Field(() => StringFieldUpdateOperationsInput, {nullable:true})
     firstName?: StringFieldUpdateOperationsInput;
@@ -61,6 +62,9 @@ export class UserUncheckedUpdateWithoutSocialLinksInput {
 
     @Field(() => NullableIntFieldUpdateOperationsInput, {nullable:true})
     postNumber?: NullableIntFieldUpdateOperationsInput;
+
+    @Field(() => GenerationUncheckedUpdateManyWithoutUsersNestedInput, {nullable:true})
+    generations?: GenerationUncheckedUpdateManyWithoutUsersNestedInput;
 
     @Field(() => GroupUncheckedUpdateManyWithoutUsersNestedInput, {nullable:true})
     groups?: GroupUncheckedUpdateManyWithoutUsersNestedInput;

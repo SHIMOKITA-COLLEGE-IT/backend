@@ -1,6 +1,7 @@
 import { Field } from '@nestjs/graphql';
 import { InputType } from '@nestjs/graphql';
 import { GroupType } from '../prisma/group-type.enum';
+import * as Validator from 'class-validator';
 import { GroupCreatephotoUrlsInput } from './group-createphoto-urls.input';
 import { UserCreateNestedManyWithoutGroupsInput } from '../user/user-create-nested-many-without-groups.input';
 
@@ -13,16 +14,11 @@ export class GroupCreateInput {
     @Field(() => String, {nullable:false})
     name!: string;
 
-    @Field(() => Date, {nullable:true})
-    from?: Date | string;
-
-    @Field(() => Date, {nullable:true})
-    to?: Date | string;
-
     @Field(() => String, {nullable:true})
     emoji?: string;
 
     @Field(() => String, {nullable:true})
+    @Validator.IsUrl()
     imageUrl?: string;
 
     @Field(() => String, {nullable:true})

@@ -17,6 +17,6 @@ export class UserWhereUniqueInput {
 
     @Field(() => String, {nullable:true})
     @Validator.IsAlphanumeric()
-    @Validator.Length(4, 12)
+    @Validator.Length(3, 12)
     username?: string;
 }

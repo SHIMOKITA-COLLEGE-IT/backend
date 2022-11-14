@@ -15,11 +15,5 @@ export class TagCountAggregate {
     iconUrl!: number;
 
     @Field(() => Int, {nullable:false})
-    createdAt!: number;
-
-    @Field(() => Int, {nullable:false})
-    updatedAt!: number;
-
-    @Field(() => Int, {nullable:false})
     _all!: number;
 }

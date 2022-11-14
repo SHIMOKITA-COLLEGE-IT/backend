@@ -5,6 +5,7 @@ import { BoolFieldUpdateOperationsInput } from '../prisma/bool-field-update-oper
 import { NullableStringFieldUpdateOperationsInput } from '../prisma/nullable-string-field-update-operations.input';
 import { DateTimeFieldUpdateOperationsInput } from '../prisma/date-time-field-update-operations.input';
 import { NullableIntFieldUpdateOperationsInput } from '../prisma/nullable-int-field-update-operations.input';
+import { GenerationUpdateManyWithoutUsersNestedInput } from '../generation/generation-update-many-without-users-nested.input';
 import { GroupUpdateManyWithoutUsersNestedInput } from '../group/group-update-many-without-users-nested.input';
 import { UserRootsTracingUpdateManyWithoutUserNestedInput } from '../user-roots-tracing/user-roots-tracing-update-many-without-user-nested.input';
 import { UserSkillAcquisitionUpdateManyWithoutUserNestedInput } from '../user-skill-acquisition/user-skill-acquisition-update-many-without-user-nested.input';
@@ -29,8 +30,8 @@ export class UserUpdateWithoutSocialLinksInput {
     @Field(() => NullableStringFieldUpdateOperationsInput, {nullable:true})
     imageUrl?: NullableStringFieldUpdateOperationsInput;
 
-    @Field(() => NullableStringFieldUpdateOperationsInput, {nullable:true})
-    username?: NullableStringFieldUpdateOperationsInput;
+    @Field(() => StringFieldUpdateOperationsInput, {nullable:true})
+    username?: StringFieldUpdateOperationsInput;
 
     @Field(() => StringFieldUpdateOperationsInput, {nullable:true})
     firstName?: StringFieldUpdateOperationsInput;
@@ -61,6 +62,9 @@ export class UserUpdateWithoutSocialLinksInput {
 
     @Field(() => NullableIntFieldUpdateOperationsInput, {nullable:true})
     postNumber?: NullableIntFieldUpdateOperationsInput;
+
+    @Field(() => GenerationUpdateManyWithoutUsersNestedInput, {nullable:true})
+    generations?: GenerationUpdateManyWithoutUsersNestedInput;
 
     @Field(() => GroupUpdateManyWithoutUsersNestedInput, {nullable:true})
     groups?: GroupUpdateManyWithoutUsersNestedInput;

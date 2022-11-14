@@ -25,12 +25,6 @@ export class RootsOrderByWithAggregationInput {
     @Field(() => SortOrder, {nullable:true})
     introductionUrl?: keyof typeof SortOrder;
 
-    @Field(() => SortOrder, {nullable:true})
-    createdAt?: keyof typeof SortOrder;
-
-    @Field(() => SortOrder, {nullable:true})
-    updatedAt?: keyof typeof SortOrder;
-
     @Field(() => RootsCountOrderByAggregateInput, {nullable:true})
     _count?: RootsCountOrderByAggregateInput;
 

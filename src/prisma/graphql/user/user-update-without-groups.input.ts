@@ -6,6 +6,7 @@ import { NullableStringFieldUpdateOperationsInput } from '../prisma/nullable-str
 import { DateTimeFieldUpdateOperationsInput } from '../prisma/date-time-field-update-operations.input';
 import { SocialLinkUpdateManyWithoutUserNestedInput } from '../social-link/social-link-update-many-without-user-nested.input';
 import { NullableIntFieldUpdateOperationsInput } from '../prisma/nullable-int-field-update-operations.input';
+import { GenerationUpdateManyWithoutUsersNestedInput } from '../generation/generation-update-many-without-users-nested.input';
 import { UserRootsTracingUpdateManyWithoutUserNestedInput } from '../user-roots-tracing/user-roots-tracing-update-many-without-user-nested.input';
 import { UserSkillAcquisitionUpdateManyWithoutUserNestedInput } from '../user-skill-acquisition/user-skill-acquisition-update-many-without-user-nested.input';
 import { TagUpdateManyWithoutUsersNestedInput } from '../tag/tag-update-many-without-users-nested.input';
@@ -29,8 +30,8 @@ export class UserUpdateWithoutGroupsInput {
     @Field(() => NullableStringFieldUpdateOperationsInput, {nullable:true})
     imageUrl?: NullableStringFieldUpdateOperationsInput;
 
-    @Field(() => NullableStringFieldUpdateOperationsInput, {nullable:true})
-    username?: NullableStringFieldUpdateOperationsInput;
+    @Field(() => StringFieldUpdateOperationsInput, {nullable:true})
+    username?: StringFieldUpdateOperationsInput;
 
     @Field(() => StringFieldUpdateOperationsInput, {nullable:true})
     firstName?: StringFieldUpdateOperationsInput;
@@ -64,6 +65,9 @@ export class UserUpdateWithoutGroupsInput {
 
     @Field(() => NullableIntFieldUpdateOperationsInput, {nullable:true})
     postNumber?: NullableIntFieldUpdateOperationsInput;
+
+    @Field(() => GenerationUpdateManyWithoutUsersNestedInput, {nullable:true})
+    generations?: GenerationUpdateManyWithoutUsersNestedInput;
 
     @Field(() => UserRootsTracingUpdateManyWithoutUserNestedInput, {nullable:true})
     roots?: UserRootsTracingUpdateManyWithoutUserNestedInput;

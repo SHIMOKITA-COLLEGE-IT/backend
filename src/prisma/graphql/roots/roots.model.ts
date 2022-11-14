@@ -26,12 +26,6 @@ export class Roots {
     @Field(() => [UserRootsTracing], {nullable:true})
     users?: Array<UserRootsTracing>;
 
-    @Field(() => Date, {nullable:false})
-    createdAt!: Date;
-
-    @Field(() => Date, {nullable:false})
-    updatedAt!: Date;
-
     @Field(() => RootsCount, {nullable:false})
     _count?: RootsCount;
 }

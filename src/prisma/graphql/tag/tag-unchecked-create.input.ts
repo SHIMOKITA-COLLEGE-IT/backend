@@ -20,10 +20,4 @@ export class TagUncheckedCreateInput {
 
     @Field(() => UserUncheckedCreateNestedManyWithoutTagsInput, {nullable:true})
     users?: UserUncheckedCreateNestedManyWithoutTagsInput;
-
-    @Field(() => Date, {nullable:true})
-    createdAt?: Date | string;
-
-    @Field(() => Date, {nullable:true})
-    updatedAt?: Date | string;
 }

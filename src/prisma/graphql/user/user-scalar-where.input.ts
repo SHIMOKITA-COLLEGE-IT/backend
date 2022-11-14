@@ -34,8 +34,8 @@ export class UserScalarWhereInput {
     @Field(() => StringNullableFilter, {nullable:true})
     imageUrl?: StringNullableFilter;
 
-    @Field(() => StringNullableFilter, {nullable:true})
-    username?: StringNullableFilter;
+    @Field(() => StringFilter, {nullable:true})
+    username?: StringFilter;
 
     @Field(() => StringFilter, {nullable:true})
     firstName?: StringFilter;

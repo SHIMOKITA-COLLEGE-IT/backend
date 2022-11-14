@@ -15,12 +15,6 @@ export class GroupMinAggregate {
     @Field(() => String, {nullable:true})
     name?: string;
 
-    @Field(() => Date, {nullable:true})
-    from?: Date | string;
-
-    @Field(() => Date, {nullable:true})
-    to?: Date | string;
-
     @Field(() => String, {nullable:true})
     emoji?: string;
 

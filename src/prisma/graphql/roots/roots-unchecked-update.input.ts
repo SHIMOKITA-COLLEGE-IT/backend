@@ -5,7 +5,6 @@ import { StringFieldUpdateOperationsInput } from '../prisma/string-field-update-
 import { EnumRootsTypeFieldUpdateOperationsInput } from '../prisma/enum-roots-type-field-update-operations.input';
 import { NullableStringFieldUpdateOperationsInput } from '../prisma/nullable-string-field-update-operations.input';
 import { UserRootsTracingUncheckedUpdateManyWithoutRootsNestedInput } from '../user-roots-tracing/user-roots-tracing-unchecked-update-many-without-roots-nested.input';
-import { DateTimeFieldUpdateOperationsInput } from '../prisma/date-time-field-update-operations.input';
 
 @InputType()
 export class RootsUncheckedUpdateInput {
@@ -27,10 +26,4 @@ export class RootsUncheckedUpdateInput {
 
     @Field(() => UserRootsTracingUncheckedUpdateManyWithoutRootsNestedInput, {nullable:true})
     users?: UserRootsTracingUncheckedUpdateManyWithoutRootsNestedInput;
-
-    @Field(() => DateTimeFieldUpdateOperationsInput, {nullable:true})
-    createdAt?: DateTimeFieldUpdateOperationsInput;
-
-    @Field(() => DateTimeFieldUpdateOperationsInput, {nullable:true})
-    updatedAt?: DateTimeFieldUpdateOperationsInput;
 }

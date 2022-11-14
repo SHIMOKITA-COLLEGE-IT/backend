@@ -26,12 +26,6 @@ export class RootsGroupBy {
     @Field(() => String, {nullable:true})
     introductionUrl?: string;
 
-    @Field(() => Date, {nullable:false})
-    createdAt!: Date | string;
-
-    @Field(() => Date, {nullable:false})
-    updatedAt!: Date | string;
-
     @Field(() => RootsCountAggregate, {nullable:true})
     _count?: RootsCountAggregate;
 

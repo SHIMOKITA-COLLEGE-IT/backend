@@ -6,6 +6,7 @@ import { NullableStringFieldUpdateOperationsInput } from '../prisma/nullable-str
 import { DateTimeFieldUpdateOperationsInput } from '../prisma/date-time-field-update-operations.input';
 import { SocialLinkUncheckedUpdateManyWithoutUserNestedInput } from '../social-link/social-link-unchecked-update-many-without-user-nested.input';
 import { NullableIntFieldUpdateOperationsInput } from '../prisma/nullable-int-field-update-operations.input';
+import { GenerationUncheckedUpdateManyWithoutUsersNestedInput } from '../generation/generation-unchecked-update-many-without-users-nested.input';
 import { UserRootsTracingUncheckedUpdateManyWithoutUserNestedInput } from '../user-roots-tracing/user-roots-tracing-unchecked-update-many-without-user-nested.input';
 import { UserSkillAcquisitionUncheckedUpdateManyWithoutUserNestedInput } from '../user-skill-acquisition/user-skill-acquisition-unchecked-update-many-without-user-nested.input';
 import { TagUncheckedUpdateManyWithoutUsersNestedInput } from '../tag/tag-unchecked-update-many-without-users-nested.input';
@@ -29,8 +30,8 @@ export class UserUncheckedUpdateWithoutGroupsInput {
     @Field(() => NullableStringFieldUpdateOperationsInput, {nullable:true})
     imageUrl?: NullableStringFieldUpdateOperationsInput;
 
-    @Field(() => NullableStringFieldUpdateOperationsInput, {nullable:true})
-    username?: NullableStringFieldUpdateOperationsInput;
+    @Field(() => StringFieldUpdateOperationsInput, {nullable:true})
+    username?: StringFieldUpdateOperationsInput;
 
     @Field(() => StringFieldUpdateOperationsInput, {nullable:true})
     firstName?: StringFieldUpdateOperationsInput;
@@ -64,6 +65,9 @@ export class UserUncheckedUpdateWithoutGroupsInput {
 
     @Field(() => NullableIntFieldUpdateOperationsInput, {nullable:true})
     postNumber?: NullableIntFieldUpdateOperationsInput;
+
+    @Field(() => GenerationUncheckedUpdateManyWithoutUsersNestedInput, {nullable:true})
+    generations?: GenerationUncheckedUpdateManyWithoutUsersNestedInput;
 
     @Field(() => UserRootsTracingUncheckedUpdateManyWithoutUserNestedInput, {nullable:true})
     roots?: UserRootsTracingUncheckedUpdateManyWithoutUserNestedInput;

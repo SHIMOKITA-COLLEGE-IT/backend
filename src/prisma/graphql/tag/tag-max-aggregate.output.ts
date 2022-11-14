@@ -13,10 +13,4 @@ export class TagMaxAggregate {
 
     @Field(() => String, {nullable:true})
     iconUrl?: string;
-
-    @Field(() => Date, {nullable:true})
-    createdAt?: Date | string;
-
-    @Field(() => Date, {nullable:true})
-    updatedAt?: Date | string;
 }

@@ -20,10 +20,4 @@ export class RootsCreateInput {
 
     @Field(() => UserRootsTracingCreateNestedManyWithoutRootsInput, {nullable:true})
     users?: UserRootsTracingCreateNestedManyWithoutRootsInput;
-
-    @Field(() => Date, {nullable:true})
-    createdAt?: Date | string;
-
-    @Field(() => Date, {nullable:true})
-    updatedAt?: Date | string;
 }

@@ -9,6 +9,9 @@ export class UserCount {
     socialLinks?: number;
 
     @Field(() => Int, {nullable:false})
+    generations?: number;
+
+    @Field(() => Int, {nullable:false})
     groups?: number;
 
     @Field(() => Int, {nullable:false})

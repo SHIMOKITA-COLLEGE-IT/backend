@@ -4,8 +4,6 @@ export enum GroupScalarFieldEnum {
     id = "id",
     groupType = "groupType",
     name = "name",
-    from = "from",
-    to = "to",
     emoji = "emoji",
     imageUrl = "imageUrl",
     slackChannel = "slackChannel",

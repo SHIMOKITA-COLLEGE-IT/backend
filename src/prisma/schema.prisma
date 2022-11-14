@@ -34,8 +34,8 @@ model User {
   /// @Validator.IsUrl()
   imageUrl String?
   /// @Validator.IsAlphanumeric()
-  /// @Validator.Length(4, 12)
-  username String? @unique
+  /// @Validator.Length(3, 12)
+  username String  @unique
 
   // Step 2
   /// @Validator.IsNotEmpty()
@@ -51,14 +51,15 @@ model User {
   socialLinks      SocialLink[]
 
   // Step 3
-  isAlumni   Boolean @default(false)
+  isAlumni    Boolean      @default(false)
   /// @Validator.@Min(100)
   /// @Validator.@Max(599)
-  roomNumber Int?
+  roomNumber  Int?
   /// @Validator.@Min(100)
   /// @Validator.@Max(599)
-  postNumber Int?
-  groups     Group[]
+  postNumber  Int?
+  generations Generation[]
+  groups      Group[]
 
   // Step 4
   roots  UserRootsTracing[]
@@ -75,15 +76,20 @@ model User {
   updatedAt DateTime @updatedAt
 }
 
-model Group {
-  id        Int       @id @default(autoincrement())
-  groupType GroupType
-  name      String
-  from      DateTime?
-  to        DateTime?
+model Generation {
+  id Int @id @default(autoincrement())
 
-  emoji        String?
-  imageUrl     String?
+  generationType GenerationType
+  name           String
+  from           DateTime
+  to             DateTime
+
+  emoji    String?
+  /// @Validator.IsUrl()
+  imageUrl String?
+  /// @Validator.IsHexColor()
+  hexColor String?
+
   slackChannel String?
   description  String?
   /// @Validator.IsUrl(undefined, { each: true })
@@ -94,21 +100,48 @@ model Group {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  @@unique([groupType, name, from, to])
+  @@unique([generationType, name, from, to])
 }
 
-enum GroupType {
+enum GenerationType {
   PROGRAM
   HOUSE
   HOME
+}
+
+model Group {
+  id Int @id @default(autoincrement())
+
+  groupType GroupType
+  name      String
+
+  emoji    String?
+  /// @Validator.IsUrl()
+  imageUrl String?
+
+  slackChannel String?
+  description  String?
+  /// @Validator.IsUrl(undefined, { each: true })
+  photoUrls    String[]
+
+  users User[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([groupType, name])
+}
+
+enum GroupType {
   COMMITTEE
   CLUB
 }
 
 model SocialLink {
-  id             Int             @id @default(autoincrement())
-  user           User            @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId         String
+  id     Int    @id @default(autoincrement())
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String
+
   name           String
   // For Icon
   socialLinkType SocialLinkType?
@@ -132,16 +165,15 @@ enum SocialLinkType {
 // seed ShimokitaCollege
 
 model Roots {
-  id              Int       @id @default(autoincrement())
-  name            String
-  rootsType       RootsType
+  id Int @id @default(autoincrement())
+
+  name      String
+  rootsType RootsType
+
   googleMapUrl    String?
   introductionUrl String?
 
   users UserRootsTracing[]
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
 
   @@unique([name, rootsType])
 }
@@ -155,12 +187,13 @@ enum RootsType {
 }
 
 model UserRootsTracing {
-  user    User      @relation(fields: [userId], references: [id])
+  user    User   @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId  String
-  roots   Roots     @relation(fields: [rootsId], references: [id])
+  roots   Roots  @relation(fields: [rootsId], references: [id], onDelete: Cascade)
   rootsId Int
-  from    DateTime?
-  to      DateTime?
+
+  from DateTime?
+  to   DateTime?
 
   userSkillAcquisitions UserSkillAcquisition[]
 
@@ -168,22 +201,21 @@ model UserRootsTracing {
 }
 
 model Skill {
-  id       Int     @id @default(autoincrement())
-  name     String  @unique
+  id Int @id @default(autoincrement())
+
+  name String @unique
+
   parentId Int?
   parent   Skill?  @relation("SkillTree", fields: [parentId], references: [id], onDelete: Restrict, onUpdate: Restrict)
   children Skill[] @relation("SkillTree")
 
   users UserSkillAcquisition[]
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
 }
 
 model UserSkillAcquisition {
-  user    User   @relation(fields: [userId], references: [id])
+  user    User   @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId  String
-  skill   Skill  @relation(fields: [skillId], references: [id])
+  skill   Skill  @relation(fields: [skillId], references: [id], onDelete: Cascade)
   skillId Int
 
   userRootsTracing UserRootsTracing? @relation(fields: [userId, rootsId], references: [userId, rootsId])
@@ -200,7 +232,4 @@ model Tag {
   iconUrl String?
 
   users User[]
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
 }

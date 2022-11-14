@@ -19,12 +19,6 @@ export class SkillOrderByWithAggregationInput {
     @Field(() => SortOrder, {nullable:true})
     parentId?: keyof typeof SortOrder;
 
-    @Field(() => SortOrder, {nullable:true})
-    createdAt?: keyof typeof SortOrder;
-
-    @Field(() => SortOrder, {nullable:true})
-    updatedAt?: keyof typeof SortOrder;
-
     @Field(() => SkillCountOrderByAggregateInput, {nullable:true})
     _count?: SkillCountOrderByAggregateInput;
 

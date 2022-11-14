@@ -17,12 +17,6 @@ export class Group {
     @Field(() => String, {nullable:false})
     name!: string;
 
-    @Field(() => Date, {nullable:true})
-    from!: Date | null;
-
-    @Field(() => Date, {nullable:true})
-    to!: Date | null;
-
     @Field(() => String, {nullable:true})
     emoji!: string | null;
 

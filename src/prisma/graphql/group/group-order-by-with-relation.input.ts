@@ -16,12 +16,6 @@ export class GroupOrderByWithRelationInput {
     name?: keyof typeof SortOrder;
 
     @Field(() => SortOrder, {nullable:true})
-    from?: keyof typeof SortOrder;
-
-    @Field(() => SortOrder, {nullable:true})
-    to?: keyof typeof SortOrder;
-
-    @Field(() => SortOrder, {nullable:true})
     emoji?: keyof typeof SortOrder;
 
     @Field(() => SortOrder, {nullable:true})

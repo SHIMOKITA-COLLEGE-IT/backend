@@ -3,7 +3,6 @@ import { InputType } from '@nestjs/graphql';
 import { IntWithAggregatesFilter } from '../prisma/int-with-aggregates-filter.input';
 import { EnumGroupTypeWithAggregatesFilter } from '../prisma/enum-group-type-with-aggregates-filter.input';
 import { StringWithAggregatesFilter } from '../prisma/string-with-aggregates-filter.input';
-import { DateTimeNullableWithAggregatesFilter } from '../prisma/date-time-nullable-with-aggregates-filter.input';
 import { StringNullableWithAggregatesFilter } from '../prisma/string-nullable-with-aggregates-filter.input';
 import { StringNullableListFilter } from '../prisma/string-nullable-list-filter.input';
 import { DateTimeWithAggregatesFilter } from '../prisma/date-time-with-aggregates-filter.input';
@@ -28,12 +27,6 @@ export class GroupScalarWhereWithAggregatesInput {
 
     @Field(() => StringWithAggregatesFilter, {nullable:true})
     name?: StringWithAggregatesFilter;
-
-    @Field(() => DateTimeNullableWithAggregatesFilter, {nullable:true})
-    from?: DateTimeNullableWithAggregatesFilter;
-
-    @Field(() => DateTimeNullableWithAggregatesFilter, {nullable:true})
-    to?: DateTimeNullableWithAggregatesFilter;
 
     @Field(() => StringNullableWithAggregatesFilter, {nullable:true})
     emoji?: StringNullableWithAggregatesFilter;

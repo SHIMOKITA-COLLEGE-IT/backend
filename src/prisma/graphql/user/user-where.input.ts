@@ -6,6 +6,7 @@ import { StringNullableFilter } from '../prisma/string-nullable-filter.input';
 import { DateTimeFilter } from '../prisma/date-time-filter.input';
 import { SocialLinkListRelationFilter } from '../social-link/social-link-list-relation-filter.input';
 import { IntNullableFilter } from '../prisma/int-nullable-filter.input';
+import { GenerationListRelationFilter } from '../generation/generation-list-relation-filter.input';
 import { GroupListRelationFilter } from '../group/group-list-relation-filter.input';
 import { UserRootsTracingListRelationFilter } from '../user-roots-tracing/user-roots-tracing-list-relation-filter.input';
 import { UserSkillAcquisitionListRelationFilter } from '../user-skill-acquisition/user-skill-acquisition-list-relation-filter.input';
@@ -39,8 +40,8 @@ export class UserWhereInput {
     @Field(() => StringNullableFilter, {nullable:true})
     imageUrl?: StringNullableFilter;
 
-    @Field(() => StringNullableFilter, {nullable:true})
-    username?: StringNullableFilter;
+    @Field(() => StringFilter, {nullable:true})
+    username?: StringFilter;
 
     @Field(() => StringFilter, {nullable:true})
     firstName?: StringFilter;
@@ -74,6 +75,9 @@ export class UserWhereInput {
 
     @Field(() => IntNullableFilter, {nullable:true})
     postNumber?: IntNullableFilter;
+
+    @Field(() => GenerationListRelationFilter, {nullable:true})
+    generations?: GenerationListRelationFilter;
 
     @Field(() => GroupListRelationFilter, {nullable:true})
     groups?: GroupListRelationFilter;

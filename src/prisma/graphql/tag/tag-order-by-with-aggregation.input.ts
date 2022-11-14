@@ -19,12 +19,6 @@ export class TagOrderByWithAggregationInput {
     @Field(() => SortOrder, {nullable:true})
     iconUrl?: keyof typeof SortOrder;
 
-    @Field(() => SortOrder, {nullable:true})
-    createdAt?: keyof typeof SortOrder;
-
-    @Field(() => SortOrder, {nullable:true})
-    updatedAt?: keyof typeof SortOrder;
-
     @Field(() => TagCountOrderByAggregateInput, {nullable:true})
     _count?: TagCountOrderByAggregateInput;
 

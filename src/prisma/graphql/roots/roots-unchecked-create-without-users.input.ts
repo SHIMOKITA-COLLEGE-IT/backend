@@ -20,10 +20,4 @@ export class RootsUncheckedCreateWithoutUsersInput {
 
     @Field(() => String, {nullable:true})
     introductionUrl?: string;
-
-    @Field(() => Date, {nullable:true})
-    createdAt?: Date | string;
-
-    @Field(() => Date, {nullable:true})
-    updatedAt?: Date | string;
 }

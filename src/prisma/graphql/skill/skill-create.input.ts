@@ -18,10 +18,4 @@ export class SkillCreateInput {
 
     @Field(() => UserSkillAcquisitionCreateNestedManyWithoutSkillInput, {nullable:true})
     users?: UserSkillAcquisitionCreateNestedManyWithoutSkillInput;
-
-    @Field(() => Date, {nullable:true})
-    createdAt?: Date | string;
-
-    @Field(() => Date, {nullable:true})
-    updatedAt?: Date | string;
 }

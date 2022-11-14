@@ -19,12 +19,6 @@ export class SkillGroupBy {
     @Field(() => Int, {nullable:true})
     parentId?: number;
 
-    @Field(() => Date, {nullable:false})
-    createdAt!: Date | string;
-
-    @Field(() => Date, {nullable:false})
-    updatedAt!: Date | string;
-
     @Field(() => SkillCountAggregate, {nullable:true})
     _count?: SkillCountAggregate;
 

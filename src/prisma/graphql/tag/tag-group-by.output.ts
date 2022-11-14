@@ -19,12 +19,6 @@ export class TagGroupBy {
     @Field(() => String, {nullable:true})
     iconUrl?: string;
 
-    @Field(() => Date, {nullable:false})
-    createdAt!: Date | string;
-
-    @Field(() => Date, {nullable:false})
-    updatedAt!: Date | string;
-
     @Field(() => TagCountAggregate, {nullable:true})
     _count?: TagCountAggregate;
 
