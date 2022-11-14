@@ -86,7 +86,7 @@ jobs:
           region: ${{ env.REGION }}
           # NOTE: If required, update to the appropriate source folder
           source: ./
-          env_vars: 'DATABASE_URL=postgresql://${{ secrets.DB_USER }}:${{ secrets.DB_PASS }}@localhost:5432/postgres?socket=/cloudsql/${{ env.INSTANCE_CONNECTION_NAME }}'
+          env_vars: 'DATABASE_URL="postgresql://${{ secrets.DB_USER }}:${{ secrets.DB_PASS }}@localhost:5432/postgres?socket=/cloudsql/${{ env.INSTANCE_CONNECTION_NAME }}"'
 
       # If required, use the Cloud Run url output in later steps
       - name: Show Output
