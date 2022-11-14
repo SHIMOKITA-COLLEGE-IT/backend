@@ -35,4 +35,5 @@ jobs:
       - name: Cloud SQL migration
         run: npx prisma migrate deploy
         env: 
-          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          # DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          DATABASE_URL: postgresql://postgres:example@localhost:5432/postgres
