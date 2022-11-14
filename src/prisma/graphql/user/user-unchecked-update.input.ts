@@ -5,7 +5,7 @@ import { BoolFieldUpdateOperationsInput } from '../prisma/bool-field-update-oper
 import { NullableStringFieldUpdateOperationsInput } from '../prisma/nullable-string-field-update-operations.input';
 import { DateTimeFieldUpdateOperationsInput } from '../prisma/date-time-field-update-operations.input';
 import { SocialLinkUncheckedUpdateManyWithoutUserNestedInput } from '../social-link/social-link-unchecked-update-many-without-user-nested.input';
-import { IntFieldUpdateOperationsInput } from '../prisma/int-field-update-operations.input';
+import { NullableIntFieldUpdateOperationsInput } from '../prisma/nullable-int-field-update-operations.input';
 import { GroupUncheckedUpdateManyWithoutUsersNestedInput } from '../group/group-unchecked-update-many-without-users-nested.input';
 import { UserRootsTracingUncheckedUpdateManyWithoutUserNestedInput } from '../user-roots-tracing/user-roots-tracing-unchecked-update-many-without-user-nested.input';
 import { UserSkillAcquisitionUncheckedUpdateManyWithoutUserNestedInput } from '../user-skill-acquisition/user-skill-acquisition-unchecked-update-many-without-user-nested.input';
@@ -60,11 +60,11 @@ export class UserUncheckedUpdateInput {
     @Field(() => BoolFieldUpdateOperationsInput, {nullable:true})
     isAlumni?: BoolFieldUpdateOperationsInput;
 
-    @Field(() => IntFieldUpdateOperationsInput, {nullable:true})
-    roomNumber?: IntFieldUpdateOperationsInput;
+    @Field(() => NullableIntFieldUpdateOperationsInput, {nullable:true})
+    roomNumber?: NullableIntFieldUpdateOperationsInput;
 
-    @Field(() => IntFieldUpdateOperationsInput, {nullable:true})
-    postNumber?: IntFieldUpdateOperationsInput;
+    @Field(() => NullableIntFieldUpdateOperationsInput, {nullable:true})
+    postNumber?: NullableIntFieldUpdateOperationsInput;
 
     @Field(() => GroupUncheckedUpdateManyWithoutUsersNestedInput, {nullable:true})
     groups?: GroupUncheckedUpdateManyWithoutUsersNestedInput;

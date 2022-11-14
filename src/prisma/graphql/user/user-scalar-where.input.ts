@@ -4,7 +4,7 @@ import { StringFilter } from '../prisma/string-filter.input';
 import { BoolFilter } from '../prisma/bool-filter.input';
 import { StringNullableFilter } from '../prisma/string-nullable-filter.input';
 import { DateTimeFilter } from '../prisma/date-time-filter.input';
-import { IntFilter } from '../prisma/int-filter.input';
+import { IntNullableFilter } from '../prisma/int-nullable-filter.input';
 import { StringNullableListFilter } from '../prisma/string-nullable-list-filter.input';
 
 @InputType()
@@ -61,11 +61,11 @@ export class UserScalarWhereInput {
     @Field(() => BoolFilter, {nullable:true})
     isAlumni?: BoolFilter;
 
-    @Field(() => IntFilter, {nullable:true})
-    roomNumber?: IntFilter;
+    @Field(() => IntNullableFilter, {nullable:true})
+    roomNumber?: IntNullableFilter;
 
-    @Field(() => IntFilter, {nullable:true})
-    postNumber?: IntFilter;
+    @Field(() => IntNullableFilter, {nullable:true})
+    postNumber?: IntNullableFilter;
 
     @Field(() => StringFilter, {nullable:true})
     bio?: StringFilter;

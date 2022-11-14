@@ -64,11 +64,11 @@ export class UserCreateInput {
     @Field(() => Boolean, {nullable:true})
     isAlumni?: boolean;
 
-    @Field(() => Int, {nullable:false})
-    roomNumber!: number;
+    @Field(() => Int, {nullable:true})
+    roomNumber?: number;
 
-    @Field(() => Int, {nullable:false})
-    postNumber!: number;
+    @Field(() => Int, {nullable:true})
+    postNumber?: number;
 
     @Field(() => GroupCreateNestedManyWithoutUsersInput, {nullable:true})
     groups?: GroupCreateNestedManyWithoutUsersInput;

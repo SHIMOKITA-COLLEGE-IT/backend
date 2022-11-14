@@ -61,15 +61,15 @@ export class User {
      * @Validator.@Min(100)
      * @Validator.@Max(599)
      */
-    @Field(() => Int, {nullable:false,description:'@Validator.@Min(100)\n@Validator.@Max(599)'})
-    roomNumber!: number;
+    @Field(() => Int, {nullable:true,description:'@Validator.@Min(100)\n@Validator.@Max(599)'})
+    roomNumber!: number | null;
 
     /**
      * @Validator.@Min(100)
      * @Validator.@Max(599)
      */
-    @Field(() => Int, {nullable:false,description:'@Validator.@Min(100)\n@Validator.@Max(599)'})
-    postNumber!: number;
+    @Field(() => Int, {nullable:true,description:'@Validator.@Min(100)\n@Validator.@Max(599)'})
+    postNumber!: number | null;
 
     @Field(() => [Group], {nullable:true})
     groups?: Array<Group>;

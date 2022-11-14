@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE "User" ALTER COLUMN "roomNumber" DROP NOT NULL,
+ALTER COLUMN "postNumber" DROP NOT NULL;

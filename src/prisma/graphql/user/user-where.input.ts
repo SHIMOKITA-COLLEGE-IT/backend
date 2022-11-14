@@ -5,7 +5,7 @@ import { BoolFilter } from '../prisma/bool-filter.input';
 import { StringNullableFilter } from '../prisma/string-nullable-filter.input';
 import { DateTimeFilter } from '../prisma/date-time-filter.input';
 import { SocialLinkListRelationFilter } from '../social-link/social-link-list-relation-filter.input';
-import { IntFilter } from '../prisma/int-filter.input';
+import { IntNullableFilter } from '../prisma/int-nullable-filter.input';
 import { GroupListRelationFilter } from '../group/group-list-relation-filter.input';
 import { UserRootsTracingListRelationFilter } from '../user-roots-tracing/user-roots-tracing-list-relation-filter.input';
 import { UserSkillAcquisitionListRelationFilter } from '../user-skill-acquisition/user-skill-acquisition-list-relation-filter.input';
@@ -69,11 +69,11 @@ export class UserWhereInput {
     @Field(() => BoolFilter, {nullable:true})
     isAlumni?: BoolFilter;
 
-    @Field(() => IntFilter, {nullable:true})
-    roomNumber?: IntFilter;
+    @Field(() => IntNullableFilter, {nullable:true})
+    roomNumber?: IntNullableFilter;
 
-    @Field(() => IntFilter, {nullable:true})
-    postNumber?: IntFilter;
+    @Field(() => IntNullableFilter, {nullable:true})
+    postNumber?: IntNullableFilter;
 
     @Field(() => GroupListRelationFilter, {nullable:true})
     groups?: GroupListRelationFilter;

@@ -19,9 +19,9 @@ Table User {
   position String [not null, note: '@Validator.IsNotEmpty()']
   socialLinks SocialLink [not null]
   isAlumni Boolean [not null, default: false]
-  roomNumber Int [not null, note: '@Validator.@Min(100)
+  roomNumber Int [note: '@Validator.@Min(100)
 @Validator.@Max(599)']
-  postNumber Int [not null, note: '@Validator.@Min(100)
+  postNumber Int [note: '@Validator.@Min(100)
 @Validator.@Max(599)']
   groups Group [not null]
   roots UserRootsTracing [not null]

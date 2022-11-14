@@ -52,11 +52,11 @@ export class UserGroupBy {
     @Field(() => Boolean, {nullable:false})
     isAlumni!: boolean;
 
-    @Field(() => Int, {nullable:false})
-    roomNumber!: number;
+    @Field(() => Int, {nullable:true})
+    roomNumber?: number;
 
-    @Field(() => Int, {nullable:false})
-    postNumber!: number;
+    @Field(() => Int, {nullable:true})
+    postNumber?: number;
 
     @Field(() => String, {nullable:false})
     bio!: string;
