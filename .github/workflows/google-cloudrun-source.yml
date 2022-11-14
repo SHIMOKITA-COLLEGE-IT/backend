@@ -51,9 +51,9 @@ on:
     branches: [ "main" ]
 
 env:
-  GCP_PROJECT_ID: college-app-366823
-  GCP_REGION: asia-northeast1
-  SERVICE: backend
+  PROJECT_ID: college-app-366823
+  REGION: asia-northeast1
+  INSTANCE_CONNECTION_NAME: college-app-366823:asia-northeast1:college-app
 
 jobs:
   deploy:
@@ -81,12 +81,12 @@ jobs:
         id: deploy
         uses: google-github-actions/deploy-cloudrun@v0
         with:
-          project_id: ${{ env.GCP_PROJECT_ID }}
-          service: ${{ env.SERVICE }}
-          region: ${{ env.GCP_REGION }}
+          project_id: ${{ env.PROJECT_ID }}
+          service: backend
+          region: ${{ env.REGION }}
           # NOTE: If required, update to the appropriate source folder
           source: ./
-          env_vars: 'DATABASE_URL=${{ secrets.DATABASE_URL }}'
+          env_vars: 'DATABASE_URL=postgresql://${{ secrets.DB_USER }}:${{ secrets.DB_PASS }}@localhost:5432/postgres?socket=/cloudsql/${{ env.INSTANCE_CONNECTION_NAME }}'
 
       # If required, use the Cloud Run url output in later steps
       - name: Show Output
