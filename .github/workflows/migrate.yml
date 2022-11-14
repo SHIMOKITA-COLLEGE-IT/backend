@@ -38,7 +38,7 @@ jobs:
         image: ghcr.io/owner/myservice1
         credentials:
           username: oauth2accesstoken
-          password: ${{ needs.login.outpus.access_token }}
+          password: ${{ secrets.github_token }}
       # proxy:
       #   image: gcr.io/college-app-366823/csap
       #   credentials:
