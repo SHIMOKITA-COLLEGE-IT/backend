@@ -32,16 +32,21 @@ jobs:
     runs-on: ubuntu-latest
     container: node:18
     services:
-      proxy:
-        image: gcr.io/college-app-366823/csap
+      myservice1:
+        image: ghcr.io/owner/myservice1
         credentials:
-          username: 'oauth2accesstoken'
-          password: ${{ secrets.DOCKER_PASSWORD }}
-        options: >-
-          --health-cmd 'curl -f http://localhost:8090 || exit 1'
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
+          username: ${{ github.actor }}
+          password: ${{ secrets.github_token }}
+      # proxy:
+      #   image: gcr.io/college-app-366823/csap
+      #   credentials:
+      #     username: 'oauth2accesstoken'
+      #     password: ${{ secrets.DOCKER_PASSWORD }}
+      #   options: >-
+      #     --health-cmd 'curl -f http://localhost:8090 || exit 1'
+      #     --health-interval 10s
+      #     --health-timeout 5s
+      #     --health-retries 5
     steps:
       - name: Checkout
         uses: actions/checkout@v3
