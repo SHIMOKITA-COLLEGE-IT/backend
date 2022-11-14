@@ -32,14 +32,20 @@ jobs:
           docker run \
           -d \
           -p 5432:5432 \
+          -p 8090:8090 \
           --health-cmd "curl --fail http://localhost:8090 || exit 1" \
           --health-interval 10s \
           --health-timeout 5s \
           --health-retries 5 \
           gcr.io/cloud-sql-connectors/cloud-sql-proxy:2.0.0-preview.1 \
-          ./cloud-sql-proxy college-app-366823:asia-northeast1:college-app --token ${{ steps.auth.outputs.access_token }}
+          ./cloud-sql-proxy college-app-366823:asia-northeast1:college-app \ 
+          --token ${{ steps.auth.outputs.access_token }} \
+          --health-check \
+          --http-port=8090 \
       
-      - run: until nc -w 10 127.0.0.1 8090; do sleep 1; done
+      - run: npm install -g wait-port
+
+      - run: wait-port localhost:8090/liveness
 
       - name: Cloud SQL migration
         run: npx prisma migrate deploy
