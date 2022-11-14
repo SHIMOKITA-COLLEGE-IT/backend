@@ -24,6 +24,9 @@ jobs:
 
       - run: |
           echo "ACCESS_TOKEN=${{ steps.auth.outputs.access_token }}" >> $GITHUB_ENV
+      
+      - run: |
+          echo ${{ env.ACCESS_TOKEN }}
   migration:
     needs: 'login'
     runs-on: ubuntu-latest
