@@ -4,6 +4,10 @@ on:
   push:
     branches: [ "main" ]
 
+env:
+  GCP_PROJECT_ID: college-app-366823
+  GCP_REGION: asia-northeast1
+
 jobs:
   migration:
     permissions:
