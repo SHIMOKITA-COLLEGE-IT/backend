@@ -106,12 +106,12 @@ enum GroupType {
 }
 
 model SocialLink {
-  id             Int            @id @default(autoincrement())
-  user           User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id             Int             @id @default(autoincrement())
+  user           User            @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId         String
   name           String
   // For Icon
-  socialLinkType SocialLinkType
+  socialLinkType SocialLinkType?
   /// @Validator.IsUrl()
   url            String
 }
@@ -127,7 +127,6 @@ enum SocialLinkType {
   YOUTUBE
   GITHUB
   LINKTREE
-  OTHER
 }
 
 // seed ShimokitaCollege

@@ -13,9 +13,8 @@ export { EnumGroupTypeWithAggregatesFilter } from './enum-group-type-with-aggreg
 export { EnumRootsTypeFieldUpdateOperationsInput } from './enum-roots-type-field-update-operations.input';
 export { EnumRootsTypeFilter } from './enum-roots-type-filter.input';
 export { EnumRootsTypeWithAggregatesFilter } from './enum-roots-type-with-aggregates-filter.input';
-export { EnumSocialLinkTypeFieldUpdateOperationsInput } from './enum-social-link-type-field-update-operations.input';
-export { EnumSocialLinkTypeFilter } from './enum-social-link-type-filter.input';
-export { EnumSocialLinkTypeWithAggregatesFilter } from './enum-social-link-type-with-aggregates-filter.input';
+export { EnumSocialLinkTypeNullableFilter } from './enum-social-link-type-nullable-filter.input';
+export { EnumSocialLinkTypeNullableWithAggregatesFilter } from './enum-social-link-type-nullable-with-aggregates-filter.input';
 export { FindFirstGroupOrThrowArgs } from './find-first-group-or-throw.args';
 export { FindFirstRootsOrThrowArgs } from './find-first-roots-or-throw.args';
 export { FindFirstSkillOrThrowArgs } from './find-first-skill-or-throw.args';
@@ -48,8 +47,8 @@ export { NestedEnumGroupTypeFilter } from './nested-enum-group-type-filter.input
 export { NestedEnumGroupTypeWithAggregatesFilter } from './nested-enum-group-type-with-aggregates-filter.input';
 export { NestedEnumRootsTypeFilter } from './nested-enum-roots-type-filter.input';
 export { NestedEnumRootsTypeWithAggregatesFilter } from './nested-enum-roots-type-with-aggregates-filter.input';
-export { NestedEnumSocialLinkTypeFilter } from './nested-enum-social-link-type-filter.input';
-export { NestedEnumSocialLinkTypeWithAggregatesFilter } from './nested-enum-social-link-type-with-aggregates-filter.input';
+export { NestedEnumSocialLinkTypeNullableFilter } from './nested-enum-social-link-type-nullable-filter.input';
+export { NestedEnumSocialLinkTypeNullableWithAggregatesFilter } from './nested-enum-social-link-type-nullable-with-aggregates-filter.input';
 export { NestedFloatFilter } from './nested-float-filter.input';
 export { NestedFloatNullableFilter } from './nested-float-nullable-filter.input';
 export { NestedIntFilter } from './nested-int-filter.input';
@@ -61,6 +60,7 @@ export { NestedStringNullableFilter } from './nested-string-nullable-filter.inpu
 export { NestedStringNullableWithAggregatesFilter } from './nested-string-nullable-with-aggregates-filter.input';
 export { NestedStringWithAggregatesFilter } from './nested-string-with-aggregates-filter.input';
 export { NullableDateTimeFieldUpdateOperationsInput } from './nullable-date-time-field-update-operations.input';
+export { NullableEnumSocialLinkTypeFieldUpdateOperationsInput } from './nullable-enum-social-link-type-field-update-operations.input';
 export { NullableIntFieldUpdateOperationsInput } from './nullable-int-field-update-operations.input';
 export { NullableStringFieldUpdateOperationsInput } from './nullable-string-field-update-operations.input';
 export { QueryMode } from './query-mode.enum';

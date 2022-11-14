@@ -20,8 +20,8 @@ export class SocialLinkGroupBy {
     @Field(() => String, {nullable:false})
     name!: string;
 
-    @Field(() => SocialLinkType, {nullable:false})
-    socialLinkType!: keyof typeof SocialLinkType;
+    @Field(() => SocialLinkType, {nullable:true})
+    socialLinkType?: keyof typeof SocialLinkType;
 
     @Field(() => String, {nullable:false})
     url!: string;

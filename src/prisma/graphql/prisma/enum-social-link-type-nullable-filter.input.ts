@@ -1,10 +1,10 @@
 import { Field } from '@nestjs/graphql';
 import { InputType } from '@nestjs/graphql';
 import { SocialLinkType } from './social-link-type.enum';
-import { NestedEnumSocialLinkTypeFilter } from './nested-enum-social-link-type-filter.input';
+import { NestedEnumSocialLinkTypeNullableFilter } from './nested-enum-social-link-type-nullable-filter.input';
 
 @InputType()
-export class EnumSocialLinkTypeFilter {
+export class EnumSocialLinkTypeNullableFilter {
 
     @Field(() => SocialLinkType, {nullable:true})
     equals?: keyof typeof SocialLinkType;
@@ -15,6 +15,6 @@ export class EnumSocialLinkTypeFilter {
     @Field(() => [SocialLinkType], {nullable:true})
     notIn?: Array<keyof typeof SocialLinkType>;
 
-    @Field(() => NestedEnumSocialLinkTypeFilter, {nullable:true})
-    not?: NestedEnumSocialLinkTypeFilter;
+    @Field(() => NestedEnumSocialLinkTypeNullableFilter, {nullable:true})
+    not?: NestedEnumSocialLinkTypeNullableFilter;
 }

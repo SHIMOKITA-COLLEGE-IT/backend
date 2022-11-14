@@ -2,7 +2,7 @@ import { Field } from '@nestjs/graphql';
 import { InputType } from '@nestjs/graphql';
 import { IntFilter } from '../prisma/int-filter.input';
 import { StringFilter } from '../prisma/string-filter.input';
-import { EnumSocialLinkTypeFilter } from '../prisma/enum-social-link-type-filter.input';
+import { EnumSocialLinkTypeNullableFilter } from '../prisma/enum-social-link-type-nullable-filter.input';
 
 @InputType()
 export class SocialLinkScalarWhereInput {
@@ -25,8 +25,8 @@ export class SocialLinkScalarWhereInput {
     @Field(() => StringFilter, {nullable:true})
     name?: StringFilter;
 
-    @Field(() => EnumSocialLinkTypeFilter, {nullable:true})
-    socialLinkType?: EnumSocialLinkTypeFilter;
+    @Field(() => EnumSocialLinkTypeNullableFilter, {nullable:true})
+    socialLinkType?: EnumSocialLinkTypeNullableFilter;
 
     @Field(() => StringFilter, {nullable:true})
     url?: StringFilter;

@@ -19,8 +19,8 @@ export class SocialLink {
     @Field(() => String, {nullable:false})
     name!: string;
 
-    @Field(() => SocialLinkType, {nullable:false})
-    socialLinkType!: keyof typeof SocialLinkType;
+    @Field(() => SocialLinkType, {nullable:true})
+    socialLinkType!: keyof typeof SocialLinkType | null;
 
     @Field(() => String, {nullable:false})
     url!: string;

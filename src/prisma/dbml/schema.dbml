@@ -58,7 +58,7 @@ Table SocialLink {
   user User [not null]
   userId String [not null]
   name String [not null]
-  socialLinkType SocialLinkType [not null]
+  socialLinkType SocialLinkType
   url String [not null, note: '@Validator.IsUrl()']
 }
 
@@ -153,7 +153,6 @@ Enum SocialLinkType {
   YOUTUBE
   GITHUB
   LINKTREE
-  OTHER
 }
 
 Enum RootsType {
