@@ -54,10 +54,10 @@ model User {
   isAlumni   Boolean @default(false)
   /// @Validator.@Min(100)
   /// @Validator.@Max(599)
-  roomNumber Int
+  roomNumber Int?
   /// @Validator.@Min(100)
   /// @Validator.@Max(599)
-  postNumber Int
+  postNumber Int?
   groups     Group[]
 
   // Step 4
