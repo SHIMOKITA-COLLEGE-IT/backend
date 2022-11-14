@@ -30,7 +30,7 @@ jobs:
 
           chmod +x cloud-sql-proxy
 
-          ./cloud-sql-proxy college-app-366823:asia-northeast1:college-app --token ${{ steps.auth.outputs.access_token }}
+          ./cloud-sql-proxy college-app-366823:asia-northeast1:college-app --token ${{ steps.auth.outputs.access_token }} & sleep 10s
 
       - name: Cloud SQL migration
         run: npx prisma migrate deploy
