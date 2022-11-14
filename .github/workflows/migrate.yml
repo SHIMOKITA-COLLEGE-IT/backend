@@ -28,7 +28,7 @@ jobs:
 
       - run: docker pull gcr.io/cloud-sql-connectors/cloud-sql-proxy:2.0.0-preview.1
 
-      - run: docker run -d gcr.io/cloud-sql-connectors/cloud-sql-proxy:2.0.0-preview.1 --name cloud-sql-proxy -p 5432:5432 ./cloud-sql-proxy college-app-366823:asia-northeast1:college-app --token ${{ steps.auth.outputs.access_token }} --port
+      - run: docker run -d gcr.io/cloud-sql-connectors/cloud-sql-proxy:2.0.0-preview.1 --name cloud-sql-proxy -p 5432:5432 ./cloud-sql-proxy college-app-366823:asia-northeast1:college-app --token ${{ steps.auth.outputs.access_token }}
 
       - name: Cloud SQL migration
         run: npx prisma migrate deploy
