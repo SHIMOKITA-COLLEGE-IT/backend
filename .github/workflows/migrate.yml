@@ -30,15 +30,15 @@ jobs:
       - run: |
           echo ${{ env.ACCESS_TOKEN }}
   migration:
-    needs: 'login'
+    needs: login
     runs-on: ubuntu-latest
     container: node:18
     services:
       myservice1:
-        image: ghcr.io/owner/myservice1
+        image: gcr.io/college-app-366823/csap
         credentials:
           username: oauth2accesstoken
-          password: ${{ secrets.github_token }}
+          password: ${{ secrets.hoge }}
       # proxy:
       #   image: gcr.io/college-app-366823/csap
       #   credentials:
