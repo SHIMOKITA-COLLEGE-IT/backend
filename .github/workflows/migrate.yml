@@ -26,23 +26,26 @@ jobs:
           service_account: "${{ secrets.WIF_SERVICE_ACCOUNT }}"
           token_format: "access_token"
 
-      - run: docker pull gcr.io/cloud-sql-connectors/cloud-sql-proxy:2.0.0-preview.1
+      # - run: docker pull gcr.io/cloud-sql-connectors/cloud-sql-proxy:2.0.0-preview.1
+      # - run: |
+      #     docker run \
+      #     -d \
+      #     -p 5432:5432 \
+      #     -p 8090:8090 \
+      #     --health-cmd "curl --fail http://localhost:8090 || exit 1" \
+      #     --health-interval 10s \
+      #     --health-timeout 5s \
+      #     --health-retries 5 \
+      #     gcr.io/cloud-sql-connectors/cloud-sql-proxy:2.0.0-preview.1 \
+      #     ./cloud-sql-proxy college-app-366823:asia-northeast1:college-app --token ${{ steps.auth.outputs.access_token }} --health-check --http-port=8090
+      # - run: npm install -g wait-port
+      # - run: wait-port localhost:8090/liveness
 
       - run: |
-          docker run \
-          -d \
-          -p 5432:5432 \
-          -p 8090:8090 \
-          --health-cmd "curl --fail http://localhost:8090 || exit 1" \
-          --health-interval 10s \
-          --health-timeout 5s \
-          --health-retries 5 \
-          gcr.io/cloud-sql-connectors/cloud-sql-proxy:2.0.0-preview.1 \
-          ./cloud-sql-proxy college-app-366823:asia-northeast1:college-app --token ${{ steps.auth.outputs.access_token }} --health-check --http-port=8090
-      
-      - run: npm install -g wait-port
-
-      - run: wait-port localhost:8090/liveness
+          URL="https://storage.googleapis.com/cloud-sql-connectors/cloud-sql-proxy/v2.0.0-preview.2"
+          wget "$URL/cloud-sql-proxy.linux.amd64" -O cloud-sql-proxy
+          chmod +x cloud-sql-proxy
+          ./cloud-sql-proxy college-app-366823:asia-northeast1:college-app --token ${{ steps.auth.outputs.access_token }} & sleep 10s
 
       - name: Cloud SQL migration
         run: npx prisma migrate deploy
